@@ -13,7 +13,6 @@
           </q-input>
           <p class="text-xs mb-4">It must be a combination of minimum 8 letters, numbers, and symbols.</p>
           <div class="flex items-center justify-between mb-4">
-            <q-checkbox v-model="rememberMe" label="Remember me"/>
             <router-link to="/forgot-password" class="text-primary">Forgot Password?</router-link>
           </div>
           <q-btn unelevated no-caps color="primary" label="Log In" type="submit"
@@ -36,7 +35,6 @@ export default {
     return {
       email: '',
       password: '',
-      rememberMe: false,
       showPassword: false,
     };
   },

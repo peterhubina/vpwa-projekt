@@ -71,8 +71,8 @@
             </template>
           </q-input>
           <div class="flex items-center justify-between mb-4">
-            <router-link to="/forgot-password" class="text-primary"
-              >Forgot Password?</router-link
+            <router-link to="/login" class="text-primary"
+              >Already have an account</router-link
             >
           </div>
           <q-btn
@@ -84,11 +84,6 @@
             class="w-full py-4 text-base font-medium rounded"
           />
         </q-form>
-        <span class="h-[2px] w-full bg-neutral-200 mt-8 rounded"></span>
-        <p class="text-gray-600 mt-2">
-          Already have an account?
-          <router-link to="/login" class="text-primary">Log In</router-link>
-        </p>
       </div>
     </div>
   </div>
