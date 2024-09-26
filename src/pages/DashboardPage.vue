@@ -2,38 +2,35 @@
   <div class="flex h-screen">
     <!-- Sidebar -->
     <aside class="w-64 bg-gray-800 text-white flex flex-col justify-between">
-      <div>
-        <div class="q-pa-md" style="padding-bottom: 20px">
-          <div>
-            <q-fab
-              v-model="fab1"
-              label="Channels"
-              label-position="left"
-              color="green"
-              icon="keyboard_arrow_right"
-              direction="right"
 
-            >
-              <q-fab-action color="purple" @click="joinChannel" icon="search" label="Join" />
-              <q-fab-action color="blue" @click="createChannel" icon="add" label="Create" />
-            </q-fab>
-          </div>
+      <div class="q-pa-md" style="padding-bottom: 20px">
+        <div>
+          <q-fab
+            v-model="fab1"
+            label="Channels"
+            label-position="left"
+            color="green"
+            icon="tv"
+            direction="right">
+            <q-fab-action color="purple" @click="joinChannel" icon="search" label="Join" />
+            <q-fab-action color="blue" @click="createChannel" icon="add" label="Create" />
+          </q-fab>
         </div>
-
-        <ul class="flex-1 overflow-y-auto">
-          <li v-for="channel in channels" :key="channel.id" :class="{'bg-yellow-500': channel.isHighlighted}" class="p-4 border-b border-gray-700">
-            <div class="flex justify-between items-center space-x-3">
-              <button @click="OpenChannel" class="text-left px-4 rounded flex-1"> <span>{{ channel.name }}</span> </button>
-
-              <div>
-                <button @click="leaveChannel(channel.id)" class="text-red-500">Leave</button>
-                <button v-if="channel.isAdmin" @click="deleteChannel(channel.id)" class="text-red-500 ml-2">Delete</button>
-                <span v-else class="ml-12 w-[64px]"></span> <!-- Placeholder to maintain space -->
-              </div>
-            </div>
-          </li>
-        </ul>
       </div>
+
+      <ul class="flex-1 overflow-y-auto">
+        <li v-for="channel in channels" :key="channel.id" :class="{'bg-yellow-600': channel.isHighlighted}" class="p-3 border-b border-gray-700" >
+          <q-fab :color="channel.color" push :icon="channel.icon" direction="right" >
+            <q-fab-action color="accent" @click="joinChannel()" icon="face" label="Acc"/>
+            <q-fab-action v-if="channel.isAdmin" color="red" @click=deleteChannel(channel.id) icon="delete" label="Del"/>
+            <q-fab-action v-if="!channel.isAdmin" color="orange" @click=leaveChannel(channel.id) icon="exit_to_app" label="Lea"/>
+          </q-fab>
+          <button @click="OpenChannel(channel.id)" class="text-left px-4 rounded flex-1"> <span >{{ channel.name }}</span> </button>
+
+        </li>
+      </ul>
+
+
       <div class="q-pa-md" style="padding-bottom: 20px">
         <div>
           <q-fab
@@ -41,9 +38,8 @@
             label="Account"
             label-position="left"
             color="blue"
-            icon="keyboard_arrow_right"
-            direction="right"
-          >
+            icon="account_circle"
+            direction="right">
             <q-fab-action color="purple" @click="joinChannel" icon="edit" label="Edit" />
             <q-fab-action color="red" @click="joinChannel" icon="logout" label="Log Out" />
           </q-fab>
@@ -51,9 +47,7 @@
       </div>
     </aside>
 
-    <aside class="left-64 bg-gray-800 text-white flex flex-col justify-between">
 
-    </aside>
     <!-- Main Content -->
     <main class="flex-1 p-4">
       <router-view></router-view>
@@ -62,8 +56,8 @@
     <UserPopup v-if="showUserPopup" @close="toggleUserPopup" />
   </div>
   <!-- Message Channel -->
-  <MessagePanel v-if="showMessagePanel" @close="OpenChannel" />
   <WriteMessage v-if="showMessagePanel" @close="OpenChannel" />
+  <MessagePanel v-if="showMessagePanel" @close="OpenChannel" />
 </template>
 
 <script>
@@ -92,8 +86,11 @@ export default {
   data() {
     return {
       channels: [
-        { id: 1, name: 'General', isHighlighted: false, isAdmin: true },
-        { id: 2, name: 'Random', isHighlighted: true, isAdmin: false },
+        { id: 1, name: 'General', isHighlighted: false, isAdmin: true, color:'red', icon:'image'},
+        { id: 2, name: 'Random', isHighlighted: true, isAdmin: false, color:'blue', icon:'facebook' },
+        { id: 3, name: 'Channel4569', isHighlighted: false, isAdmin: false, color:'green', icon:'discord'},
+        { id: 4, name: 'Channel123456789', isHighlighted: false, isAdmin: false, color:'pink', icon:'apple'},
+        { id: 5, name: 'Channel12345678912', isHighlighted: false, isAdmin: true, color:'yellow', icon:'business'},
       ],
       showUserPopup: false,
       showMessagePanel: true,
@@ -117,7 +114,19 @@ export default {
     toggleUserPopup() {
       this.showUserPopup = !this.showUserPopup;
     },
-    OpenChannel() {
+    OpenChannel(channelId) {
+      this.channels.forEach(channel => {
+        if (channel.isHighlighted) {
+          channel.isHighlighted = false;
+        }
+      });
+
+      const selectedChannel = this.channels.find(channel => channel.id === channelId);
+      if (selectedChannel) {
+        selectedChannel.isHighlighted = true;
+      }
+
+
       this.showMessagePanel = !this.showMessagePanel;
       this.showWriteMessage = !this.showWriteMessage;
     },
