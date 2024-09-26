@@ -9,11 +9,13 @@
         </div>
         <ul class="flex-1 overflow-y-auto">
           <li v-for="channel in channels" :key="channel.id" :class="{'bg-yellow-500': channel.isHighlighted}" class="p-4 border-b border-gray-700">
-            <div class="flex justify-between items-center">
-              <span>{{ channel.name }}</span>
+            <div class="flex justify-between items-center space-x-3">
+              <button @click="OpenChannel" class="text-left px-4 rounded flex-1"> <span>{{ channel.name }}</span> </button>
+
               <div>
                 <button @click="leaveChannel(channel.id)" class="text-red-500">Leave</button>
                 <button v-if="channel.isAdmin" @click="deleteChannel(channel.id)" class="text-red-500 ml-2">Delete</button>
+                <span v-else class="ml-12 w-[64px]"></span> <!-- Placeholder to maintain space -->
               </div>
             </div>
           </li>
@@ -22,6 +24,10 @@
       <div class="p-4">
         <button @click="toggleUserPopup" class="bg-blue-500 text-white py-2 px-4 rounded">User</button>
       </div>
+    </aside>
+
+    <aside class="left-64 bg-gray-800 text-white flex flex-col justify-between">
+
     </aside>
     <!-- Main Content -->
     <main class="flex-1 p-4">
@@ -57,6 +63,9 @@ export default {
     },
     toggleUserPopup() {
       this.showUserPopup = !this.showUserPopup;
+    },
+    OpenChannel() {
+      this.$router.push({ name: 'MainTextPanelPage', params: { id: channelId } });
     },
   },
   components: {
