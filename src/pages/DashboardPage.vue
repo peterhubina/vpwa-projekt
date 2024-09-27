@@ -26,7 +26,7 @@
           class="p-3 border-b border-gray-700"
         >
           <!-- Channel Container -->
-          <div class="relative" :class="{ 'fab-expanded': expandedFab === channel.id }">
+          <div class="relative" :class="{ 'fab-expanded': channel.isExpanded }">
             <!-- FAB for Channel -->
             <q-fab
               :color="channel.color"
@@ -38,8 +38,8 @@
             >
               <q-fab-action color="blue" @click="OpenChannel(channel.id)" icon="message" label="Messages"/>
               <q-fab-action color="accent" @click="joinChannel()" icon="face" label="Associates"/>
-              <q-fab-action v-if="channel.isAdmin" color="red" @click=deleteChannel(channel.id) icon="delete" label="Delete"/>
-              <q-fab-action v-if="!channel.isAdmin" color="orange" @click=leaveChannel(channel.id) icon="exit_to_app" label="Leave"/>
+              <q-fab-action v-if="channel.isAdmin" color="red" @click="deleteChannel(channel.id)" icon="delete" label="Delete"/>
+              <q-fab-action v-if="!channel.isAdmin" color="orange" @click="leaveChannel(channel.id)" icon="exit_to_app" label="Leave"/>
             </q-fab>
 
             <!-- Channel Button -->
@@ -76,45 +76,30 @@
   </div>
 
   <!-- Message Channel -->
-  <WriteMessage v-if="showMessagePanel" @close="OpenChannel" />
   <MessagePanel v-if="showMessagePanel" @close="OpenChannel" />
 </template>
 
 <script>
 import UserPopup from 'components/UserPopup.vue';
 import MessagePanel from 'components/MessagePanel.vue';
-import WriteMessage from 'components/WriteMessage.vue';
 import { ref } from 'vue'; // Import ref for reactivity
 
 export default {
   setup() {
     const fab1 = ref(false);
     const fab2 = ref(false);
-    const expandedFab = ref(null); // Track expanded FAB
 
-    const toggleFab1 = () => {
-      fab1.value = !fab1.value; // Toggle fab1 state
-    };
-
-    const toggleFab2 = () => {
-      fab2.value = !fab2.value; // Toggle fab2 state
-    };
-
-    const expandFab = (channelId) => {
-      expandedFab.value = expandedFab.value === channelId ? null : channelId;
-    };
-
-    return { fab1, fab2, expandedFab, toggleFab1, toggleFab2, expandFab };
+    return { fab1, fab2 };
   },
 
   data() {
     return {
       channels: [
-        { id: 1, name: 'General', isHighlighted: false, isAdmin: true, color: 'red', icon: 'image' },
-        { id: 2, name: 'Random', isHighlighted: true, isAdmin: false, color: 'blue', icon: 'facebook' },
-        { id: 3, name: 'Channel4569', isHighlighted: false, isAdmin: false, color: 'green', icon: 'discord' },
-        { id: 4, name: 'Channel123456789', isHighlighted: false, isAdmin: false, color: 'pink', icon: 'apple' },
-        { id: 5, name: 'Channel12345678912', isHighlighted: false, isAdmin: true, color: 'purple', icon: 'business' },
+        { id: 1, name: 'General', isHighlighted: false, isAdmin: true, color: 'red', icon: 'image', isExpanded: false },
+        { id: 2, name: 'Random', isHighlighted: true, isAdmin: false, color: 'blue', icon: 'facebook', isExpanded: false },
+        { id: 3, name: 'Channel4569', isHighlighted: false, isAdmin: false, color: 'green', icon: 'discord', isExpanded: false },
+        { id: 4, name: 'Channel123456789', isHighlighted: false, isAdmin: false, color: 'pink', icon: 'apple', isExpanded: false },
+        { id: 5, name: 'Channel12345678912', isHighlighted: false, isAdmin: true, color: 'purple', icon: 'business', isExpanded: false },
       ],
       showUserPopup: false,
       showMessagePanel: true,
@@ -139,6 +124,13 @@ export default {
       this.showUserPopup = !this.showUserPopup;
     },
 
+    expandFab(channelId) {
+      const channel = this.channels.find(c => c.id === channelId);
+      if (channel) {
+        channel.isExpanded = !channel.isExpanded; // Toggle this channel's expanded state
+      }
+    },
+
     OpenChannel(channelId) {
       this.channels.forEach((channel) => {
         if (channel.isHighlighted) {
@@ -152,12 +144,10 @@ export default {
       }
 
       this.showMessagePanel = !this.showMessagePanel;
-      this.showWriteMessage = !this.showWriteMessage;
     },
   },
 
   components: {
-    WriteMessage,
     UserPopup,
     MessagePanel,
   },
