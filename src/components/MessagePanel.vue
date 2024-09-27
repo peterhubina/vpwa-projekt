@@ -1,49 +1,41 @@
 <template>
   <div class="message-panel-container flex h-screen">
-    <div class="message-list">
-      <q-chat-message
-        name="me"
-        avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-        :text="['hey, how are you?']"
-        stamp="7 minutes ago"
-        sent
-        bg-color="amber-7"
-      />
-      <q-chat-message
-        name="Jane"
-        avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-        :text="[ 'doing fine, how r you?',
-        'I just feel like typing a really, really, REALLY long message to annoy you...' ]"
-        size="4"
-        stamp="4 minutes ago"
-        text-color="white"
-        bg-color="primary"
-      />
-      <q-chat-message
-        name="Jane"
-        avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-        :text="['Did it work?']"
-        stamp="1 minutes ago"
-        size="8"
-        text-color="white"
-        bg-color="primary"
-      />
-      <q-chat-message
-        name="Jane"
-        avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-        :text="['Did it work?']"
-        stamp="1 minutes ago"
-        size="10"
-        text-color="white"
-        bg-color="primary"
-      />
-    </div>
+    <ul class="flex-1 overflow-y-auto">
+      <li v-for="message in messages" :key="message.id" class="p-3 border-b">
+        <q-chat-message
+          :name="message.from"
+          :text="[message.text]"
+          :stamp="new Date(parseInt(message.timestamp)).toLocaleTimeString()"
+          :sent="message.my_message"
+          :bg-color="message.my_message ? 'primary' : 'secondary'"
+          text-color="white"
+          class="white-name"
+        />
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
-  // Setup logic if needed
+  data() {
+    return {
+      messages: [
+        { id: 1, from: 'me', text: 'hey, how are you?', my_message: true, timestamp: '1633072800000' },
+        { id: 2, from: 'Mark', text: 'doing fine, how r you?', my_message: false, timestamp: '1633072800000' },
+        { id: 3, from: 'Mark', text: 'I just feel like typing a really, really, REALLY long message to annoy you...', my_message: false, timestamp: '1633072800000' },
+        { id: 4, from: 'Mark', text: 'Did it work my friend...', my_message: false, timestamp: '1633072800000' },
+        { id: 1, from: 'me', text: 'hey, how are you?', my_message: true, timestamp: '1633072800000' },
+        { id: 2, from: 'Jane', text: 'doing fine, how r you?', my_message: false, timestamp: '1633072800000' },
+        { id: 3, from: 'Jane', text: 'I just feel like typing a really, really, REALLY long message to annoy you...', my_message: false, timestamp: '1633072800000' },
+        { id: 4, from: 'Jane', text: 'Did it work my friend...', my_message: false, timestamp: '1633072800000' },
+        { id: 1, from: 'me', text: 'hey, how are you?', my_message: true, timestamp: '1633072800000' },
+        { id: 2, from: 'Jane', text: 'doing fine, how r you?', my_message: false, timestamp: '1633072800000' },
+        { id: 3, from: 'Jane', text: 'I just feel like typing a really, really, REALLY long message to annoy you...', my_message: false, timestamp: '1633072800000' },
+        { id: 4, from: 'Jane', text: 'Did it work my friend...', my_message: false, timestamp: '1633072800000' }
+      ]
+    };
+  },
 };
 </script>
 
@@ -60,10 +52,14 @@ export default {
   padding: 20px; /* Padding for content */
   z-index: 10; /* Ensure it sits above other content */
   overflow-y: auto; /* Scrollable if too many messages */
-  max-height: 400px; /* Max height for the message panel */
+  max-height: 800px; /* Max height for the message panel */
 }
 .message-list {
   display: flex;
   flex-direction: column; /* Align messages vertically */
+}
+
+.white-name {
+  color: white !important; /* Use !important to override any default styles */
 }
 </style>
