@@ -75,16 +75,16 @@
       <router-view></router-view>
     </main>
 
-    <!-- Associates List -->
-    <Associateslist v-if="showAssociatesList" @close="toggleAssociatesList"></AssociatesList>/ />
-  </div>
+    <!-- Message Channel -->
+    <MessagePanel v-if="showMessagePanel" @close="OpenChannel" />
 
-  <!-- Message Channel -->
-  <MessagePanel v-if="showMessagePanel" @close="OpenChannel" />
+    <!-- Associates List -->
+    <AssociatesList v-if="showAssociatesList" @close="toggleAssociatesList" />
+  </div>
 </template>
 
 <script>
-import Associateslist from 'components/AssociatesList.vue';
+import AssociatesList from 'components/AssociatesList.vue';
 import MessagePanel from 'components/MessagePanel.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue'; // Import ref for reactivity
 
@@ -117,8 +117,8 @@ export default {
   data() {
     return {
       channels: [
-        { id: 1, name: 'General', isHighlighted: false, isAdmin: true, color: 'red', icon: 'image', isExpanded: false },
-        { id: 2, name: 'Random', isHighlighted: true, isAdmin: false, color: 'blue', icon: 'facebook', isExpanded: false },
+        { id: 1, name: 'General', isHighlighted: false, isAdmin: false, color: 'red', icon: 'image', isExpanded: false },
+        { id: 2, name: 'Random', isHighlighted: true, isAdmin: true, color: 'blue', icon: 'facebook', isExpanded: false },
         { id: 3, name: 'Channel4569', isHighlighted: false, isAdmin: false, color: 'green', icon: 'discord', isExpanded: false },
         { id: 4, name: 'Channel123456789', isHighlighted: false, isAdmin: false, color: 'pink', icon: 'apple', isExpanded: false },
         { id: 5, name: 'Channel123456789', isHighlighted: false, isAdmin: true, color: 'purple', icon: 'business', isExpanded: false },
@@ -181,7 +181,7 @@ export default {
   },
 
   components: {
-    Associateslist,
+    AssociatesList,
     MessagePanel,
   },
 };

@@ -14,13 +14,16 @@
             label-position="left"
             vertical-actions-align="left"
             color="transparent"
-            direction="down"
+            direction="right"
             :style="{ border: '1px solid white', 'box-shadow': 'inset 0 0 0 1px white' }"
-            @click="expandFab(associate.id)"
           >
             <q-fab-action color="red" @click="joinChannel" icon="remove" label="Kick" />
           </q-fab>
-          <span class="ml-2">{{ associate.role }}{{ ': ' }}{{ associate.name }}</span>
+          <div class="ml-2 flex flex-col">
+            <span>{{ 'Role ' }}: {{ associate.role }}</span>
+            <span>{{ 'Name ' }}: {{ associate.name }}</span>
+            <span>{{ 'Kick votes ' }}: {{ '0' }}</span>
+          </div>
         </div>
       </li>
     </ul>
@@ -37,10 +40,10 @@ export default {
         {id: 2, name: 'Jane Smith', role: 'user', isExpanded: false},
         {id: 3, name: 'Michael Johnson', role: 'user', isExpanded: false},
         {id: 4, name: 'Emily Davis', role: 'user', isExpanded: false},
-        {id: 1, name: 'John Doe', role: 'user', isExpanded: false},
-        {id: 2, name: 'Jane Smith', role: 'user', isExpanded: false},
-        {id: 3, name: 'Michael Johnson', role: 'user', isExpanded: false},
-        {id: 4, name: 'Emily Davis', role: 'user', isExpanded: false},
+        {id: 5, name: 'John Doe', role: 'user', isExpanded: false},
+        {id: 6, name: 'Jane Smith', role: 'user', isExpanded: false},
+        {id: 7, name: 'Michael Johnson', role: 'user', isExpanded: false},
+        {id: 8, name: 'Emily Davis', role: 'user', isExpanded: false},
         // Duplicate entries removed for clarity
       ]
     };
@@ -49,14 +52,8 @@ export default {
   methods: {
     joinChannel() {
       // Define what should happen when the "Kick" button is clicked
-    },
+    }
 
-    expandFab(associateId) {
-      const associate = this.associates.find(a => a.id === associateId);
-      if (associate) {
-        associate.isExpanded = !associate.isExpanded; // Toggle this associate's expanded state
-      }
-    },
   }
 }
 </script>
@@ -70,12 +67,8 @@ export default {
   height: 400px;
   transform: translateY(-50%);
   background-color: gray;
-  border: 1px solid #ccc;
+  border: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-}
-
-.fab-expanded {
-  margin-bottom: 60px; /* Adjust this value depending on the height of expanded fab-actions */
 }
 </style>

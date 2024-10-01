@@ -10,7 +10,12 @@
           :bg-color="message.my_message ? 'primary' : 'violin'"
           text-color="white"
           class="white-name message-bubble"
-        />
+        >
+          <!-- Use the avatar slot to display an icon -->
+          <template v-slot:avatar>
+            <q-icon name="account_circle" size="55px"/>
+          </template>
+        </q-chat-message>
       </li>
     </ul>
 
@@ -112,7 +117,7 @@ export default {
   background: black;
   border-radius: 0;
   padding: 20px;
-  z-index: 10;
+  z-index: 0;
   display: flex;
   flex-direction: column; /* Make it a column layout */
   font-size: 1.1rem;
@@ -147,6 +152,6 @@ ul {
 }
 
 .white-name {
-  color: white !important; /* Use !important to override any default styles */
+  color: white; /* Use !important to override any default styles */
 }
 </style>
