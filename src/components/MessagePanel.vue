@@ -1,5 +1,5 @@
 <template>
-  <div class="message-panel-container flex h-screen">
+  <div :class="['message-panel-container flex h-screen', { 'mobile': isMobile }]">
     <ul class="flex-1 overflow-y-auto">
       <li v-for="message in messages" :key="message.id" class="p-2">
         <q-chat-message
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 export default {
   data() {
@@ -61,6 +61,21 @@ export default {
   setup() {
     const text = ref('');
     const maxHeight = '3rem * 3'; // The maximum height for 3 rows of text
+    const isMobile = ref(window.innerWidth < 600);
+
+    const updateMobileState = () => {
+      isMobile.value = window.innerWidth < 600;
+    };
+
+    // Add event listener for window resize
+    onMounted(() => {
+      window.addEventListener('resize', updateMobileState);
+    });
+
+    // Clean up the event listener on component unmount
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', updateMobileState);
+    });
 
     const formatTimeStamp = (timestamp) => {
       const messageDate = new Date(parseInt(timestamp));
@@ -80,6 +95,7 @@ export default {
       text,
       maxHeight,
       formatTimeStamp,
+      isMobile,
     };
   },
 };
@@ -88,8 +104,8 @@ export default {
 <style scoped>
 .message-panel-container {
   position: absolute;
-  top: 0rem; /* Position it to start from the top */
-  left: 16rem;
+  top: 0;
+  left: 16rem; /* Default value for desktop */
   right: 0;
   bottom: 16rem; /* Leave 100px for the input area at the bottom */
   width: calc(100% - 16rem); /* Make it responsive to fill the remaining width */
@@ -100,6 +116,12 @@ export default {
   display: flex;
   flex-direction: column; /* Make it a column layout */
   font-size: 1.1rem;
+}
+
+/* Mobile Styles */
+.message-panel-container.mobile {
+  left: 10rem; /* Adjust left position for mobile */
+  width: calc(100% - 10rem); /* Adjust width for mobile */
 }
 
 ul {
