@@ -38,7 +38,8 @@
               @click="expandFab(channel.id)"
             >
               <q-fab-action color="blue" @click="OpenChannel(channel.id)" icon="message" label="Messages"/>
-              <q-fab-action color="accent" @click="joinChannel()" icon="face" label="Associates"/>
+              <q-fab-action color="green" icon="add" label="Invite"/>
+              <q-fab-action color="accent" @click="toggleAssociatesList()" icon="face" label="Associates"/>
               <q-fab-action v-if="channel.isAdmin" color="red" @click="deleteChannel(channel.id)" icon="delete" label="Delete"/>
               <q-fab-action v-if="!channel.isAdmin" color="orange" @click="leaveChannel(channel.id)" icon="exit_to_app" label="Leave"/>
             </q-fab>
@@ -74,8 +75,8 @@
       <router-view></router-view>
     </main>
 
-    <!-- User Popup -->
-    <UserPopup v-if="showUserPopup" @close="toggleUserPopup" />
+    <!-- Associates List -->
+    <Associateslist v-if="showAssociatesList" @close="toggleAssociatesList"></AssociatesList>/ />
   </div>
 
   <!-- Message Channel -->
@@ -83,7 +84,7 @@
 </template>
 
 <script>
-import UserPopup from 'components/UserPopup.vue';
+import Associateslist from 'components/AssociatesList.vue';
 import MessagePanel from 'components/MessagePanel.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue'; // Import ref for reactivity
 
@@ -122,7 +123,7 @@ export default {
         { id: 4, name: 'Channel123456789', isHighlighted: false, isAdmin: false, color: 'pink', icon: 'apple', isExpanded: false },
         { id: 5, name: 'Channel123456789', isHighlighted: false, isAdmin: true, color: 'purple', icon: 'business', isExpanded: false },
       ],
-      showUserPopup: false,
+      showAssociatesList: false,
       showMessagePanel: true,
       showWriteMessage: true,
       isAccountFabExpanded: false,
@@ -143,8 +144,8 @@ export default {
       this.channels = this.channels.filter((channel) => channel.id !== channelId);
     },
 
-    toggleUserPopup() {
-      this.showUserPopup = !this.showUserPopup;
+    toggleAssociatesList() {
+      this.showAssociatesList = !this.showAssociatesList;
     },
 
     toggleAccountFab() {
@@ -180,7 +181,7 @@ export default {
   },
 
   components: {
-    UserPopup,
+    Associateslist,
     MessagePanel,
   },
 };
@@ -189,7 +190,7 @@ export default {
 <style scoped>
 /* Style to ensure spacing for expanded Fab */
 .fab-expanded {
-  margin-bottom: 150px; /* Adjust this value depending on the height of expanded fab-actions */
+  margin-bottom: 200px; /* Adjust this value depending on the height of expanded fab-actions */
 }
 
 aside {
