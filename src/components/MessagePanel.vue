@@ -114,7 +114,7 @@ export default {
   background: black;
   border-radius: 0;
   padding: 20px;
-  z-index: 0;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   font-size: 1.1rem;

@@ -209,10 +209,10 @@ ul {
 }
 
 .account-space {
-  margin-bottom: 100px; /* Space for expanded account FAB */
+  margin-bottom: 110px; /* Space for expanded account FAB */
 }
 
 .channel-space {
-  margin-top: 100px; /* Adjust this value for the space needed when FAB is expanded */
+  margin-top: 110px; /* Adjust this value for the space needed when FAB is expanded */
 }
 </style>
