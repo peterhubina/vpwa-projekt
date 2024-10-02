@@ -11,7 +11,6 @@
           text-color="white"
           class="white-name message-bubble"
         >
-          <!-- Use the avatar slot to display an icon -->
           <template v-slot:avatar>
             <q-icon name="account_circle" size="55px"/>
           </template>
@@ -65,19 +64,17 @@ export default {
 
   setup() {
     const text = ref('');
-    const maxHeight = '3rem * 3'; // The maximum height for 3 rows of text
+    const maxHeight = '3rem * 3';
     const isMobile = ref(window.innerWidth < 600);
 
     const updateMobileState = () => {
       isMobile.value = window.innerWidth < 600;
     };
 
-    // Add event listener for window resize
     onMounted(() => {
       window.addEventListener('resize', updateMobileState);
     });
 
-    // Clean up the event listener on component unmount
     onBeforeUnmount(() => {
       window.removeEventListener('resize', updateMobileState);
     });
@@ -85,7 +82,7 @@ export default {
     const formatTimeStamp = (timestamp) => {
       const messageDate = new Date(parseInt(timestamp));
       const now = new Date();
-      const diff = Math.floor((now - messageDate) / 1000); // difference in seconds
+      const diff = Math.floor((now - messageDate) / 1000);
 
       if (diff < 60) return `${diff} seconds ago`;
       if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`;
@@ -110,23 +107,23 @@ export default {
 .message-panel-container {
   position: absolute;
   top: 0;
-  left: 16rem; /* Default value for desktop */
+  left: 16rem;
   right: 0;
-  bottom: 16rem; /* Leave 100px for the input area at the bottom */
-  width: calc(100% - 16rem); /* Make it responsive to fill the remaining width */
+  bottom: 16rem;
+  width: calc(100% - 16rem);
   background: black;
   border-radius: 0;
   padding: 20px;
   z-index: 0;
   display: flex;
-  flex-direction: column; /* Make it a column layout */
+  flex-direction: column;
   font-size: 1.1rem;
 }
 
 /* Mobile Styles */
 .message-panel-container.mobile {
-  left: 10rem; /* Adjust left position for mobile */
-  width: calc(100% - 10rem); /* Adjust width for mobile */
+  left: 10rem;
+  width: calc(100% - 10rem);
 }
 
 ul {
@@ -140,11 +137,11 @@ ul {
 
 .message-input {
   width: 100%;
-  max-height: calc(1.5em * 3); /* Limit to 3 rows */
+  max-height: calc(1.5em * 3);
   overflow-y: auto;
   border: none;
   outline: none;
-  resize: none; /* No manual resizing */
+  resize: none;
   padding: 0;
   background: white;
   border-radius: 20px;
@@ -152,6 +149,6 @@ ul {
 }
 
 .white-name {
-  color: white; /* Use !important to override any default styles */
+  color: white;
 }
 </style>

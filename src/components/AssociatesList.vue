@@ -44,14 +44,14 @@ export default {
         {id: 6, name: 'Jane Smith', role: 'user', isExpanded: false},
         {id: 7, name: 'Michael Johnson', role: 'user', isExpanded: false},
         {id: 8, name: 'Emily Davis', role: 'user', isExpanded: false},
-        // Duplicate entries removed for clarity
+
       ]
     };
   },
 
   methods: {
     joinChannel() {
-      // Define what should happen when the "Kick" button is clicked
+
     }
 
   }
