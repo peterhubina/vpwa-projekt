@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref} from 'vue';
 
 export default {
   data() {
@@ -120,7 +120,6 @@ export default {
   font-size: 1.1rem;
 }
 
-/* Mobile Styles */
 .message-panel-container.mobile {
   left: 10rem;
   width: calc(100% - 10rem);

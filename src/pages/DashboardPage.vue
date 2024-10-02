@@ -1,218 +1,85 @@
 <template>
-  <div class="flex h-screen">
-    <!-- Sidebar -->
-    <aside :class="{'w-64': !isMobile, 'w-40': isMobile}" class="bg-gray-800 text-white flex flex-col justify-between">
-      <div class="q-pa-md" style="padding: 10px">
-        <div>
-          <q-fab
-            v-model="fab1"
-            @click="toggleChannelFab"
-            label="Channels"
-            label-position="left"
-            vertical-actions-align="left"
-            color="green"
-            icon="tv"
-            direction="down">
-            <q-fab-action color="purple" @click="joinChannel" icon="search" label="Join" />
-            <q-fab-action color="blue" @click="createChannel" icon="add" label="Create" />
-          </q-fab>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated>
+      <q-toolbar>
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer"/>
+        <q-toolbar-title>Flow</q-toolbar-title>
+        <div class="q-pa-md row q-gutter-md">
+          <q-btn-dropdown color="blue" label="" icon="discord" style="border-radius: 30px;">
+            <div style="display: flex; flex-direction: column; gap: 5px; padding: 7px;">
+              <q-btn color="blue" label="Create New Channel" icon="create" push size="md" v-close-popup style="border-radius: 30px;"/>
+              <q-btn color="blue" label="Join existing Channel" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
+            </div>
+          </q-btn-dropdown>
+          <q-btn-dropdown color="blue" label="" icon="account_circle" style="border-radius: 30px;">
+            <div class="row no-wrap q-pa-md">
+              <div class="column">
+                <div class="text-subtitle1 q-mb-sm">Name: John Doe</div>
+                <div class="text-subtitle1 q-mb-lg">Gmail: john.doe@gmail.com</div>
+                <div>
+                  <q-btn-toggle v-model="model" class="my-custom-toggle" no-caps rounded unelevated toggle-color="blue" color="white" text-color="primary"
+                    :options="[
+                      {label: 'Online', value: 'one'},
+                      {label: 'Offline', value: 'two'},
+                      {label: 'Invisible', value: 'three'}
+                      ]"/>
+                </div>
+              </div>
+              <q-separator vertical inset class="q-mx-lg" />
+              <div class="column items-center">
+                <q-avatar size="72px" class="q-mb-md">
+                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="">
+                </q-avatar>
+                <q-btn color="warning" label="Logout" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
+              </div>
+            </div>
+          </q-btn-dropdown>
         </div>
-      </div>
+      </q-toolbar>
+    </q-header>
 
-      <ul :class="{ 'account-space': isAccountFabExpanded, 'channel-space': isChannelFabExpanded }" class="flex-1 overflow-y-auto">
-        <li
-          v-for="channel in channels"
-          :key="channel.id"
-          :class="{'bg-yellow-600': channel.isHighlighted}"
-          class="p-3 border-b border-gray-600"
-        >
-          <!-- Channel Container -->
-          <div class="relative" :class="{ 'fab-expanded': channel.isExpanded }">
-            <!-- FAB for Channel -->
-            <q-fab
-              :color="channel.color"
-              push
-              :icon="channel.icon"
-              direction="down"
-              vertical-actions-align="left"
-              @click="expandFab(channel.id)"
-            >
-              <q-fab-action color="blue" @click="OpenChannel(channel.id)" icon="message" label="Messages"/>
-              <q-fab-action color="green" icon="add" label="Invite"/>
-              <q-fab-action color="accent" @click="toggleAssociatesList()" icon="face" label="Associates"/>
-              <q-fab-action v-if="channel.isAdmin" color="red" @click="deleteChannel(channel.id)" icon="delete" label="Delete"/>
-              <q-fab-action v-if="!channel.isAdmin" color="orange" @click="leaveChannel(channel.id)" icon="exit_to_app" label="Leave"/>
-            </q-fab>
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+      <q-list>
+        <q-item-label header>Channels</q-item-label>
 
-            <!-- Channel Button -->
-            <button v-if="!isMobile" @click="OpenChannel(channel.id)" class="text-left px-4 rounded flex-1 font-bold">
-              <span>{{ channel.name }}</span>
-            </button>
-          </div>
-        </li>
-      </ul>
+        <q-item clickable v-ripple>
+          <q-item>General Channel</q-item>
+          <q-item>General Channel</q-item>
+          <q-item-section avatar>
+            <q-avatar color="primary" text-color="white">R</q-avatar>
+          </q-item-section>
+        </q-item>
 
-      <div class="q-pa-md" style="padding: 10px">
-        <div>
-          <q-fab
-            @click="toggleAccountFab"
-            v-model="fab2"
-            label="Account"
-            label-position="left"
-            vertical-actions-align="left"
-            color="blue"
-            icon="account_circle"
-            direction="up">
-            <q-fab-action color="purple" @click="joinChannel" icon="edit" label="Edit" />
-            <q-fab-action color="red" @click="joinChannel" icon="logout" label="Log Out" />
-          </q-fab>
-        </div>
-      </div>
-    </aside>
+        <q-item clickable v-ripple>
+          <q-item-section>Letter avatar-type</q-item-section>
+          <q-item-section avatar>
+            <q-avatar color="primary" text-color="white">R</q-avatar>
+          </q-item-section>
+        </q-item>
 
-    <!-- Main Content -->
-    <main class="flex-1 p-4">
-      <router-view></router-view>
-    </main>
+      </q-list>
+    </q-drawer>
 
-    <!-- Message Channel -->
-    <MessagePanel v-if="showMessagePanel" @close="OpenChannel" />
-
-    <!-- Associates List -->
-    <AssociatesList v-if="showAssociatesList" @close="toggleAssociatesList" />
-  </div>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+  </q-layout>
 </template>
 
-<script>
-import AssociatesList from 'components/AssociatesList.vue';
-import MessagePanel from 'components/MessagePanel.vue';
-import { ref, onMounted, onBeforeUnmount } from 'vue'; // Import ref for reactivity
+<script setup lang="ts">
+import { ref } from 'vue'
 
-export default {
-  setup() {
-    const fab1 = ref(false);
-    const fab2 = ref(false);
+// Define reactive properties directly in <script setup>
+const model = ref('one');
+const leftDrawerOpen = ref(false);
 
-    const isMobile = ref(window.innerWidth < 600);
-
-    const updateMobileState = () => {
-      isMobile.value = window.innerWidth < 600;
-    };
-
-    // Add event listener for window resize
-    onMounted(() => {
-      window.addEventListener('resize', updateMobileState);
-    });
-
-    // Clean up the event listener on component unmount
-    onBeforeUnmount(() => {
-      window.removeEventListener('resize', updateMobileState);
-    });
-
-    return { fab1, fab2, isMobile };
-  },
-
-
-
-  data() {
-    return {
-      channels: [
-        { id: 1, name: 'General', isHighlighted: false, isAdmin: false, color: 'red', icon: 'image', isExpanded: false },
-        { id: 2, name: 'Random', isHighlighted: true, isAdmin: true, color: 'blue', icon: 'facebook', isExpanded: false },
-        { id: 3, name: 'Channel4569', isHighlighted: false, isAdmin: false, color: 'green', icon: 'discord', isExpanded: false },
-        { id: 4, name: 'Channel123456789', isHighlighted: false, isAdmin: false, color: 'pink', icon: 'apple', isExpanded: false },
-        { id: 5, name: 'Channel123456789', isHighlighted: false, isAdmin: true, color: 'purple', icon: 'business', isExpanded: false },
-      ],
-      showAssociatesList: false,
-      showMessagePanel: true,
-      showWriteMessage: true,
-      isAccountFabExpanded: false,
-      isChannelFabExpanded: false,
-    };
-  },
-
-  methods: {
-    createChannel() {},
-
-    joinChannel() {},
-
-    leaveChannel(channelId) {
-      this.channels = this.channels.filter((channel) => channel.id !== channelId);
-    },
-
-    deleteChannel(channelId) {
-      this.channels = this.channels.filter((channel) => channel.id !== channelId);
-    },
-
-    toggleAssociatesList() {
-      this.showAssociatesList = !this.showAssociatesList;
-    },
-
-    toggleAccountFab() {
-      this.isAccountFabExpanded = !this.isAccountFabExpanded; // Toggle the account FAB expanded state
-    },
-
-    toggleChannelFab() {
-      this.isChannelFabExpanded = !this.isChannelFabExpanded; // Toggle the account FAB expanded state
-    },
-
-    expandFab(channelId) {
-      const channel = this.channels.find(c => c.id === channelId);
-      if (channel) {
-        channel.isExpanded = !channel.isExpanded; // Toggle this channel's expanded state
-      }
-    },
-
-    OpenChannel(channelId) {
-      const selectedChannel = this.channels.find((channel) => channel.id === channelId);
-      if (selectedChannel && selectedChannel.isHighlighted) {
-        return;
-      }
-      this.channels.forEach((channel) => {
-        if (channel.isHighlighted) {
-          channel.isHighlighted = false;
-        }
-      });
-      if (selectedChannel) {
-        selectedChannel.isHighlighted = true;
-      }
-      this.showMessagePanel = !this.showMessagePanel;
-    }
-  },
-
-  components: {
-    AssociatesList,
-    MessagePanel,
-  },
-};
+// Function to toggle the left drawer state
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
 </script>
 
-<style scoped>
-/* Style to ensure spacing for expanded Fab */
-.fab-expanded {
-  margin-bottom: 200px; /* Adjust this value depending on the height of expanded fab-actions */
-}
-
-aside {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Sidebar takes full screen height */
-}
-
-ul {
-  overflow-y: auto; /* Make the channel list scrollable */
-  flex: 1;          /* Ensure it takes up available space between FABs */
-}
-
-.q-pa-md:last-child {
-  margin-top: auto; /* Pushes the Account section to the bottom */
-}
-
-.account-space {
-  margin-bottom: 110px; /* Space for expanded account FAB */
-}
-
-.channel-space {
-  margin-top: 110px; /* Adjust this value for the space needed when FAB is expanded */
-}
+<style lang="sass" scoped>
+.my-custom-toggle
+  border: 1px solid #027be3
 </style>
