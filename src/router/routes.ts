@@ -7,16 +7,17 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
   {
+    path: '/main',
+    component: () => import('layouts/DashboardLayout.vue'),
+    children: [{ path: '', component: () => import('components/MessagePanel.vue') }],
+  },
+  {
     path: '/login',
     children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
   },
   {
     path: '/signup',
     children: [{ path: '', component: () => import('pages/SignUp.vue') }],
-  },
-  {
-    path: '/dashboard',
-    children: [{ path: '', component: () => import('pages/DashboardPage.vue') }],
   },
 
   // Always leave this as last one,
