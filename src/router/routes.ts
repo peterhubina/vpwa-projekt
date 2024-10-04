@@ -9,7 +9,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/main',
     component: () => import('layouts/DashboardLayout.vue'),
-    children: [{ path: '', component: () => import('components/MessagePanel.vue') }],
+    children: [
+      { path: '', name: 'MessagePanel', component: () => import('components/MessagePanel.vue') }, // Keep MessagePanel
+      { path: '', name: 'NoChannelOpened', component: () => import('components/NoChannelOpened.vue') }, // Route for NoChannelOpen
+    ],
   },
   {
     path: '/login',
@@ -19,9 +22,7 @@ const routes: RouteRecordRaw[] = [
     path: '/signup',
     children: [{ path: '', component: () => import('pages/SignUp.vue') }],
   },
-
   // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

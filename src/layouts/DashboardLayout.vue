@@ -134,6 +134,7 @@
                       size="md"
                       v-close-popup
                       style="border-radius: 30px;"
+                      @click="logout"
                     />
                   </div>
                 </div>
@@ -188,10 +189,39 @@
                       text-color="primary"
                       push
                       size="md"
-                      v-close-popup
                       style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
-                      icon="add"
-                    ></q-btn>
+                      icon="add">
+                      <q-popup-proxy>
+                        <q-banner>
+                          <q-item>
+                            <q-item-section>
+                              <div class="row items-center">
+                                <q-avatar color="primary" text-color="white" class="q-mr-sm">
+                                  <q-icon name="account_circle" />
+                                </q-avatar>
+                                <q-input
+                                  ref="Invite_Account"
+                                  filled
+                                  label="account gmail..."
+                                  lazy-rules
+                                  model-value=""
+                                  style="margin-bottom: 10px;"
+                                />
+                              </div>
+                              <q-btn
+                                color="primary"
+                                label="Invite"
+                                icon="add"
+                                push
+                                size="md"
+                                v-close-popup
+                                style="border-radius: 30px; margin-top: 10px;"
+                              />
+                            </q-item-section>
+                          </q-item>
+                        </q-banner>
+                      </q-popup-proxy>
+                    </q-btn>
 
                     <q-btn
                       color="primary"
@@ -239,10 +269,12 @@
 
 <script lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     // Define reactive properties
+    const router = useRouter();
     const model = ref('one');
     const leftDrawerOpen = ref(false);
 
@@ -253,6 +285,13 @@ export default {
 
     function leaveChannel(channelId: number) {
       channels.value = channels.value.filter(channel => channel.id !== channelId);
+    }
+
+    function logout() {
+      // Logic for logging out (like clearing tokens) can go here
+
+      // Redirect to the NoChannelOpen page after logout
+      router.push({ name: 'NoChannelOpen' }); // Navigate to NoChannelOpen.vue
     }
 
     // Array of channels for the list
@@ -285,6 +324,7 @@ export default {
       notifications,
       blueModel,
       leaveChannel,
+      logout,
     };
   },
 };

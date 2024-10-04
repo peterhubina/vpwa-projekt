@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md row justify-center" style="flex-direction: column; height: 100vh;">
-    <div style="width: 100%; max-width: 100%; flex-grow: 1; overflow-y: auto; max-height: 80vh; height: 100%">
+  <div class="q-pa-md row justify-center" style="height: 100vh; position: relative;">
+    <div class="messages-container" style="flex-grow: 1; overflow-y: scroll;">
       <q-chat-message
         v-for="(message, index) in messages"
         :key="index"
@@ -14,19 +14,17 @@
         :class="{'border-primary': !message.me, 'border-white': message.me}"
       />
     </div>
-    <div class="q-pa-md" style="width: 100%; max-width: 1200px; position: relative;">
+    <div class="input-container">
       <q-input standout bottom-slots v-model="text_message" label="Write message..." counter maxlength="150" :dense="dense">
         <template v-slot:before>
           <q-avatar>
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="">
           </q-avatar>
         </template>
-
         <template v-slot:append>
           <q-icon v-if="text_message !== ''" name="close" @click="text_message = ''" class="cursor-pointer" />
           <q-icon name="schedule" />
         </template>
-
         <template v-slot:after>
           <q-btn round dense flat icon="send" @click="sendMessage" />
         </template>
@@ -62,7 +60,6 @@ export default {
         text: ['Did it work?'],
         stamp: '1 minute ago', me: false,
       },
-
     ]);
 
     const sendMessage = () => {
@@ -90,5 +87,21 @@ export default {
 </script>
 
 <style scoped>
-/* Add any specific styles you need here */
+.messages-container {
+  height: auto; /* Adjust this based on the height of the input-container */
+  overflow-y: auto;
+  margin-bottom: 10px; /* Optional: Add some spacing between messages and input */
+}
+
+.input-container {
+  position: absolute; /* Keep the input container fixed at the bottom */
+  bottom: 0; /* Align it at the bottom of the viewport */
+  left: 0;
+  right: 0;
+  height: 90px; /* Set a fixed height for your input area */
+  padding: 10px;
+  background: white; /* Maintain background color for the input area */
+  z-index: 10; /* Optional: Set a z-index to keep it above other content */
+}
+
 </style>
