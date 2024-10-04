@@ -15,7 +15,7 @@
                   </q-avatar>
                   <q-toolbar-title>Notifications</q-toolbar-title>
                 </q-toolbar>
-                <q-item v-for="notification in notifications" :key="notification.id" class="q-my-sm" clickable v-ripple>
+                <q-item v-for="notification in notifications" :key="notification.id" class="q-my-sm" clickable v-ripple v-close-popup>
                   <q-item-section avatar>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
@@ -160,15 +160,65 @@
             </q-item-section>
 
 
-            <q-btn color="primary" style="border-radius: 150px; width: 40px; height: 40px; padding: 0;" icon="notifications">
+            <q-btn color="white" text-color="primary" unelevated style="border-radius: 150px; width: 35px; height: 35px; padding: 0;" icon="more_vert">
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{channel.name }}</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.public ? 'Public' : 'Private' }} server</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
                   </q-toolbar>
+                  <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; padding: 10px;">
+                    <q-btn
+                      color="white"
+                      label="accounts"
+                      text-color="primary"
+                      push
+                      size="md"
+                      v-close-popup
+                      style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
+                      icon="account_circle"
+                    ></q-btn>
+
+                    <q-btn
+                      v-if="channel.public || channel.admin"
+                      color="white"
+                      label="invite"
+                      text-color="primary"
+                      push
+                      size="md"
+                      v-close-popup
+                      style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
+                      icon="add"
+                    ></q-btn>
+
+                    <q-btn
+                      color="primary"
+                      label="leave"
+                      text-color="white"
+                      push
+                      size="md"
+                      v-close-popup
+                      @click="leaveChannel(channel.id)"
+                      style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
+                      icon="remove"
+                    ></q-btn>
+
+                    <q-btn
+                      v-if="channel.admin"
+                      color="primary"
+                      label="delete"
+                      text-color="white"
+                      push
+                      size="md"
+                      v-close-popup
+                      @click="leaveChannel(channel.id)"
+                      style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
+                      icon="delete"
+                    ></q-btn>
+                  </div>
+
                 </q-banner>
               </q-popup-proxy>
             </q-btn>
@@ -201,18 +251,22 @@ export default {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     }
 
+    function leaveChannel(channelId: number) {
+      channels.value = channels.value.filter(channel => channel.id !== channelId);
+    }
+
     // Array of channels for the list
     const channels = ref([
-      { id: 1, name: 'Channel1', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day', admin: true },
-      { id: 2, name: 'Channel2', description: 'Just another day at the office!', admin: false },
-      { id: 3, name: 'Channel3', description: 'Team discussion on project', admin: false },
-      { id: 4, name: 'Channel4', description: 'What\'s your favorite movie?', admin: false },
-      { id: 5, name: 'Channel5', description: 'Let\'s plan the weekend getaway', admin: false },
-      { id: 6, name: 'Channel6', description: 'Hello how u doing in this rainy day', admin: true },
-      { id: 7, name: 'Channel7', description: 'Just another day at the office!', admin: false },
-      { id: 8, name: 'Channel8', description: 'Team discussion on project', admin: false },
-      { id: 9, name: 'Channel9', description: 'What\'s your favorite movie?', admin: false },
-      { id: 10, name: 'Channel10', description: 'Let\'s plan the weekend getaway', admin: false },
+      { id: 1, name: 'Channel1', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day', admin: true , public: false},
+      { id: 2, name: 'Channel2', description: 'Just another day at the office!', admin: false, public: false },
+      { id: 3, name: 'Channel3', description: 'Team discussion on project', admin: false, public: false },
+      { id: 4, name: 'Channel4', description: 'What\'s your favorite movie?', admin: false, public: false },
+      { id: 5, name: 'Channel5', description: 'Let\'s plan the weekend getaway', admin: false, public: false },
+      { id: 6, name: 'Channel6', description: 'Hello how u doing in this rainy day', admin: true, public: false },
+      { id: 7, name: 'Channel7', description: 'Just another day at the office!', admin: false, public: false },
+      { id: 8, name: 'Channel8', description: 'Team discussion on project', admin: false, public: true },
+      { id: 9, name: 'Channel9', description: 'What\'s your favorite movie?', admin: false, public: true },
+      { id: 10, name: 'Channel10', description: 'Let\'s plan the weekend getaway', admin: false, public: true },
     ]);
 
     const notifications = ref([
@@ -230,6 +284,7 @@ export default {
       channels,
       notifications,
       blueModel,
+      leaveChannel,
     };
   },
 };
@@ -240,4 +295,5 @@ export default {
 <style lang="sass" scoped>
 .my-custom-toggle
   border: 1px solid #027be3
+
 </style>
