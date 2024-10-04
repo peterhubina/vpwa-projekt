@@ -49,7 +49,7 @@
                       <div>
                         <q-input
                           ref="ChannelNameCreate"
-                          filled
+                          rounded standout
                           label="Channel Name"
                           lazy-rules
                           model-value=""
@@ -77,8 +77,8 @@
                     header-class="text-primary">
                     <q-card>
                       <q-input
+                        rounded standout
                         ref="ChannelNameJoin"
-                        filled
                         label="Channel Name"
                         lazy-rules
                         model-value=""
@@ -177,10 +177,32 @@
                       text-color="primary"
                       push
                       size="md"
-                      v-close-popup
                       style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
                       icon="account_circle"
-                    ></q-btn>
+                    >
+                      <q-popup-proxy>
+                        <q-banner>
+                            <q-item-section>
+                              <q-item v-for="account in accounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
+                                <q-item-section avatar>
+                                  <q-avatar color="primary" text-color="white" class="relative">
+                                    <img :src="account.avatar" alt="User Avatar" />
+                                    <q-badge :color="account.status === 'online' ? 'primary' : 'warning'" rounded floating />
+                                  </q-avatar>
+                                </q-item-section>
+
+                                <q-item-section>
+                                  <q-item-label>{{ account.name }}</q-item-label>
+                                  <q-item-label caption lines="1">gmail: {{ account.gmail }}</q-item-label>
+                                  <q-item-label caption lines="1">status: {{ account.admin ? 'admin' : 'guest' }}, {{ account.status}}{{ account.is_typing ? ', typing...' : '' }}</q-item-label>
+                                  <q-item-label caption lines="1">{{ account.is_typing ? ' hello chat i am online' : '' }}</q-item-label>
+                                </q-item-section>
+                              </q-item>
+                            </q-item-section>
+
+                        </q-banner>
+                      </q-popup-proxy>
+                    </q-btn>
 
                     <q-btn
                       v-if="channel.public || channel.admin"
@@ -200,12 +222,12 @@
                                   <q-icon name="account_circle" />
                                 </q-avatar>
                                 <q-input
+                                  rounded standout
                                   ref="Invite_Account"
-                                  filled
                                   label="account gmail..."
                                   lazy-rules
                                   model-value=""
-                                  style="margin-bottom: 10px;"
+                                  style="margin-bottom: 0;"
                                 />
                               </div>
                               <q-btn
@@ -225,6 +247,37 @@
 
                     <q-btn
                       color="primary"
+                      label="kick"
+                      text-color="white"
+                      push
+                      size="md"
+                      style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
+                      icon="remove"
+                    >
+                      <q-popup-proxy>
+                        <q-banner>
+                          <q-item-section>
+                            <q-item v-for="account in accounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
+                              <q-item-section avatar>
+                                <q-avatar color="primary" text-color="white" class="relative">
+                                  <img :src="account.avatar" alt="User Avatar" />
+                                </q-avatar>
+                              </q-item-section>
+
+                              <q-item-section>
+                                <q-item-label>{{ account.name }}</q-item-label>
+                                <q-item-label v-if="!account.admin" caption lines="1">kick votes: {{ account.kick_votes}}</q-item-label>
+                                <q-item-label v-if="account.admin" caption lines="1">admin</q-item-label>
+                              </q-item-section>
+                            </q-item>
+                          </q-item-section>
+
+                        </q-banner>
+                      </q-popup-proxy>
+                    </q-btn>
+
+                    <q-btn
+                      color="primary"
                       label="leave"
                       text-color="white"
                       push
@@ -232,7 +285,7 @@
                       v-close-popup
                       @click="leaveChannel(channel.id)"
                       style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
-                      icon="remove"
+                      icon="exit_to_app"
                     ></q-btn>
 
                     <q-btn
@@ -310,7 +363,15 @@ export default {
 
     const notifications = ref([
       { id: 1, name: 'Channel1', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day, Hello how u doing in this rainy day' },
-      { id: 10, name: 'Channel10', description: 'Let\'s plan the weekend getaway' },
+      { id: 2, name: 'Channel10', description: 'Let\'s plan the weekend getaway' },
+    ]);
+
+    const accounts = ref([
+      { id: 1, name: 'Joe', gmail: 'joe.garfield@gmail.com', admin: true, status: 'online', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
+      { id: 2, name: 'Alex', gmail: 'alex.gordon@gmail.com', admin: false, status: 'online', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: true, kick_votes:'2'},
+      { id: 3, name: 'Marco', gmail: 'marco.polo@gmail.com', admin: false, status: 'online', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
+      { id: 4, name: 'Clement', gmail: 'clement.gotwald@gmail.com', admin: false, status: 'offline', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'1'},
+      { id: 5, name: 'Peter', gmail: 'peter.parker@gmail.com', admin: false, status: 'offline', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
     ]);
 
     const blueModel = ref('server');
@@ -325,6 +386,7 @@ export default {
       blueModel,
       leaveChannel,
       logout,
+      accounts,
     };
   },
 };
@@ -335,5 +397,14 @@ export default {
 <style lang="sass" scoped>
 .my-custom-toggle
   border: 1px solid #027be3
+
+.relative
+  position: relative
+
+
+.q-badge
+  position: absolute
+  top: 0
+  right: 0
 
 </style>

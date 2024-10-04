@@ -1,9 +1,9 @@
 <template>
-  <div class="q-pa-md row justify-center" style="height: 100vh; position: relative;">
-    <div class="messages-container" style="flex-grow: 1; overflow-y: scroll;">
+  <div class="q-pa-md row justify-center" style="height: calc(100vh - 75px); position: relative;"> <!-- Adjust the height to account for the header -->
+    <div class="messages-container" style="flex-grow: 1; overflow-y: auto;">
       <q-chat-message
-        v-for="(message, index) in messages"
-        :key="index"
+        v-for="message in messages"
+        :key="message.id"
         :name="message.name"
         :avatar="message.avatar"
         :text="message.text"
@@ -15,7 +15,8 @@
       />
     </div>
     <div class="input-container">
-      <q-input standout bottom-slots v-model="text_message" label="Write message..." counter maxlength="150" :dense="dense">
+      <q-separator />
+      <q-input rounded standout v-model="text_message" label="Write message..." counter maxlength="150" :dense="dense">
         <template v-slot:before>
           <q-avatar>
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="">
@@ -42,28 +43,15 @@ export default {
 
     // Placeholder for messages
     const messages = ref([
-      {
-        id: 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-        text: ['hey, how are you?'],
-        stamp: '7 minutes ago', me: true,
-      },
-      {
-        id: 2, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-        text: [
-          'doing fine, how r you?',
-          'I just feel like typing a really, really, REALLY long message to annoy you...',
-        ],
-        stamp: '4 minutes ago', me: false,
-      },
-      {
-        id: 3, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-        text: ['Did it work?'],
-        stamp: '1 minute ago', me: false,
-      },
+      { id: 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['hey, how are you?'], stamp: '7 minutes ago', me: true },
+      { id: 2, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
+      { id: 3, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false },
+      { id: 4, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['nope'], stamp: '1 minutes ago', me: true },
+      { id: 5, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false }
     ]);
 
     const sendMessage = () => {
-      if (text_message.value.trim()) {
+      if (text_message.value) {
         messages.value.push({
           id: messages.value.length + 1,
           name: 'me',
@@ -88,20 +76,19 @@ export default {
 
 <style scoped>
 .messages-container {
-  height: auto; /* Adjust this based on the height of the input-container */
+  height: calc(100vh - 170px);
   overflow-y: auto;
-  margin-bottom: 10px; /* Optional: Add some spacing between messages and input */
+  margin-bottom: 10px;
 }
 
 .input-container {
-  position: absolute; /* Keep the input container fixed at the bottom */
-  bottom: 0; /* Align it at the bottom of the viewport */
+  position: absolute;
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 90px; /* Set a fixed height for your input area */
+  height: 90px;
   padding: 10px;
-  background: white; /* Maintain background color for the input area */
-  z-index: 10; /* Optional: Set a z-index to keep it above other content */
+  background: white;
+  z-index: 10;
 }
-
 </style>
