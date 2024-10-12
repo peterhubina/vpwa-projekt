@@ -6,7 +6,7 @@
         <q-toolbar-title>Flow</q-toolbar-title>
         <div class="q-pa-md row q-gutter-md">
           <q-btn color="primary" style="border-radius: 150px; width: 40px; height: 40px; padding: 0;" icon="notifications">
-            <q-badge color="red" floating style="border-radius: 12px;">2</q-badge>
+            <q-badge color="red" floating style="border-radius: 12px;">{{ notifications.length }}</q-badge>
             <q-popup-proxy>
               <q-banner>
                 <q-toolbar class="bg-primary text-white shadow-2">
@@ -21,9 +21,8 @@
                       <q-icon name="discord" />
                     </q-avatar>
                   </q-item-section>
-
                   <q-item-section>
-                    <q-item-label>{{ notification.name }}</q-item-label>
+                    <q-item-label>{{ notification.name }} - {{ notification.type }}</q-item-label>
                     <q-item-label caption lines="1">{{ notification.description }}</q-item-label>
                   </q-item-section>
                 </q-item>
@@ -49,7 +48,7 @@
                       <div>
                         <q-input
                           ref="ChannelNameCreate"
-                          rounded standout
+                          rounded outlined bg-color="white"
                           label="Channel Name"
                           lazy-rules
                           model-value=""
@@ -77,7 +76,7 @@
                     header-class="text-primary">
                     <q-card>
                       <q-input
-                        rounded standout
+                        rounded outlined bg-color="white"
                         ref="ChannelNameJoin"
                         label="Channel Name"
                         lazy-rules
@@ -222,7 +221,7 @@
                                   <q-icon name="account_circle" />
                                 </q-avatar>
                                 <q-input
-                                  rounded standout
+                                  rounded outlined bg-color="white"
                                   ref="Invite_Account"
                                   label="account gmail..."
                                   lazy-rules
@@ -362,8 +361,10 @@ export default {
     ]);
 
     const notifications = ref([
-      { id: 1, name: 'Channel1', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day, Hello how u doing in this rainy day' },
-      { id: 2, name: 'Channel10', description: 'Let\'s plan the weekend getaway' },
+      { id: 1, name: 'Channel1', type:'message', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day, Hello how u doing in this rainy day' },
+      { id: 2, name: 'Channel10', type:'kick', description: 'You have been kicked from channel' },
+      { id: 3, name: 'Channel9', type:'invite', description: 'You have been invited to channel' },
+      { id: 4, name: 'Channel11', type:'delete', description: 'Channel has been deleted' },
     ]);
 
     const accounts = ref([

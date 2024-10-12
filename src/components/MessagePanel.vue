@@ -16,7 +16,7 @@
     </div>
     <div class="input-container">
       <q-separator />
-      <q-input rounded standout v-model="text_message" label="Write message..." counter maxlength="150" :dense="dense">
+      <q-input rounded outlined v-model="text_message" bg-color="white" label="Write message..." counter maxlength="150" :dense="dense" style="padding: 10px;">
         <template v-slot:before>
           <q-avatar>
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="">
@@ -76,7 +76,7 @@ export default {
 
 <style scoped>
 .messages-container {
-  height: calc(100vh - 170px);
+  height: 100%;
   overflow-y: auto;
   margin-bottom: 10px;
 }
@@ -91,4 +91,5 @@ export default {
   background: white;
   z-index: 10;
 }
+
 </style>

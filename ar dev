@@ -1,0 +1,102 @@
+[33mcommit 549e96461674f70879e84713c99dd233370a07e1[m[33m ([m[1;36mHEAD -> [m[1;32mphase-1[m[33m, [m[1;31morigin/phase-1[m[33m)[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Wed Oct 2 00:03:19 2024 +0200
+
+    Add Associates info, kick button
+
+[33mcommit eb7c2066dd7ab284b0fb1aedadfd765149822ba4[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Tue Oct 1 20:41:15 2024 +0200
+
+    Add Associates List Component functionality, fixed not opening messages
+
+[33mcommit 7d48ae68b8997048ce25e0f572a9a4dfa3cbe6c2[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Tue Oct 1 15:09:32 2024 +0200
+
+    Mobile resize added, fixed Account and Channels resizing
+
+[33mcommit 01bf4a5535e95fb2f96792917d98d58c98b2b8bc[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Fri Sep 27 18:03:01 2024 +0200
+
+    Added popup Associates.vue, fix MessagePanel.vue fix more channels opened at once bug
+
+[33mcommit 40bcaead480c686c5c8abb26db221b87c6521cb9[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Fri Sep 27 15:03:46 2024 +0200
+
+    Dashboard Expandable Buttons fix, Message placeholder database
+
+[33mcommit 93925ba74f665779daef9259fb4dbadd5cc2a12d[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Thu Sep 26 18:05:31 2024 +0200
+
+    Dashboard clickable fix added icon view
+
+[33mcommit f1f87582dfdd979caa716e067536976777ee54e7[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Thu Sep 26 12:43:19 2024 +0200
+
+    Dashboard Account and Channels button, simple text and message component non functional
+
+[33mcommit d26b5b85baea2a09a7e167e5c409818d11b8fd63[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Thu Sep 26 10:58:30 2024 +0200
+
+    Fix user button from dashboard, Clickable Channel names, adding MainTextPanelPage
+
+[33mcommit 64aeb806026796768a7455dee366491fc852a374[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Wed Sep 25 13:08:28 2024 +0200
+
+    Fix already have account
+
+[33mcommit eb77af0b778cf7ee7634baaf30bbda64c26d877a[m
+Author: peterhubina <peter.hubina1@gmail.com>
+Date:   Wed Sep 25 12:57:50 2024 +0200
+
+    add DashboardPage.vue
+
+[33mcommit 44db7cafba2eca754fd499cea1488563f013229c[m
+Merge: 4a26733 981582f
+Author: peterhubina <peter.hubina1@gmail.com>
+Date:   Wed Sep 25 12:49:12 2024 +0200
+
+    Merge remote-tracking branch 'origin/phase-1' into phase-1
+
+[33mcommit 4a267331b3bc3842ec53334f3f2490c6d69b1db2[m
+Author: peterhubina <peter.hubina1@gmail.com>
+Date:   Wed Sep 25 12:48:40 2024 +0200
+
+    add some dependencies
+
+[33mcommit 981582f5648e69ad48151bda054cab5334e2a3d0[m
+Author: MartinGregor <martingregor.svk@gmail.com>
+Date:   Wed Sep 25 12:28:01 2024 +0200
+
+    Remove of remember me and policy checkmark
+
+[33mcommit 47ac74768ddc9a1dc22ce7c10b206b526e5f9472[m
+Author: peterhubina <peter.hubina1@gmail.com>
+Date:   Wed Sep 25 12:12:02 2024 +0200
+
+    add SignUpPage.vue
+
+[33mcommit 15351ff0a3850f7d34dce78bef6824a4ae91d957[m
+Author: peterhubina <peter.hubina1@gmail.com>
+Date:   Wed Sep 25 11:11:36 2024 +0200
+
+    setup tailwind + add LoginPage.vue
+
+[33mcommit c95931a9642d9b9e68b8f0bf79f6891ed6fb3c87[m
+Author: peterhubina <peter.hubina1@gmail.com>
+Date:   Wed Sep 25 08:28:22 2024 +0200
+
+    zadanie + data model
+
+[33mcommit 1468b18d404087c81eea53807eb8975eebaa39f6[m
+Author: peterhubina <peter.hubina1@gmail.com>
+Date:   Wed Sep 25 08:05:35 2024 +0200
+
+    Initialize the project 🚀
