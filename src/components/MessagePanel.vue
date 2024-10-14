@@ -47,41 +47,35 @@ import { ref, nextTick } from 'vue';
 export default {
   setup() {
     const text_message = ref('');
-    const messagesContainer = ref(null); // Reference to the container
+    const messagesContainer = ref(null);
+    const loadingComplete = ref(false); // To control if more messages should be loaded
 
     const messages = ref([
       { id: 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['hey, how are you?'], stamp: '7 minutes ago', me: true },
       { id: 2, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
       { id: 3, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false },
-      { id: 4, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['nope'], stamp: '1 minutes ago', me: true },
-      { id: 5, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false },
-      { id: 6, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['hey, how are you?'], stamp: '7 minutes ago', me: true },
-      { id: 7, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
-      { id: 8, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false },
-      { id: 9, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['nope'], stamp: '1 minutes ago', me: true },
-      { id: 10, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false },
-      { id: 11, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message1'], stamp: '1 minute ago', me: true },
-      { id: 12, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message2'], stamp: '1 minute ago', me: false },
-      { id: 13, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message3'], stamp: '1 minute ago', me: true },
-      { id: 14, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message4'], stamp: '1 minute ago', me: false },
-      { id: 15, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message5'], stamp: '1 minute ago', me: true },
-      { id: 16, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message6'], stamp: '1 minute ago', me: false },
-      { id: 17, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message7'], stamp: '1 minute ago', me: true },
-      { id: 18, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message8'], stamp: '1 minute ago', me: false },
-      { id: 19, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message9'], stamp: '1 minute ago', me: true },
-      { id: 20, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message10'], stamp: '1 minute ago', me: false },
-      { id: 21, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Message11'], stamp: '1 minute ago', me: true },
+      { id: 4, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['nope'], stamp: '1 minute ago', me: true },
     ]);
 
-    const visibleMessages = ref([]);
-    let currentIndex = 0; // To keep track of loaded messages
-
     const onLoad = (index, done) => {
+      if (loadingComplete.value) {
+        done();
+        return;
+      }
       setTimeout(() => {
-        // Load the next 7 messages
-        const nextMessages = messages.value.slice(currentIndex, currentIndex + 7);
-        visibleMessages.value.push(...nextMessages);
-        currentIndex += nextMessages.length;
+        const moreMessages =
+          [
+            {id: messages.value.length + 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 1'], stamp: '10 minutes ago', me: true},
+            {id: messages.value.length + 2, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 2'], stamp: '12 minutes ago', me: false},
+            {id: messages.value.length + 3, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 3'], stamp: '12 minutes ago', me: true},
+            {id: messages.value.length + 4, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 4'], stamp: '12 minutes ago', me: false},
+            {id: messages.value.length + 5, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 5'], stamp: '12 minutes ago', me: true},
+            {id: messages.value.length + 6, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 6'], stamp: '12 minutes ago', me: false},
+            {id: messages.value.length + 7, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 7'], stamp: '12 minutes ago', me: true},
+            {id: messages.value.length + 8, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Old message 8'], stamp: '12 minutes ago', me: false},
+        ];
+        if (moreMessages.length === 0) {loadingComplete.value = true;}
+        else {messages.value.unshift(...moreMessages);}
 
         done();
       }, 2000);
@@ -99,7 +93,7 @@ export default {
         });
         text_message.value = '';
 
-        await nextTick(); // Wait for the DOM to update
+        await nextTick();
         scrollToBottom();
       }
     };
@@ -118,7 +112,7 @@ export default {
       sendMessage,
       messagesContainer,
       onLoad,
-
+      loadingComplete,
     };
   },
 };
