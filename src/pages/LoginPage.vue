@@ -1,35 +1,59 @@
 <template>
-    <!--  Main Content  -->
-    <div class="min-h-dvh flex h-full justify-center items-center">
-      <div class="flex flex-col p-8 sm:w-[560px] font-light">
-        <h1 class="text-2xl sm:text-4xl font-medium mb-6 sm:mb-10">Log In</h1>
-        <q-form @submit="onSubmit">
-          <q-input outlined v-model="email" label="Email Address" type="email" name="email" class="mb-4"/>
-          <q-input outlined v-model="password" label="Password" :type="showPassword ? 'text' : 'password'" class="mb-2">
-            <template v-slot:append>
-              <q-icon :name="showPassword ? 'visibility_off' : 'visibility'" @click="togglePasswordVisibility"
-                      class="cursor-pointer"/>
-            </template>
-          </q-input>
-          <p class="text-xs mb-4">It must be a combination of minimum 8 letters, numbers, and symbols.</p>
-          <div class="flex items-center justify-between mb-4">
-            <router-link to="/forgot-password" class="text-primary">Forgot Password?</router-link>
-          </div>
-          <q-btn unelevated no-caps color="primary" label="Log In" type="submit"
-                 class="w-full py-4 text-base font-medium rounded"/>
-        </q-form>
-        <span class="h-[2px] w-full bg-neutral-200 mt-8 rounded"></span>
-        <p class="text-gray-600 mt-2">No account yet?
-          <router-link to="/signup" class="text-primary">Sign Up</router-link>
+  <!--  Main Content  -->
+  <div class="flex flex-center" style="min-height: 100vh;">
+    <div class="column q-pa-xl font-weight-light login-container">
+      <h1 class="font-medium q-mb-lg login-title">Log In</h1>
+      <q-form @submit="onSubmit">
+        <q-input
+          outlined
+          v-model="email"
+          label="Email Address"
+          type="email"
+          name="email"
+          class="q-mb-md"
+        />
+        <q-input
+          outlined
+          v-model="password"
+          label="Password"
+          :type="showPassword ? 'text' : 'password'"
+          class="q-mb-sm"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="showPassword ? 'visibility_off' : 'visibility'"
+              @click="togglePasswordVisibility"
+              class="cursor-pointer"
+            />
+          </template>
+        </q-input>
+        <p class="text-caption q-mb-md">
+          It must be a combination of minimum 8 letters, numbers, and symbols.
         </p>
-      </div>
+        <div class="row items-center justify-end q-mb-md">
+          <router-link to="/forgot-password" class="text-primary"
+          >Forgot Password?</router-link
+          >
+        </div>
+        <q-btn
+          unelevated
+          no-caps
+          color="primary"
+          label="Log In"
+          type="submit"
+          class="full-width q-py-md text-body font-medium"
+        />
+      </q-form>
+      <q-separator class="q-my-lg" />
+      <p class="text-grey q-mt-sm">
+        No account yet?
+        <router-link to="/signup" class="text-primary">Sign Up</router-link>
+      </p>
     </div>
+  </div>
 </template>
 
 <script>
-//import { useAuthStore } from 'stores/auth';
-//import { validateEmail, validatePassword } from 'src/utils/authValidation';
-
 export default {
   data() {
     return {
@@ -43,37 +67,24 @@ export default {
       this.showPassword = !this.showPassword;
     },
     async onSubmit() {
-      //const emailError = validateEmail(this.email);
-      //const passwordError = validatePassword(false, this.password);
-      /*
-      if (emailError || passwordError) {
-        this.$q.notify({
-          type: 'negative',
-          message: emailError || passwordError,
-          position: 'top'
-        });
-        return;
-      }
-
-      try {
-        const response = await this.$axios.post('http://localhost:3000/auth/login', {
-          email: this.email,
-          password: this.password
-        });
-
-        const authStore = useAuthStore();
-
-        authStore.login({
-          token: response.data.token,
-          user: response.data.user,
-        });
-
-        this.$q.notify({type: 'positive', message: response.data.message, position: 'top'});
-        this.$router.push('/')
-      } catch (error) {
-        this.$q.notify({type: 'negative', message: error.response.data.message, position: 'top'});
-      }*/
-    }
+    },
   },
 };
 </script>
+
+<style>
+.login-container {
+  max-width: 560px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 2rem;
+}
+
+@media (min-width: 600px) {
+  .login-title {
+    font-size: 2.5rem;
+  }
+}
+</style>

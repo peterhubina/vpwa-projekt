@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-dvh grid" style="grid-template-rows: auto 1fr auto">
+  <div class="full-page-grid">
     <!--  Main Content  -->
-    <div class="flex h-full justify-center items-center">
-      <div class="flex flex-col p-8 sm:w-[560px] font-light">
-        <h1 class="text-2xl sm:text-4xl font-medium mb-6 sm:mb-10">Sign Up</h1>
+    <div class="flex flex-center items-center full-height">
+      <div class="column q-pa-xl font-weight-light signup-container">
+        <h1 class="font-medium signup-title q-mb-md">Sign Up</h1>
         <q-form @submit="onSubmit">
           <q-input
             outlined
@@ -11,7 +11,7 @@
             label="First Name"
             type="text"
             name="firstName"
-            class="mb-4"
+            class="q-mb-md"
           />
           <q-input
             outlined
@@ -19,7 +19,7 @@
             label="Last Name"
             type="text"
             name="lastName"
-            class="mb-4"
+            class="q-mb-md"
           />
           <q-input
             outlined
@@ -27,7 +27,7 @@
             label="Nickname"
             type="text"
             name="nickname"
-            class="mb-4"
+            class="q-mb-md"
           />
           <q-input
             outlined
@@ -35,14 +35,14 @@
             label="Email Address"
             type="email"
             name="email"
-            class="mb-4"
+            class="q-mb-md"
           />
           <q-input
             outlined
             v-model="password"
             label="Password"
             :type="showPassword ? 'text' : 'password'"
-            class="mb-2"
+            class="q-mb-sm"
           >
             <template v-slot:append>
               <q-icon
@@ -52,7 +52,7 @@
               />
             </template>
           </q-input>
-          <p class="text-xs mb-4">
+          <p class="text-caption q-mb-md">
             It must be a combination of minimum 8 letters, numbers, and symbols.
           </p>
           <q-input
@@ -60,7 +60,7 @@
             v-model="passwordRepeated"
             label="Password Repeated"
             :type="showPassword ? 'text' : 'password'"
-            class="mb-4"
+            class="q-mb-md"
           >
             <template v-slot:append>
               <q-icon
@@ -70,9 +70,9 @@
               />
             </template>
           </q-input>
-          <div class="flex items-center justify-between mb-4">
+          <div class="row items-center q-mb-md">
             <router-link to="/login" class="text-primary"
-              >Already have an account</router-link
+            >Already have an account</router-link
             >
           </div>
           <q-btn
@@ -81,7 +81,8 @@
             color="primary"
             label="Sign Up"
             type="submit"
-            class="w-full py-4 text-base font-medium rounded"
+            class="full-width q-py-md font-weight-medium"
+            rounded
           />
         </q-form>
       </div>
@@ -106,6 +107,40 @@ export default {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
+    async onSubmit() {
+    },
   },
 };
 </script>
+
+<style>
+.full-page-grid {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.signup-container {
+  width: 100%;
+}
+
+.signup-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .signup-container {
+    max-width: 560px;
+  }
+
+  .signup-title {
+    font-size: 2.25rem;
+    margin-bottom: 2.5rem;
+  }
+}
+</style>
