@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer"/>
-        <q-toolbar-title>Flow</q-toolbar-title>
+        <q-toolbar-title>Channel1</q-toolbar-title>
         <div class="q-pa-md row q-gutter-md">
           <q-btn color="primary" style="border-radius: 150px; width: 40px; height: 40px; padding: 0;" icon="notifications">
             <q-badge color="red" floating style="border-radius: 12px;">{{ notifications.length }}</q-badge>
@@ -157,7 +157,9 @@
             <q-item-section>
               <q-item-label>
                 {{channel.name }}
-                <q-badge v-if="channel.isNew" color="red" class="q-ml-sm">New</q-badge></q-item-label>
+                <q-badge v-if="channel.isNew" color='primary' text-color="white" class="q-ml-sm">New Channel</q-badge>
+                <q-badge v-if="channel.isMessage" color='secondary' text-color="primary" class="q-ml-sm">New Message</q-badge>
+              </q-item-label>
               <q-item-label caption lines="1">{{channel.description }}</q-item-label>
             </q-item-section>
 
@@ -348,12 +350,12 @@ export default {
     // Array of channels for the list
     const channels = ref([
       { id: 1, name: 'Channel1', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day', admin: true , public: false, not: 'none'},
-      { id: 2, name: 'Channel2', description: 'Just another day at the office!', admin: false, public: false, not: 'none' },
+      { id: 2, name: 'Channel2', description: 'Just another day at the office!', admin: false, public: false, not: 'none',isMessage: true },
       { id: 3, name: 'Channel3', description: 'Team discussion on project', admin: false, public: false, not: 'message' },
       { id: 4, name: 'Channel4', description: 'What\'s your favorite movie?', admin: false, public: false, not: 'none' },
       { id: 5, name: 'Channel5', description: 'Let\'s plan the weekend getaway', admin: false, public: false, not: 'none', isNew: true },
       { id: 6, name: 'Channel6', description: 'Hello how u doing in this rainy day', admin: true, public: false, not: 'invite' },
-      { id: 7, name: 'Channel7', description: 'Just another day at the office!', admin: false, public: false, not: 'none' },
+      { id: 7, name: 'Channel7', description: 'Just another day at the office!', admin: false, public: false, not: 'none',isMessage: true },
       { id: 8, name: 'Channel8', description: 'Team discussion on project', admin: false, public: true, not: 'none' },
       { id: 9, name: 'Channel9', description: 'What\'s your favorite movie?', admin: false, public: true, not: 'invite' },
       { id: 10, name: 'Channel10', description: 'Let\'s plan the weekend getaway', admin: false, public: true, not: 'none' },
