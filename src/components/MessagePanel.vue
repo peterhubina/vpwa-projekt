@@ -68,7 +68,6 @@ export default {
     ]);
 
     const channels = inject('channels');
-
     const sendMessage = async () => {
       if (text_message.value) {
         const trimmedMessage = text_message.value.trim();
@@ -81,37 +80,29 @@ export default {
               channels.value.splice(index, 1);
 
               $q.notify({
-                type: 'warning',
+                type: 'info',
                 message: `You have quit the channel "${channelName}".`,
                 position: 'top',
                 timeout: 3000,
+                color: 'white',
+                textColor: 'primary'
               });
             }
-          } else {
-
-            messages.value.push({
-              id: messages.value.length + 1,
-              name: 'System',
-              avatar: '',
-              text: [`Channel "${channelName}" not found.`],
-              stamp: 'just now',
-              me: false,
+          }
+          else {
+            $q.notify({
+              type: 'warning',
+              message: `Channel: "${channelName}" not found.`,
+              position: 'top',
+              timeout: 3000,
             });
           }
           text_message.value = '';
           return;
         }
 
-        messages.value.push({
-          id: messages.value.length + 1,
-          name: 'me',
-          avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-          text: [text_message.value],
-          stamp: 'just now',
-          me: true,
-        });
+        messages.value.push({id: messages.value.length + 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: [text_message.value], stamp: 'just now', me: true,});
         text_message.value = '';
-
         await nextTick();
 
         if (message_container.value) {
