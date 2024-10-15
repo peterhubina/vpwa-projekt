@@ -115,7 +115,7 @@ export default {
           });
           return;
         }
-        else if(trimmedMessage.startsWith('/help'))
+        else if(trimmedMessage.startsWith('//'))
         {
           $q.notify({
             type: 'info',
