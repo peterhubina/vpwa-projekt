@@ -89,6 +89,7 @@ export default {
                 textColor: 'primary'
               });
             }
+            text_message.value = '';
           }
           else {
             $q.notify({
@@ -96,10 +97,89 @@ export default {
               message: `Channel: "${channelName}" not found.`,
               position: 'top',
               timeout: 3000,
-              color: 'secondary',
-              textColor: 'primary'
+              color: 'warning',
+              textColor: 'white'
             });
           }
+          return;
+        }
+        else if(trimmedMessage.startsWith('/quit'))
+        {
+          $q.notify({
+            type: 'warning',
+            message: 'Channel name missing.',
+            position: 'top',
+            timeout: 3000,
+            color: 'warning',
+            textColor: 'white'
+          });
+          return;
+        }
+        else if(trimmedMessage.startsWith('/help'))
+        {
+          $q.notify({
+            type: 'info',
+            message: '/kick {nick name} = add kick vote to account in current chanel',
+            position: 'top',
+            timeout: 10000,
+            color: 'white',
+            textColor: 'primary'
+          });
+
+          $q.notify({
+            type: 'info',
+            message: '/quit {channel name} = deleting channel',
+            position: 'top',
+            timeout: 10000,
+            color: 'white',
+            textColor: 'primary'
+          });
+
+          $q.notify({
+            type: 'info',
+            message: '/cancel = leaving current channel',
+            position: 'top',
+            timeout: 10000,
+            color: 'white',
+            textColor: 'primary'
+          });
+
+          $q.notify({
+            type: 'info',
+            message: '/list = current channel accounts list',
+            position: 'top',
+            timeout: 10000,
+            color: 'white',
+            textColor: 'primary'
+          });
+
+          $q.notify({
+            type: 'info',
+            message: '/join {channel name} [private/public] = creating of channel',
+            position: 'top',
+            timeout: 10000,
+            color: 'white',
+            textColor: 'primary'
+          });
+
+          $q.notify({
+            type: 'info',
+            message: '/invite {nick name} = invite account to current channel',
+            position: 'top',
+            timeout: 10000,
+            color: 'white',
+            textColor: 'primary'
+          });
+
+          $q.notify({
+            type: 'info',
+            message: '/revoke {nick name} = revoke account from current channel',
+            position: 'top',
+            timeout: 10000,
+            color: 'white',
+            textColor: 'primary'
+          });
+
           text_message.value = '';
           return;
         }
