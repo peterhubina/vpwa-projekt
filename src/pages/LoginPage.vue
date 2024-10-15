@@ -42,6 +42,7 @@
           label="Log In"
           type="submit"
           class="full-width q-py-md text-body font-medium"
+          rounded
         />
       </q-form>
       <q-separator class="q-my-lg" />
