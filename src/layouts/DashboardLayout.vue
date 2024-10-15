@@ -147,15 +147,17 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
 
       <q-list>
-        <q-item v-for="channel in channels" :key="channel.name" style="display: flex; flex-direction: column;">
-          <q-item clickable v-ripple>
+        <q-item class="no-padding" v-for="channel in channels" :key="channel.name" style="display: flex; flex-direction: column;">
+          <q-item class="q-px-md q-py-lg" clickable v-ripple>
             <q-item-section side>
-              <q-icon name="discord" class="text-blue"/> <!-- Replace with your actual left icon name -->
+              <q-icon name="discord" class="text-blue"/>
             </q-item-section>
 
 
             <q-item-section>
-              <q-item-label>{{channel.name }}</q-item-label>
+              <q-item-label>
+                {{channel.name }}
+                <q-badge v-if="channel.isNew" color="red" class="q-ml-sm">New</q-badge></q-item-label>
               <q-item-label caption lines="1">{{channel.description }}</q-item-label>
             </q-item-section>
 
@@ -320,12 +322,11 @@
 
 
 <script lang="ts">
-import { ref } from 'vue';
+import {provide, ref} from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
   setup() {
-    // Define reactive properties
     const router = useRouter();
     const model = ref('one');
     const leftDrawerOpen = ref(false);
@@ -340,10 +341,8 @@ export default {
     }
 
     function logout() {
-      // Logic for logging out (like clearing tokens) can go here
 
-      // Redirect to the NoChannelOpen page after logout
-      router.push({ name: 'NoChannelOpen' }); // Navigate to NoChannelOpen.vue
+      router.push({ name: 'NoChannelOpen' });
     }
 
     // Array of channels for the list
@@ -352,7 +351,7 @@ export default {
       { id: 2, name: 'Channel2', description: 'Just another day at the office!', admin: false, public: false, not: 'none' },
       { id: 3, name: 'Channel3', description: 'Team discussion on project', admin: false, public: false, not: 'message' },
       { id: 4, name: 'Channel4', description: 'What\'s your favorite movie?', admin: false, public: false, not: 'none' },
-      { id: 5, name: 'Channel5', description: 'Let\'s plan the weekend getaway', admin: false, public: false, not: 'none' },
+      { id: 5, name: 'Channel5', description: 'Let\'s plan the weekend getaway', admin: false, public: false, not: 'none', isNew: true },
       { id: 6, name: 'Channel6', description: 'Hello how u doing in this rainy day', admin: true, public: false, not: 'invite' },
       { id: 7, name: 'Channel7', description: 'Just another day at the office!', admin: false, public: false, not: 'none' },
       { id: 8, name: 'Channel8', description: 'Team discussion on project', admin: false, public: true, not: 'none' },
@@ -376,6 +375,8 @@ export default {
     ]);
 
     const blueModel = ref('server');
+
+    provide('channels', channels);
 
     // Return the properties and methods
     return {
