@@ -31,6 +31,7 @@
         placeholder="Write a message"
         :dense="dense"
         input-class="text-padding"
+        @keyup.enter="sendMessage"
       >
         <template v-slot:append>
           <q-icon
@@ -95,6 +96,8 @@ export default {
               message: `Channel: "${channelName}" not found.`,
               position: 'top',
               timeout: 3000,
+              color: 'secondary',
+              textColor: 'primary'
             });
           }
           text_message.value = '';

@@ -157,8 +157,8 @@
             <q-item-section>
               <q-item-label>
                 {{channel.name }}
-                <q-badge v-if="channel.isNew" color='primary' text-color="white" class="q-ml-sm">New Channel</q-badge>
-                <q-badge v-if="channel.isMessage" color='secondary' text-color="primary" class="q-ml-sm">New Message</q-badge>
+                <q-badge v-if="channel.isNew" color='warning' text-color="white" class="q-ml-sm">New Channel</q-badge>
+                <q-badge v-if="channel.isMessage" color='primary' text-color="white" class="q-ml-sm">New Message</q-badge>
               </q-item-label>
               <q-item-label caption lines="1">{{channel.description }}</q-item-label>
             </q-item-section>
@@ -343,7 +343,6 @@ export default {
     }
 
     function logout() {
-
       router.push({ name: 'NoChannelOpen' });
     }
 
