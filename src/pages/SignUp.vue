@@ -72,7 +72,7 @@
           </q-input>
           <div class="row items-center q-mb-md">
             <router-link to="/login" class="text-primary"
-            >Already have an account</router-link
+            >Already have an account?</router-link
             >
           </div>
           <q-btn

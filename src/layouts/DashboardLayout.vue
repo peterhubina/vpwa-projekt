@@ -47,7 +47,7 @@
                   <q-avatar color="primary" text-color="white">
                     <q-icon name="discord" />
                   </q-avatar>
-                  <q-toolbar-title>Channel Connection</q-toolbar-title>
+                  <q-toolbar-title class="channel-connection">Channel Connection</q-toolbar-title>
                 </q-toolbar>
                 <q-item style="display: flex; flex-direction: column;">
                   <q-expansion-item
@@ -375,7 +375,6 @@ export default {
 
     provide('channels', channels);
 
-    // Return the properties and methods
     return {
       model,
       leftDrawerOpen,
@@ -401,6 +400,8 @@ export default {
 .relative
   position: relative
 
+.channel-connection
+  font-size: 18px
 
 .q-badge
   position: absolute
