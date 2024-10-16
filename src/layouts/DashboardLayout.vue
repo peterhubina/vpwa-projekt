@@ -14,6 +14,17 @@
                     <q-icon name="notifications" />
                   </q-avatar>
                   <q-toolbar-title>Notifications</q-toolbar-title>
+                  <div class="q-pa-md q-gutter-lg">
+                    <q-toggle
+                      v-model="Tag_Only"
+                      checked-icon="check"
+                      color="white"
+                      icon-color="primary"
+                      unchecked-icon="clear"
+                      label="Tag Only"
+                      left-label
+                    />
+                  </div>
                 </q-toolbar>
                 <q-item v-for="notification in notifications" :key="notification.id" class="q-my-sm" clickable v-ripple v-close-popup>
                   <q-item-section avatar>
@@ -117,8 +128,7 @@
                         :options="[
                           { label: 'Online', value: 'one' },
                           { label: 'Offline', value: 'two' },
-                          { label: 'Invisible', value: 'three' }
-                                  ]"/>
+                          { label: 'Invisible', value: 'three' }]"/>
                     </div>
                   </div>
                   <q-separator vertical inset class="q-mx-lg" />
@@ -316,6 +326,7 @@ export default {
   setup() {
     const router = useRouter();
     const model = ref('one');
+    const Tag_Only = ref(false)
     const leftDrawerOpen = ref(false);
 
     // Function to toggle the left drawer state
@@ -375,6 +386,7 @@ export default {
       leaveChannel,
       logout,
       accounts,
+      Tag_Only,
     };
   },
 };

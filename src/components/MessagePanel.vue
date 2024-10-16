@@ -15,10 +15,11 @@
             :text="message.text"
             :stamp="message.stamp"
             :sent="message.me"
-            :bg-color="message.me ? 'secondary' : 'primary'"
+            :bg-color="message.text.some(t => t.includes('@Michael')) ? 'warning' : (message.me ? 'secondary' : 'primary')"
             :text-color="message.me ? 'primary' : 'white'"
             :class="{'border-primary': !message.me, 'border-white': message.me}"
-          />
+          >
+          </q-chat-message>
         </div>
         <div>
           <q-chat-message
@@ -33,7 +34,7 @@
 
           <q-popup-proxy v-model:showing="showMessage" transition-show="scale" transition-hide="scale">
             <div class="q-pa-md bg-primary text-white" style="width: auto;">
-              <div class="text-subtitle2">Hello Michael I want...</div>
+              <div class="text-subtitle2">Hello Michael I have a question for you, can y...</div>
             </div>
           </q-popup-proxy>
         </div>
@@ -87,8 +88,8 @@ export default {
     const showMessage = ref(true);
     const showAccountList = ref(false);
     const messages = ref([
-      { id: 96, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['@Michael hey, how are you?'], stamp: '7 minutes ago', me: true },
-      { id: 97, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
+      { id: 96, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Hey, how are you?'], stamp: '7 minutes ago', me: true },
+      { id: 97, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['@Michael are u doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
       { id: 98, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false },
       { id: 99, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['nope'], stamp: '1 minute ago', me: true }
     ]);
