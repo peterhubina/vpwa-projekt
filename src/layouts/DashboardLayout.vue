@@ -22,7 +22,7 @@
                     </q-avatar>
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label>{{ notification.name }} - {{ notification.type }}</q-item-label>
+                    <q-item-label>{{ notification.name }} - {{ notification.type }} - By: Joe</q-item-label>
                     <q-item-label caption lines="1">{{ notification.description }}</q-item-label>
                   </q-item-section>
                 </q-item>
@@ -184,26 +184,7 @@
                       icon="account_circle"
                     >
                       <q-popup-proxy>
-                        <q-banner>
-                            <q-item-section>
-                              <q-item v-for="account in accounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
-                                <q-item-section avatar>
-                                  <q-avatar color="primary" text-color="white" class="relative">
-                                    <img :src="account.avatar" alt="User Avatar" />
-                                    <q-badge :color="account.status === 'online' ? 'primary' : 'warning'" rounded floating />
-                                  </q-avatar>
-                                </q-item-section>
-
-                                <q-item-section>
-                                  <q-item-label>{{ account.name }}</q-item-label>
-                                  <q-item-label caption lines="1">gmail: {{ account.gmail }}</q-item-label>
-                                  <q-item-label caption lines="1">status: {{ account.admin ? 'admin' : 'guest' }}, {{ account.status}}{{ account.is_typing ? ', typing...' : '' }}</q-item-label>
-                                  <q-item-label caption lines="1">{{ account.is_typing ? ' hello chat i am online' : '' }}</q-item-label>
-                                </q-item-section>
-                              </q-item>
-                            </q-item-section>
-
-                        </q-banner>
+                        <AccountListPopup :accounts="accounts" />
                       </q-popup-proxy>
                     </q-btn>
 
@@ -326,8 +307,12 @@
 <script lang="ts">
 import {provide, ref} from 'vue';
 import { useRouter } from 'vue-router';
+import AccountListPopup from 'components/AccountListPopup.vue';
 
 export default {
+  components: {
+    AccountListPopup,
+  },
   setup() {
     const router = useRouter();
     const model = ref('one');
@@ -348,16 +333,16 @@ export default {
 
     // Array of channels for the list
     const channels = ref([
-      { id: 1, name: 'Channel1', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day', admin: true , public: false, not: 'none'},
-      { id: 2, name: 'Channel2', description: 'Just another day at the office!', admin: false, public: false, not: 'none',isMessage: true },
-      { id: 3, name: 'Channel3', description: 'Team discussion on project', admin: false, public: false, not: 'message' },
-      { id: 4, name: 'Channel4', description: 'What\'s your favorite movie?', admin: false, public: false, not: 'none' },
-      { id: 5, name: 'Channel5', description: 'Let\'s plan the weekend getaway', admin: false, public: false, not: 'none', isNew: true },
-      { id: 6, name: 'Channel6', description: 'Hello how u doing in this rainy day', admin: true, public: false, not: 'invite' },
-      { id: 7, name: 'Channel7', description: 'Just another day at the office!', admin: false, public: false, not: 'none',isMessage: true },
-      { id: 8, name: 'Channel8', description: 'Team discussion on project', admin: false, public: true, not: 'none' },
-      { id: 9, name: 'Channel9', description: 'What\'s your favorite movie?', admin: false, public: true, not: 'invite' },
-      { id: 10, name: 'Channel10', description: 'Let\'s plan the weekend getaway', admin: false, public: true, not: 'none' },
+      { id: 1, name: 'Channel1', description: 'Joe: Hello how u doing in this rainy day, Hello how u doing in this rainy day', admin: true , public: false, not: 'none', isNew: true},
+      { id: 2, name: 'Channel2', description: 'Me: Just another day at the office!', admin: false, public: false, not: 'none',isMessage: true },
+      { id: 3, name: 'Channel3', description: 'Joe: Team discussion on project', admin: false, public: false, not: 'message' },
+      { id: 4, name: 'Channel4', description: 'Me: What\'s your favorite movie?', admin: false, public: false, not: 'none' },
+      { id: 5, name: 'Channel5', description: 'Joe: Let\'s plan the weekend getaway', admin: false, public: false, not: 'none'},
+      { id: 6, name: 'Channel6', description: 'Me: Hello how u doing in this rainy day', admin: true, public: false, not: 'invite' },
+      { id: 7, name: 'Channel7', description: 'Joe: Just another day at the office!', admin: false, public: false, not: 'none'},
+      { id: 8, name: 'Channel8', description: 'Me: Team discussion on project', admin: false, public: true, not: 'none' },
+      { id: 9, name: 'Channel9', description: 'Joe: What\'s your favorite movie?', admin: false, public: true, not: 'invite' },
+      { id: 10, name: 'Channel10', description: 'Me: Let\'s plan the weekend getaway', admin: false, public: true, not: 'none' },
     ]);
 
     const notifications = ref([
