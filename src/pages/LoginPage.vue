@@ -30,11 +30,6 @@
         <p class="text-caption q-mb-md">
           It must be a combination of minimum 8 letters, numbers, and symbols.
         </p>
-        <div class="row items-center justify-end q-mb-md">
-          <router-link to="/forgot-password" class="text-primary"
-          >Forgot Password?</router-link
-          >
-        </div>
         <q-btn
           unelevated
           no-caps

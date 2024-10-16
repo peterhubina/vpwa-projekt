@@ -3,15 +3,14 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    redirect: '/login',
   },
   {
-    path: '/main',
+    path: '/dashboard',
     component: () => import('layouts/DashboardLayout.vue'),
     children: [
-      { path: '', name: 'MessagePanel', component: () => import('components/MessagePanel.vue') }, // Keep MessagePanel
-      { path: '', name: 'NoChannelOpened', component: () => import('components/NoChannelOpened.vue') }, // Route for NoChannelOpen
+      { path: '', name: 'MessagePanel', component: () => import('components/MessagePanel.vue') },
+      { path: '', name: 'NoChannelOpened', component: () => import('components/NoChannelOpened.vue') },
     ],
   },
   {
@@ -22,7 +21,7 @@ const routes: RouteRecordRaw[] = [
     path: '/signup',
     children: [{ path: '', component: () => import('pages/SignUp.vue') }],
   },
-  // Always leave this as last one,
+
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

@@ -75,7 +75,6 @@
 import {ref, nextTick, inject} from 'vue';
 import { useQuasar } from 'quasar';
 import AccountListPopup from 'components/AccountListPopup.vue';
-//import ChannelMembersAlert from "*.vue";
 
 export default {
   components: {
@@ -178,46 +177,6 @@ export default {
         done(); // Notify that loading is done
       }, 1000);
     };
-    /*
-    const handleSubmit = (text) => {
-      const joinMatch = text.value
-        .trim()
-        .match(/^\/join\s+([^[\]]+?)\s*(private)?$/);
-      const quitMatch = text.value.trim().match(/^\/quit$/);
-      const cancelMatch = text.value.trim().match(/^\/cancel$/);
-      const listMatch = text.value.trim().match(/^\/list$/);
-      const inviteMatch = text.value.trim().match(/^(\/invite)\s(\w+)$/);
-      const revokeMatch = text.value.trim().match(/^(\/revoke)\s(\w+)$/);
-      const kickMatch = text.value.trim().match(/^(\/kick)\s(\w+)$/);
-
-      if (joinMatch) {
-        channelStore.joinChannel(joinMatch[1], joinMatch[2] === 'private');
-        if (channelStore.currentChannel != null)
-          channelStore.sendMessage(channelStore.currentChannel, 'User has joined the channel');
-      } else if (quitMatch && channelStore.currentChannel) {
-        channelStore.removeChannel(channelStore.currentChannel);
-      } else if (cancelMatch && channelStore.currentChannel) {
-        channelStore.sendMessage(channelStore.currentChannel, 'User has left the channel');
-        channelStore.leaveChannel(channelStore.currentChannel);
-      } else if (inviteMatch && channelStore.currentChannel) {
-        channelStore.sendMessage(channelStore.currentChannel, 'User has been invited to the channel');
-        channelStore.inviteUser(channelStore.currentChannel, inviteMatch[2]);
-      } else if (revokeMatch && channelStore.currentChannel) {
-        channelStore.removeUser(channelStore.currentChannel, revokeMatch[2]);
-      } else if (kickMatch && channelStore.currentChannel) {
-        channelStore.sendMessage(channelStore.currentChannel, 'User has been kicked from the channel');
-        channelStore.removeUser(channelStore.currentChannel, kickMatch[2]);
-      } else if (listMatch) {
-        // channelStore.listChannels();
-        $q.dialog({
-
-          component: ChannelMembersAlert,
-        });
-      } else if (channelStore.currentChannel) {
-        channelStore.sendMessage(channelStore.currentChannel, text.value);
-      }
-      text.value = '';
-    };*/
 
     return {
       text_message,
