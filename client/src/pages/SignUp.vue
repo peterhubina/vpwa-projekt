@@ -93,6 +93,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {RouteLocationRaw} from 'vue-router';
+import {useCounterStore} from 'stores/auth';
 
 export default defineComponent({
   data() {
@@ -113,7 +114,8 @@ export default defineComponent({
       return { name: 'login' }
     },
     loading (): boolean {
-      return this.$store.state.auth.status === 'pending'
+
+      return useCounterStore().counter === 1
     }
   },
   methods: {
@@ -121,7 +123,7 @@ export default defineComponent({
       this.showPassword = !this.showPassword;
     },
     onSubmit () {
-      this.$store.dispatch('auth/register', this.form).then(() => this.$router.push(this.redirectTo))
+      this.$router.push('/dashboard' as RouteLocationRaw)
     }
   },
 });

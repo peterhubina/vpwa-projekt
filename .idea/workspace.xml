@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="configure database">
-      <change afterPath="$PROJECT_DIR$/client/src/boot/store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/store/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/Channel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Channel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/Message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Message.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/1730444851733_users.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/1730444851733_users.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/1730445342242_channels.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/1730445342242_channels.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/1730445758153_channel_users.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/1730445758153_channel_users.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.quasar/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.quasar/client-entry.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.quasar/client-prefetch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.quasar/quasar-user-options.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/quasar.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/quasar.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/SignUp.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SignUp.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/yarn.lock" afterDir="false" />
     </list>
@@ -47,7 +42,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "prettier.import.notification.dismissed": "true",
-    "ts.external.directory.path": "C:\\Users\\Peter\\Desktop\\VPWA\\backend\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/Users/peter_hubina/Desktop/Materialy/5. semester/VPWA/projekt/backend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
