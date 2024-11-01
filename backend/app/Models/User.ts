@@ -11,6 +11,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import Channel from "App/Models/Channel";
 import Message from "App/Models/Message";
+import Notification from 'App/Models/Notification';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -24,6 +25,21 @@ export default class User extends BaseModel {
 
   @column()
   public rememberMeToken: string | null
+
+  @column()
+  public name: string
+
+  @column()
+  public surname: string
+
+  @column()
+  public username: string
+
+  @column()
+  public role: 'user' | 'admin'
+
+  @column()
+  public status: 'online' | 'dnd' | 'offline'
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -50,4 +66,7 @@ export default class User extends BaseModel {
     pivotTimestamps: true,
   })
   public channels: ManyToMany<typeof Channel>
+
+  @hasMany(() => Notification)
+  public notifications: HasMany<typeof Notification>
 }

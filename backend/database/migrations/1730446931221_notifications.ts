@@ -1,17 +1,18 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'channels'
+  protected tableName = 'notifications'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').primary();
-      table.string("name").notNullable().unique();
-      table.enu('type', ['public', 'private']).notNullable().defaultTo('public')
+      table.increments('id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
+      table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
+      table.integer('message_id').unsigned().references('id').inTable('messages').onDelete('CASCADE')
+      table.string('content')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
