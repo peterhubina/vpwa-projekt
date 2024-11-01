@@ -4,7 +4,7 @@
     <div class="flex flex-center items-center full-height">
       <div class="column q-pa-xl font-weight-light signup-container">
         <h1 class="font-medium signup-title q-mb-md">Sign Up</h1>
-        <q-form @submit="onSubmit">
+        <q-form @submit="onSubmit" ref="form">
           <q-input
             outlined
             v-model.trim="form.firstName"
@@ -82,6 +82,8 @@
             label="Sign Up"
             type="submit"
             class="full-width q-py-md font-weight-medium"
+            :loading="loading"
+            @click="onSubmit"
             rounded
           />
         </q-form>

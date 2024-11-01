@@ -3,10 +3,10 @@
   <div class="flex flex-center" style="min-height: 100vh;">
     <div class="column q-pa-xl font-weight-light login-container">
       <h1 class="font-medium q-mb-lg login-title">Log In</h1>
-      <q-form @submit="onSubmit">
+      <q-form @submit="onSubmit" ref="form">
         <q-input
           outlined
-          v-model="email"
+          v-model.trim="credentials.email"
           label="Email Address"
           type="email"
           name="email"
@@ -14,7 +14,7 @@
         />
         <q-input
           outlined
-          v-model="password"
+          v-model="credentials.password"
           label="Password"
           :type="showPassword ? 'text' : 'password'"
           class="q-mb-sm"
@@ -36,6 +36,8 @@
           color="primary"
           label="Log In"
           type="submit"
+          :loading="loading"
+          @click="onSubmit"
           class="full-width q-py-md text-body font-medium"
           rounded
         />
@@ -49,8 +51,11 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { RouteLocationRaw } from 'vue-router'
+
+export default defineComponent({
   data() {
     return {
       email: '',
@@ -58,14 +63,23 @@ export default {
       showPassword: false,
     };
   },
+  computed: {
+    redirectTo (): RouteLocationRaw {
+      return (this.$route.query.redirect as string) || { name: 'home' }
+    },
+    loading (): boolean {
+      return this.$store.state.auth.status === 'pending'
+    }
+  },
   methods: {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
     async onSubmit() {
+      this.$router.push('/login' as RouteLocationRaw)
     },
   },
-};
+});
 </script>
 
 <style>

@@ -8,6 +8,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
     component: () => import('layouts/DashboardLayout.vue'),
+    name: 'home',
+    meta: { requiresAuth: true },
     children: [
       { path: '', name: 'MessagePanel', component: () => import('components/MessagePanel.vue') },
       { path: '', name: 'NoChannelOpened', component: () => import('components/NoChannelOpened.vue') },
@@ -15,11 +17,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/login',
-    children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
+    children: [{ path: '', name: 'login', meta: { guestOnly: true }, component: () => import('pages/LoginPage.vue') }],
   },
   {
     path: '/signup',
-    children: [{ path: '', component: () => import('pages/SignUp.vue') }],
+    children: [{ path: '', name: 'signup', meta: { guestOnly: true }, component: () => import('pages/SignUp.vue') }],
   },
 
   {
