@@ -22,7 +22,7 @@
           <template v-slot:append>
             <q-icon
               :name="showPassword ? 'visibility_off' : 'visibility'"
-              @click="togglePasswordVisibility"
+              @click="showPassword = !showPassword"
               class="cursor-pointer"
             />
           </template>
@@ -36,7 +36,6 @@
           color="primary"
           label="Log In"
           type="submit"
-          :loading="loading"
           @click="onSubmit"
           class="full-width q-py-md text-body font-medium"
           rounded
@@ -51,35 +50,33 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { RouteLocationRaw } from 'vue-router'
+<script setup lang="ts">
+import { reactive, ref} from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from 'src/stores/auth'
 
-export default defineComponent({
-  data() {
-    return {
-      email: '',
-      password: '',
-      showPassword: false,
-    };
-  },
-  computed: {
-    redirectTo (): RouteLocationRaw {
-      return (this.$route.query.redirect as string) || { name: 'home' }
-    },
-    loading (): boolean {
-      return this.$store.state.auth.status === 'pending'
-    }
-  },
-  methods: {
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword;
-    },
-    async onSubmit() {
-      this.$router.push('/login' as RouteLocationRaw)
-    },
-  },
-});
+const router = useRouter();
+const credentials = reactive({ email: '', password: '' });
+const showPassword = ref(false);
+
+const onSubmit = () => {
+  const loginData = {
+    email: credentials.email,
+    password: credentials.password,
+    remember: false,
+    state: 'online'
+  };
+
+  const authStore = useAuthStore();
+
+  authStore.login(loginData).then(() => {
+    // Navigate to /dashboard upon successful login
+    router.push('/dashboard');
+  }).catch((error) => {
+    // Handle login errors here
+    console.error('Login failed:', error);
+  });
+};
 </script>
 
 <style>

@@ -1,6 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import { authManager } from 'src/services'
 import { RouteLocationNormalized, RouteLocationRaw } from 'vue-router'
+import {useAuthStore} from 'stores/auth';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -17,7 +18,7 @@ const loginRoute = (from: RouteLocationNormalized): RouteLocationRaw => {
 }
 
 // this boot file wires together authentication handling with router
-export default boot(({ router, store }) => {
+export default boot(({ router }) => {
   // if the token was removed from storage, redirect to login
   authManager.onLogout(() => {
     router.push(loginRoute(router.currentRoute.value))
@@ -25,7 +26,7 @@ export default boot(({ router, store }) => {
 
   // add route guard to check auth user
   router.beforeEach(async (to) => {
-    const isAuthenticated = await store.dispatch('auth/check')
+    const isAuthenticated = await useAuthStore().check()
 
     // route requires authentication
     if (to.meta.requiresAuth && !isAuthenticated) {
@@ -35,7 +36,7 @@ export default boot(({ router, store }) => {
 
     // route is only for guests so redirect to home
     if (to.meta.guestOnly && isAuthenticated) {
-      return { name: 'home' }
+      return { name: 'dashboard' }
     }
   })
 })

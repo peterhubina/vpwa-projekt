@@ -82,7 +82,6 @@
             label="Sign Up"
             type="submit"
             class="full-width q-py-md font-weight-medium"
-            :loading="loading"
             @click="onSubmit"
             rounded
           />
@@ -95,7 +94,10 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {RouteLocationRaw} from 'vue-router';
-import {useCounterStore} from 'stores/auth';
+import {useAuthStore} from 'stores/auth';
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
 
 export default defineComponent({
   data() {
@@ -115,17 +117,15 @@ export default defineComponent({
     redirectTo (): RouteLocationRaw {
       return { name: 'login' }
     },
-    loading (): boolean {
-
-      return useCounterStore().counter === 1
-    }
   },
   methods: {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
     onSubmit () {
-      this.$router.push('/dashboard' as RouteLocationRaw)
+      useAuthStore().register(this.form).then(() => {
+        router.push('/dashboard');
+      });
     }
   },
 });
