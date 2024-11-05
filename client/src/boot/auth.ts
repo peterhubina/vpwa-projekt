@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import { authManager } from 'src/services'
 import { RouteLocationNormalized, RouteLocationRaw } from 'vue-router'
-import {useAuthStore} from 'stores/auth';
+import { useAuthStore } from 'src/stores/auth'
 
 declare module 'vue-router' {
   interface RouteMeta {
