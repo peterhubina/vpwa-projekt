@@ -4,18 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="/quit command, New channel badge, some styling changes">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="configure database">
+      <change afterPath="$PROJECT_DIR$/backend/app/Controllers/Http/UsersController.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/boot/socket.io.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/contracts/Message.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/layouts/ChatLayout.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/services/ChannelService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/services/SocketManager.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/stores/channel.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.adonisrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.adonisrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/ace-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ace-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/cors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/cors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/start/kernel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/start/kernel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/client/.eslintrc.cjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/quasar.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/quasar.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/contracts/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/contracts/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/router/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/stores/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,9 +29,36 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;peterhubina&quot;
+  }
+}</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="Default" />
+      </list>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/peterhubina/vpwa-projekt.git",
+    "accountId": "935c1e72-14e8-4d2b-b201-101b28130711"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -39,21 +72,26 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "eslint.code.style.apply.dismiss": "true",
     "git-widget-placeholder": "backend-hubina",
-    "last_opened_file_path": "/Users/peter_hubina/Desktop/Materialy/5. semester/VPWA/projekt",
+    "last_opened_file_path": "C:/Users/Peter/Downloads/slek-part2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "prettier.import.notification.dismissed": "true",
-    "ts.external.directory.path": "C:\\Users\\Peter\\Desktop\\VPWA\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\Peter\\Desktop\\VPWA\\backend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-WS-242.20224.342" />
       </set>
     </attachedChunks>
   </component>
@@ -66,7 +104,18 @@
       <option name="presentableId" value="Default" />
       <updated>1730405934976</updated>
       <workItem from="1730405936191" duration="316000" />
+      <workItem from="1730548918357" duration="42000" />
+      <workItem from="1730816725934" duration="4567000" />
     </task>
+    <task id="LOCAL-00001" summary="configure database">
+      <option name="closed" value="true" />
+      <created>1730446444261</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730446444261</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -74,6 +123,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="/quit command, New channel badge, some styling changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="/quit command, New channel badge, some styling changes" />
+    <MESSAGE value="configure database" />
+    <option name="LAST_COMMIT_MESSAGE" value="configure database" />
   </component>
 </project>

@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, BelongsTo, belongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, BelongsTo, belongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from "App/Models/User";
 import Channel from "App/Models/Channel";
-
+import Notification from 'App/Models/Notification'
 
 export default class Message extends BaseModel {
   @column({ isPrimary: true })
@@ -32,4 +32,7 @@ export default class Message extends BaseModel {
     foreignKey: "channelId",
   })
   public channel: BelongsTo<typeof Channel>;
+
+  @hasMany(() => Notification)
+  public notifications: HasMany<typeof Notification>
 }

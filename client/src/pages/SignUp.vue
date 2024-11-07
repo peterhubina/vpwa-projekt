@@ -4,10 +4,10 @@
     <div class="flex flex-center items-center full-height">
       <div class="column q-pa-xl font-weight-light signup-container">
         <h1 class="font-medium signup-title q-mb-md">Sign Up</h1>
-        <q-form @submit="onSubmit">
+        <q-form @submit="onSubmit" ref="form">
           <q-input
             outlined
-            v-model="firstName"
+            v-model.trim="form.firstName"
             label="First Name"
             type="text"
             name="firstName"
@@ -15,7 +15,7 @@
           />
           <q-input
             outlined
-            v-model="lastName"
+            v-model.trim="form.lastName"
             label="Last Name"
             type="text"
             name="lastName"
@@ -23,7 +23,7 @@
           />
           <q-input
             outlined
-            v-model="nickname"
+            v-model.trim="form.nickname"
             label="Nickname"
             type="text"
             name="nickname"
@@ -31,7 +31,7 @@
           />
           <q-input
             outlined
-            v-model="email"
+            v-model.trim="form.email"
             label="Email Address"
             type="email"
             name="email"
@@ -39,7 +39,7 @@
           />
           <q-input
             outlined
-            v-model="password"
+            v-model="form.password"
             label="Password"
             :type="showPassword ? 'text' : 'password'"
             class="q-mb-sm"
@@ -57,7 +57,7 @@
           </p>
           <q-input
             outlined
-            v-model="passwordRepeated"
+            v-model="form.passwordRepeated"
             label="Password Repeated"
             :type="showPassword ? 'text' : 'password'"
             class="q-mb-md"
@@ -82,6 +82,7 @@
             label="Sign Up"
             type="submit"
             class="full-width q-py-md font-weight-medium"
+            @click="onSubmit"
             rounded
           />
         </q-form>
@@ -90,27 +91,44 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from 'vue';
+import {RouteLocationRaw} from 'vue-router';
+import {useAuthStore} from 'stores/auth';
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+
+export default defineComponent({
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      nickname: '',
-      email: '',
-      password: '',
-      passwordRepeated: '',
+      form: {
+        firstName: '',
+        lastName: '',
+        nickname: '',
+        email: '',
+        password: '',
+        passwordRepeated: '',
+      },
       showPassword: false,
     };
+  },
+  computed: {
+    redirectTo (): RouteLocationRaw {
+      return { name: 'login' }
+    },
   },
   methods: {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
-    async onSubmit() {
-    },
+    onSubmit () {
+      useAuthStore().register(this.form).then(() => {
+        router.push('/dashboard');
+      });
+    }
   },
-};
+});
 </script>
 
 <style>

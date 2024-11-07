@@ -3,23 +3,26 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/login',
+    redirect: () => {
+      return { path: 'login' };
+    },
   },
   {
     path: '/dashboard',
     component: () => import('layouts/DashboardLayout.vue'),
+    meta: { requiresAuth: true },
     children: [
-      { path: '', name: 'MessagePanel', component: () => import('components/MessagePanel.vue') },
+      { path: '', name: 'home', component: () => import('components/MessagePanel.vue') },
       { path: '', name: 'NoChannelOpened', component: () => import('components/NoChannelOpened.vue') },
     ],
   },
   {
     path: '/login',
-    children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
+    children: [{ path: '', name: 'login', meta: { guestOnly: true }, component: () => import('pages/LoginPage.vue') }],
   },
   {
     path: '/signup',
-    children: [{ path: '', component: () => import('pages/SignUp.vue') }],
+    children: [{ path: '', name: 'signup', meta: { guestOnly: true }, component: () => import('pages/SignUp.vue') }],
   },
 
   {

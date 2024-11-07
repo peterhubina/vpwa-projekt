@@ -3,10 +3,10 @@
   <div class="flex flex-center" style="min-height: 100vh;">
     <div class="column q-pa-xl font-weight-light login-container">
       <h1 class="font-medium q-mb-lg login-title">Log In</h1>
-      <q-form @submit="onSubmit">
+      <q-form @submit="onSubmit" ref="form">
         <q-input
           outlined
-          v-model="email"
+          v-model.trim="credentials.email"
           label="Email Address"
           type="email"
           name="email"
@@ -14,7 +14,7 @@
         />
         <q-input
           outlined
-          v-model="password"
+          v-model="credentials.password"
           label="Password"
           :type="showPassword ? 'text' : 'password'"
           class="q-mb-sm"
@@ -22,7 +22,7 @@
           <template v-slot:append>
             <q-icon
               :name="showPassword ? 'visibility_off' : 'visibility'"
-              @click="togglePasswordVisibility"
+              @click="showPassword = !showPassword"
               class="cursor-pointer"
             />
           </template>
@@ -36,6 +36,7 @@
           color="primary"
           label="Log In"
           type="submit"
+          @click="onSubmit"
           class="full-width q-py-md text-body font-medium"
           rounded
         />
@@ -49,22 +50,32 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      showPassword: false,
-    };
-  },
-  methods: {
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword;
-    },
-    async onSubmit() {
-    },
-  },
+<script setup lang="ts">
+import { reactive, ref} from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from 'src/stores/auth'
+
+const router = useRouter();
+const credentials = reactive({ email: '', password: '' });
+const showPassword = ref(false);
+
+const onSubmit = () => {
+  const loginData = {
+    email: credentials.email,
+    password: credentials.password,
+    remember: false,
+    state: 'online'
+  };
+
+  const authStore = useAuthStore();
+
+  authStore.login(loginData).then(() => {
+    // Navigate to /dashboard upon successful login
+    router.push('/dashboard');
+  }).catch((error) => {
+    // Handle login errors here
+    console.error('Login failed:', error);
+  });
 };
 </script>
 
