@@ -318,6 +318,7 @@
 import {provide, ref} from 'vue';
 import { useRouter } from 'vue-router';
 import AccountListPopup from 'components/AccountListPopup.vue';
+import {useAuthStore} from 'stores/auth';
 
 export default {
   components: {
@@ -339,7 +340,12 @@ export default {
     }
 
     function logout() {
-      router.push({ name: 'NoChannelOpen' });
+      useAuthStore().logout().then(() => {
+        router.push('/login');
+      }).catch((error) => {
+        // Handle logout errors here
+        console.error('Logout failed:', error);
+      });
     }
 
     // Array of channels for the list
