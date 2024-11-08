@@ -5,6 +5,7 @@ import { api } from 'src/boot/axios'
 class AuthService {
   async register (data: RegisterData): Promise<User> {
     const response = await api.post<User>('auth/register', data)
+    console.log(data);
     return response.data
   }
 

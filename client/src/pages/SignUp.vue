@@ -7,7 +7,7 @@
         <q-form @submit="onSubmit" ref="form">
           <q-input
             outlined
-            v-model.trim="form.firstName"
+            v-model.trim="form.name"
             label="First Name"
             type="text"
             name="firstName"
@@ -15,7 +15,7 @@
           />
           <q-input
             outlined
-            v-model.trim="form.lastName"
+            v-model.trim="form.surname"
             label="Last Name"
             type="text"
             name="lastName"
@@ -23,7 +23,7 @@
           />
           <q-input
             outlined
-            v-model.trim="form.nickname"
+            v-model.trim="form.username"
             label="Nickname"
             type="text"
             name="nickname"
@@ -57,7 +57,7 @@
           </p>
           <q-input
             outlined
-            v-model="form.passwordRepeated"
+            v-model="form.passwordConfirmation"
             label="Password Repeated"
             :type="showPassword ? 'text' : 'password'"
             class="q-mb-md"
@@ -103,12 +103,12 @@ export default defineComponent({
   data() {
     return {
       form: {
-        firstName: '',
-        lastName: '',
-        nickname: '',
+        name: '',
+        surname: '',
+        username: '',
         email: '',
         password: '',
-        passwordRepeated: '',
+        passwordConfirmation: '',
       },
       showPassword: false,
     };
