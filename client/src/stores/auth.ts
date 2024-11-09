@@ -3,6 +3,7 @@ import {LoginCredentials, RegisterData, User} from 'src/contracts'
 import {ref} from 'vue';
 //import {useRouter} from "vue-router";
 import {authManager, authService, /*channelService*/} from 'src/services';
+import {useChannelStore} from 'stores/channel';
 //import {useChannelStore} from 'stores/channel';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -23,10 +24,10 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = newuser
   }
 
-  /*const AUTH_ERROR = (newerrors : any[]) => {
+  const AUTH_ERROR = (newerrors : any) => {
     status.value = 'error'
     errors.value = newerrors
-  }*/
+  }
 
   const login = async ( credentials: LoginCredentials) => {
     try {
@@ -35,10 +36,10 @@ export const useAuthStore = defineStore('auth', () => {
       AUTH_SUCCESS(null)
       // save api token to local storage and notify listeners
       authManager.setToken(apiToken.token)
-      //useChannelStore().fetchChannels()
+      await useChannelStore().fetchChannels()
       return apiToken
     } catch (err) {
-      //AUTH_ERROR(err)
+      AUTH_ERROR(err)
       throw err
     }
   }
@@ -48,13 +49,13 @@ export const useAuthStore = defineStore('auth', () => {
       AUTH_START()
       const user = await authService.me()
       if (user?.id !== user?.id) {
-        //await useChannelStore().join('general')
+        await useChannelStore().join('general')
       }
       AUTH_SUCCESS(user)
       //setStatus('online')
       return user !== null
     } catch (err) {
-      //AUTH_ERROR(err)
+      AUTH_ERROR(err)
       throw err
     }
   }
@@ -66,7 +67,7 @@ export const useAuthStore = defineStore('auth', () => {
       AUTH_SUCCESS(user)
       return user
     } catch (err) {
-      //AUTH_ERROR(err)
+      AUTH_ERROR(err)
       throw err
     }
   }
@@ -84,7 +85,7 @@ export const useAuthStore = defineStore('auth', () => {
       // remove api token and notify listeners
       authManager.removeToken()
     } catch (err) {
-      //AUTH_ERROR(err)
+      AUTH_ERROR(err)
       throw err
     }
   }

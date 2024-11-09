@@ -157,7 +157,7 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
 
       <q-list>
-        <q-item class="no-padding" v-for="channel in channels" :key="channel.name" style="display: flex; flex-direction: column;">
+        <q-item class="no-padding" v-for="channel in channelStore.channels" :key="channel.name" style="display: flex; flex-direction: column;">
           <q-item class="q-px-md q-py-lg" clickable v-ripple>
             <q-item-section side>
               <q-icon name="discord" class="text-blue"/>
@@ -167,10 +167,10 @@
             <q-item-section>
               <q-item-label>
                 {{channel.name }}
-                <q-badge v-if="channel.isNew" color='warning' text-color="white" class="q-ml-sm">New Channel</q-badge>
-                <q-badge v-if="channel.isMessage" color='primary' text-color="white" class="q-ml-sm">New Message</q-badge>
+                <!--<q-badge v-if="channel.isNew" color='warning' text-color="white" class="q-ml-sm">New Channel</q-badge>
+                <q-badge v-if="channel.isMessage" color='primary' text-color="white" class="q-ml-sm">New Message</q-badge>-->
               </q-item-label>
-              <q-item-label caption lines="1">{{channel.description }}</q-item-label>
+              <!--<q-item-label caption lines="1">{{channel.description }}</q-item-label>-->
             </q-item-section>
 
 
@@ -178,7 +178,7 @@
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{ channel.name }} - {{ channel.public ? 'Public' : 'Private' }} server</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.is_private ? 'Private' : 'Public' }} server</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
@@ -199,7 +199,7 @@
                     </q-btn>
 
                     <q-btn
-                      v-if="channel.public || channel.admin"
+                      v-if="channel.is_private == false"
                       color="white"
                       label="invite"
                       text-color="primary"
@@ -283,7 +283,7 @@
                     ></q-btn>
 
                     <q-btn
-                      v-if="channel.admin"
+
                       color="primary"
                       label="delete"
                       text-color="white"
@@ -319,6 +319,7 @@ import {provide, ref} from 'vue';
 import { useRouter } from 'vue-router';
 import AccountListPopup from 'components/AccountListPopup.vue';
 import {useAuthStore} from 'stores/auth';
+import { useChannelStore } from 'stores/channel';
 
 export default {
   components: {
@@ -329,6 +330,9 @@ export default {
     const model = ref('one');
     const Tag_Only = ref(false)
     const leftDrawerOpen = ref(false);
+
+    const channelStore = useChannelStore();
+    const authStore = useAuthStore();
 
     // Function to toggle the left drawer state
     function toggleLeftDrawer() {
@@ -383,6 +387,8 @@ export default {
 
     return {
       model,
+      channelStore,
+      authStore,
       leftDrawerOpen,
       toggleLeftDrawer,
       channels,

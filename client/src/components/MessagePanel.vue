@@ -75,6 +75,7 @@
 import {ref, nextTick, inject} from 'vue';
 import { useQuasar } from 'quasar';
 import AccountListPopup from 'components/AccountListPopup.vue';
+import {useChannelStore} from 'stores/channel';
 
 export default {
   components: {
@@ -86,6 +87,7 @@ export default {
     const message_container = ref('');
     const showMessage = ref(true);
     const showAccountList = ref(false);
+    const channelStore = useChannelStore();
     const messages = ref([
       { id: 96, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Hey, how are you?'], stamp: '7 minutes ago', me: true },
       { id: 97, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['@Michael are u doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
@@ -154,6 +156,13 @@ export default {
           text_message.value = '';
           return;
         }
+        else if(trimmedMessage.startsWith('/join')) {
+          const joinMatch = text_message.value
+            .trim()
+            .match(/^\/join\s+([^[\]]+?)\s*(private)?$/);
+          channelStore.joinChannel(joinMatch[1], joinMatch[2] === 'private')
+        }
+
         messages.value.push({id: messages.value.length + 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: [text_message.value], stamp: 'just now', me: true,});
         text_message.value = '';
         await nextTick();

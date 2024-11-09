@@ -1,6 +1,8 @@
 import { User } from 'src/contracts'
 import { authManager } from '.'
 import { SocketManager } from './SocketManager'
+import { useChannelStore } from 'src/stores/channel'
+import { ListChannel } from 'src/contracts'
 
 class ActivitySocketManager extends SocketManager {
   public subscribe (): void {
@@ -16,6 +18,15 @@ class ActivitySocketManager extends SocketManager {
       console.log('User is offline', user)
     })
 
+    this.socket.on('user:invite', (user: User, channel: ListChannel) => {
+      useChannelStore().channels.push(channel)
+    })
+
+    this.socket.on('user:kicked', (channel: ListChannel, userName: string) => {
+      useChannelStore().channels = useChannelStore().channels.filter((c) => c.id !== channel.id)
+
+    })
+
     authManager.onChange((token) => {
       if (token) {
         this.socket.connect()
@@ -23,6 +34,14 @@ class ActivitySocketManager extends SocketManager {
         this.socket.disconnect()
       }
     })
+  }
+
+  public inviteUser (userName: string, channelId: number): Promise<any> {
+    return this.emitAsync('inviteUser', userName, channelId)
+  }
+
+  public removeUser (channel: ListChannel, userName: string): Promise<any> {
+    return this.emitAsync('kickUser', channel, userName)
   }
 }
 

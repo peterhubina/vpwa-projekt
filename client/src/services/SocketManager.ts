@@ -1,10 +1,9 @@
 import type { BootCallback } from '@quasar/app-vite'
-import type { ChannelsStateInterface } from 'src/stores/channel'
 import { Manager, Socket } from 'socket.io-client'
 import { authManager } from '.'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type BootParams<T extends BootCallback<ChannelsStateInterface> = BootCallback<ChannelsStateInterface>> = T extends (params: infer P) => any ? P : never
+export type BootParams<T extends BootCallback<any> = BootCallback<any>> = T extends (params: infer P) => any ? P : never
 
 export interface SocketManagerContract {
   namespace: string
