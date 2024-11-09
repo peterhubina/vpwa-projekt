@@ -4,22 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="redirect after signup">
-      <change afterPath="$PROJECT_DIR$/backend/app/Controllers/Http/ChannelsController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/Channel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Channel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Repositories/MessagesRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Repositories/MessagesRepository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/1730445342242_channels.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/1730445342242_channels.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/start/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/start/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/client/.eslintrc.cjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/contracts/Auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/contracts/Auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/ActivityService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ActivityService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/ChannelService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ChannelService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/SocketManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/SocketManager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/stores/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/stores/channel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/channel.ts" afterDir="false" />
+    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="join new channel">
+      <change beforePath="$PROJECT_DIR$/client/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +96,7 @@
       <workItem from="1730548918357" duration="42000" />
       <workItem from="1730816725934" duration="4567000" />
       <workItem from="1731039144019" duration="16304000" />
-      <workItem from="1731139032393" duration="639000" />
+      <workItem from="1731139032393" duration="902000" />
     </task>
     <task id="LOCAL-00001" summary="configure database">
       <option name="closed" value="true" />
@@ -144,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731069864954</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="join new channel">
+      <option name="closed" value="true" />
+      <created>1731139888643</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731139888643</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +150,7 @@
     <MESSAGE value="fixed registration" />
     <MESSAGE value="logout" />
     <MESSAGE value="redirect after signup" />
-    <option name="LAST_COMMIT_MESSAGE" value="redirect after signup" />
+    <MESSAGE value="join new channel" />
+    <option name="LAST_COMMIT_MESSAGE" value="join new channel" />
   </component>
 </project>
