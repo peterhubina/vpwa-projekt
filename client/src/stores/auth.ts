@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import {LoginCredentials, RegisterData, User} from 'src/contracts'
 import {ref} from 'vue';
 //import {useRouter} from "vue-router";
-import {authManager, authService, /*channelService*/} from 'src/services';
+import {authManager, authService, channelService} from 'src/services';
 import {useChannelStore} from 'stores/channel';
 //import {useChannelStore} from 'stores/channel';
 
@@ -77,11 +77,11 @@ export const useAuthStore = defineStore('auth', () => {
       AUTH_START()
 
       await authService.logout()
-      //await useChannelStore().leave(null) // leave all channels
-      //AUTH_ERROR(null)
-      /*useChannelStore().channels.forEach((channel) => {
+      await useChannelStore().leave(null) // leave all channels
+      AUTH_ERROR(null)
+      useChannelStore().channels.forEach((channel) => {
         channelService.leave(channel.name)
-      })*/
+      })
       // remove api token and notify listeners
       authManager.removeToken()
     } catch (err) {

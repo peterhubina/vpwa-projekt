@@ -49,6 +49,7 @@ export const useChannelStore = defineStore('channel', () => {
     await channelService.join(channelName).loadMessages();
 
     channels.value.push(channel);
+    console.log('New channel')
     router.push(`/channels/${channel.id}`);
   };
 
@@ -67,7 +68,6 @@ export const useChannelStore = defineStore('channel', () => {
 
   const sendMessage = async (channel: ListChannel, message: string) => {
     const newMessage = await channelService.in(channel.name)?.addMessage(message)
-
     console.log(newMessage, 'SUCC')
     insertNewMessage(newMessage, channel.name)
   };

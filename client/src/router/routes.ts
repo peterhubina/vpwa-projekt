@@ -8,11 +8,12 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/dashboard',
+    path: '/channels',
     component: () => import('layouts/DashboardLayout.vue'),
     meta: { requiresAuth: true },
     children: [
       { path: '', name: 'home', component: () => import('components/MessagePanel.vue') },
+      { path: ':id', component: () => import('components/MessagePanel.vue') },
       { path: '', name: 'NoChannelOpened', component: () => import('components/NoChannelOpened.vue') },
     ],
   },
