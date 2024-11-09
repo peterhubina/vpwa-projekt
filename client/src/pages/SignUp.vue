@@ -91,15 +91,14 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {defineComponent} from 'vue';
-import {RouteLocationRaw} from 'vue-router';
+//import {RouteLocationRaw} from 'vue-router';
 import {useAuthStore} from 'stores/auth';
-import { useRouter } from 'vue-router'
-
-const router = useRouter();
+//import { useRouter } from 'vue-router'
 
 export default defineComponent({
+
   data() {
     return {
       form: {
@@ -114,7 +113,7 @@ export default defineComponent({
     };
   },
   computed: {
-    redirectTo (): RouteLocationRaw {
+    redirectTo () {
       return { name: 'login' }
     },
   },
@@ -124,7 +123,7 @@ export default defineComponent({
     },
     onSubmit () {
       useAuthStore().register(this.form).then(() => {
-        router.push('/dashboard');
+        this.$router.push('/login');
       });
     }
   },

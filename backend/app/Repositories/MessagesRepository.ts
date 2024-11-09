@@ -1,19 +1,34 @@
-import type { MessageRepositoryContract, SerializedMessage } from '@ioc:Repositories/MessageRepository'
-import Channel from 'App/Models/Channel'
+import type {
+  MessageRepositoryContract,
+  SerializedMessage,
+} from '@ioc:Repositories/MessageRepository'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class MessageRepository implements MessageRepositoryContract {
-  public async getAll(channelName: string): Promise<SerializedMessage[]> {
-    const channel = await Channel.query()
+  public async getAll(channelName: string, auth: HttpContextContract['auth']): Promise<any[]> {
+    console.log('test', channelName)
+    const channel = await auth
+      .user!.related('channels')
+      .query()
       .where('name', channelName)
-      .preload('messages', (messagesQuery) => messagesQuery.preload('author'))
+      .preload('messages')
       .firstOrFail()
 
-    return channel.messages.map((message) => message.serialize() as SerializedMessage)
+    return channel.messages.map((message) => message.serialize())
   }
 
-  public async create(channelName: string, userId: number, content: string): Promise<SerializedMessage> {
-    const channel = await Channel.findByOrFail('name', channelName)
-    const message = await channel.related('messages').create({ createdBy: userId, content })
+  public async create(
+    channelName: string,
+    auth: HttpContextContract['auth'],
+    content: string
+  ): Promise<SerializedMessage> {
+    // check if user is in channel
+    const channel = await auth
+      .user!.related('channels')
+      .query()
+      .where('name', channelName)
+      .firstOrFail()
+    const message = await channel.related('messages').create({ createdBy: auth.user!.id, content })
     await message.load('author')
 
     return message.serialize() as SerializedMessage

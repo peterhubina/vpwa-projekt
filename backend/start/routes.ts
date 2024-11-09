@@ -30,3 +30,18 @@ Route.group(() => {
   Route.post('logout', 'AuthController.logout').middleware('auth')
   Route.get('me', 'AuthController.me').middleware('auth')
 }).prefix('auth')
+
+Route.group(() => {
+  Route.get('channels', 'ChannelsController.ts.index')
+  Route.get('channels/:id', 'ChannelsController.ts.show')
+  Route.get('channels/:id/:n', 'ChannelsController.ts.getMessages')
+  Route.delete('channels/:id', 'ChannelsController.ts.delete')
+  Route.post('channels/join', 'ChannelsController.ts.join')
+  Route.get('channels2/:id/lister', 'ChannelsController.ts.lister')
+  Route.post('channels/remove', 'ChannelsController.ts.remove')
+  Route.post('channels/kick', 'ChannelsController.ts.kick')
+
+  Route.post('messages', 'MessagesController.create')
+  Route.post('getmessages', 'MessagesController.show')
+  Route.post('status', 'UsersController.status')
+}).middleware('auth')

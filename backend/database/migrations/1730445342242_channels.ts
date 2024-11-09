@@ -5,9 +5,10 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').primary();
-      table.string("name").notNullable().unique();
-      table.enu('type', ['public', 'private']).notNullable().defaultTo('public')
+      table.increments('id').primary()
+      table.string('name').notNullable().unique()
+      table.boolean('is_private').notNullable().defaultTo(false)
+      table.integer('owner_id').unsigned().references('users.id').onDelete('CASCADE')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
