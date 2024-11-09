@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer"/>
-        <q-toolbar-title>Channel1</q-toolbar-title>
+        <q-toolbar-title>{{currentChannelName}}</q-toolbar-title>
         <div class="q-pa-md row q-gutter-md">
           <q-btn color="primary" style="border-radius: 150px; width: 40px; height: 40px; padding: 0;" icon="notifications">
             <q-badge color="red" floating style="border-radius: 12px;">{{ notifications.length }}</q-badge>
@@ -315,7 +315,7 @@
 
 
 <script lang="ts">
-import {provide, ref} from 'vue';
+import {provide, ref, watch} from 'vue';
 import { useRouter } from 'vue-router';
 import AccountListPopup from 'components/AccountListPopup.vue';
 import {useAuthStore} from 'stores/auth';
@@ -330,9 +330,21 @@ export default {
     const model = ref('one');
     const Tag_Only = ref(false)
     const leftDrawerOpen = ref(false);
+    const authStore = useAuthStore();
 
     const channelStore = useChannelStore();
-    const authStore = useAuthStore();
+
+    // Return the current channel name
+    const getChannelName = () => {
+      return channelStore.currentChannel?.name ?? 'Slack';
+    };
+    const currentChannelName = ref(getChannelName());
+
+    //console.log('Channel: ', channelStore.getMessages(channelStore.currentChannel, 10))
+
+    watch(() => channelStore.currentChannel, (newValue) => {
+      currentChannelName.value = newValue ? newValue.name : 'Slack';
+    });
 
     // Function to toggle the left drawer state
     function toggleLeftDrawer() {
@@ -387,6 +399,7 @@ export default {
 
     return {
       model,
+      currentChannelName,
       channelStore,
       authStore,
       leftDrawerOpen,

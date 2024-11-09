@@ -71,7 +71,7 @@ const onSubmit = () => {
 
   authStore.login(loginData).then(() => {
     // Navigate to /dashboard upon successful login
-    router.push('/dashboard');
+    router.push('/channels');
   }).catch((error) => {
     // Handle login errors here
     console.error('Login failed:', error);

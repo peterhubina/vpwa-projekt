@@ -36,7 +36,7 @@ export default boot(({ router }) => {
 
     // route is only for guests so redirect to home
     if (to.meta.guestOnly && isAuthenticated) {
-      return { name: 'dashboard' }
+      return { name: 'home' }
     }
   })
 })

@@ -7,15 +7,16 @@
             <q-spinner-dots color="primary" name="dots" size="40px" />
           </div>
         </template>
-        <div v-for="(message, index) in messages" :key="index" class="caption q-py-sm">
+        <div v-for="message in channelStore.currentMessages" :key="message.id" class="caption q-py-sm">
+          {{message.content}}
           <q-chat-message
             :key="message.id"
             :name="message.name"
             :avatar="message.avatar"
-            :text="message.text"
+            :text="message.content"
             :stamp="message.stamp"
             :sent="message.me"
-            :bg-color="message.text.some(t => t.includes('@Michael')) ? 'warning' : (message.me ? 'secondary' : 'primary')"
+
             :text-color="message.me ? 'primary' : 'white'"
             :class="{'border-primary': !message.me, 'border-white': message.me}"
           >
@@ -104,14 +105,20 @@ export default {
     ]);
 
     const channels = inject('channels');
+
+    console.log('Channel: ', channelStore.currentChannel)
+
     const sendMessage = async () => {
       if (text_message.value) {
         const trimmedMessage = text_message.value.trim();
+
         if (trimmedMessage.startsWith('/quit ')) {
           const channelName = trimmedMessage.substring(6).trim();
           const channel = channels.value.find((c) => c.name === channelName);
+
           if (channel) {
             const index = channels.value.indexOf(channel);
+
             if (index !== -1) {
               channels.value.splice(index, 1);
 
@@ -124,6 +131,7 @@ export default {
                 textColor: 'primary'
               });
             }
+
             text_message.value = '';
           }
           else {
@@ -138,8 +146,7 @@ export default {
           }
           return;
         }
-        else if(trimmedMessage.startsWith('/quit'))
-        {
+        else if(trimmedMessage.startsWith('/quit')) {
           $q.notify({
             type: 'warning',
             message: 'Channel name missing.',
@@ -150,21 +157,23 @@ export default {
           });
           return;
         }
-        else if(trimmedMessage.startsWith('/list'))
-        {
+        else if(trimmedMessage.startsWith('/list')) {
           showAccountList.value = true; // Open the dialog
           text_message.value = '';
           return;
-        }
-        else if(trimmedMessage.startsWith('/join')) {
+        } else if(trimmedMessage.startsWith('/join')) {
           const joinMatch = text_message.value
             .trim()
             .match(/^\/join\s+([^[\]]+?)\s*(private)?$/);
+
           channelStore.joinChannel(joinMatch[1], joinMatch[2] === 'private')
+        } else if (channelStore.currentChannel) {
+          channelStore.sendMessage(channelStore.currentChannel, trimmedMessage);
+          console.log('Message: ', trimmedMessage);
         }
 
-        messages.value.push({id: messages.value.length + 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: [text_message.value], stamp: 'just now', me: true,});
-        text_message.value = '';
+        //messages.value.push({id: messages.value.length + 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: [text_message.value], stamp: 'just now', me: true,});
+        //text_message.value = '';
         await nextTick();
 
         if (message_container.value) {
@@ -189,6 +198,7 @@ export default {
 
     return {
       text_message,
+      channelStore,
       messages,
       dense: ref(false),
       sendMessage,
