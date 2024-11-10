@@ -277,20 +277,19 @@
                       push
                       size="md"
                       v-close-popup
-                      @click="leaveChannel(channel.id)"
+                      @click="channelStore.leaveChannel(channel)"
                       style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
                       icon="exit_to_app"
                     ></q-btn>
-
                     <q-btn
-
                       color="primary"
                       label="delete"
                       text-color="white"
                       push
                       size="md"
                       v-close-popup
-                      @click="leaveChannel(channel.id)"
+                      v-if="channel.ownerId === authStore.user?.id"
+                      @click="channelStore.removeChannel(channel)"
                       style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
                       icon="delete"
                     ></q-btn>

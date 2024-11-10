@@ -31,7 +31,7 @@ export interface ListChannel {
   id: number;
   name: string;
   is_private: boolean;
-  owner_id: number;
+  ownerId: number;
   created_at: string;
   updated_at: string;
   pivot_invited: boolean;
