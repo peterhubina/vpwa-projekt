@@ -18,8 +18,8 @@ export const useChannelStore = defineStore('channel', () => {
   const error = ref<Error|null>(null)
   const active = ref<string|null>(null)
 
-
   const currentChannel = ref<ListChannel|null>(null)
+
   const fetchChannels = async () => {
     const { data: channelsData } = await api.get(
       'http://localhost:3333/channels'
@@ -37,6 +37,7 @@ export const useChannelStore = defineStore('channel', () => {
 
     channels.value.forEach((channel) => {
       channelService.join(channel.name).loadMessages()
+      console.log('Messages: ', currentMessages)
     })
 
   };
