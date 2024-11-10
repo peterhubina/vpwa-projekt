@@ -61,7 +61,7 @@ export const useChannelStore = defineStore('channel', () => {
   };
 
   const leaveChannel = async (channel: ListChannel) => {
-    console.log('LEAVE');
+    console.log('LEAVE: ', channel);
     channelService.leaveChannel(channel.name)
     channels.value = channels.value.filter((c) => c.id !== channel.id);
     await router.push('/channels');

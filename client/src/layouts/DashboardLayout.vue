@@ -62,17 +62,17 @@
                           rounded outlined bg-color="white"
                           label="Channel Name"
                           lazy-rules
-                          model-value=""
+                          v-model="inputContent"
                           style="margin-bottom: 10px;"
                         />
-                        <q-btn color="primary" label="Create" v-model="inputContent" @click="createChannel" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
+                        <q-btn color="primary" label="Create" @click="createChannel" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
                         <q-toggle
                           :label="`${blueModel}`"
-                          false-value="Public"
-                          true-value="Private"
+                          false-value=false
+                          true-value=true
                           color="primary"
                           keep-color
-                          v-model="blueModel"
+                          v-model="isPrivate"
                         />
                       </div>
                     </q-card>
@@ -331,6 +331,9 @@ export default {
     const leftDrawerOpen = ref(false);
     const authStore = useAuthStore();
 
+    const inputContent = ref('');
+    const isPrivate = ref(false);
+
     const channelStore = useChannelStore();
 
     // Return the current channel name
@@ -364,7 +367,8 @@ export default {
     }
 
     const createChannel = () => {
-
+      console.log(inputContent.value, isPrivate.value)
+      channelStore.joinChannel(inputContent.value, isPrivate.value)
     }
 
     // Array of channels for the list
@@ -402,6 +406,8 @@ export default {
 
     return {
       model,
+      inputContent,
+      isPrivate,
       currentChannelName,
       channelStore,
       authStore,
@@ -417,11 +423,6 @@ export default {
       Tag_Only,
     };
   },
-  data() {
-    return {
-      inputContent: ''
-    }
-  }
 };
 </script>
 
