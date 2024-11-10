@@ -51,15 +51,21 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref} from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from 'src/stores/auth'
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from 'src/stores/auth';
+import { useQuasar } from 'quasar';
 
+const $q = useQuasar();
 const router = useRouter();
 const credentials = reactive({ email: '', password: '' });
 const showPassword = ref(false);
+const isSubmitting = ref(false); // Prevent duplicate submissions
 
-const onSubmit = () => {
+const onSubmit = async () => {
+  if (isSubmitting.value) return; // Exit if already submitting
+  isSubmitting.value = true;
+
   const loginData = {
     email: credentials.email,
     password: credentials.password,
@@ -69,13 +75,22 @@ const onSubmit = () => {
 
   const authStore = useAuthStore();
 
-  authStore.login(loginData).then(() => {
-    // Navigate to /dashboard upon successful login
+  try {
+    await authStore.login(loginData);
     router.push('/channels');
-  }).catch((error) => {
-    // Handle login errors here
+  } catch (error) {
     console.error('Login failed:', error);
-  });
+    $q.notify({
+      type: 'warning',
+      message: 'Login failed. Check your Gmail or password',
+      position: 'top',
+      timeout: 3000,
+      color: 'primary',
+      textColor: 'white'
+    });
+  } finally {
+    isSubmitting.value = false; // Reset flag after submission
+  }
 };
 </script>
 
