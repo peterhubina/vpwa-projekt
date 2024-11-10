@@ -65,7 +65,7 @@
                           model-value=""
                           style="margin-bottom: 10px;"
                         />
-                        <q-btn color="primary" label="Create" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
+                        <q-btn color="primary" label="Create" v-model="inputContent" @click="createChannel" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
                         <q-toggle
                           :label="`${blueModel}`"
                           false-value="Public"
@@ -178,7 +178,7 @@
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{ channel.name }} - {{ channel.is_private ? 'Private' : 'Public' }} server</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} server</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
@@ -199,7 +199,7 @@
                     </q-btn>
 
                     <q-btn
-                      v-if="channel.is_private == false"
+                      v-if="channel.isPrivate == false"
                       color="white"
                       label="invite"
                       text-color="primary"
@@ -363,6 +363,10 @@ export default {
       });
     }
 
+    const createChannel = () => {
+
+    }
+
     // Array of channels for the list
     const channels = ref([
       { id: 1, name: 'Channel1', description: 'Joe: Hello how u doing in this rainy day, Hello how u doing in this rainy day', admin: true , public: false, not: 'none', isNew: true},
@@ -401,6 +405,7 @@ export default {
       currentChannelName,
       channelStore,
       authStore,
+      createChannel,
       leftDrawerOpen,
       toggleLeftDrawer,
       channels,
@@ -412,6 +417,11 @@ export default {
       Tag_Only,
     };
   },
+  data() {
+    return {
+      inputContent: ''
+    }
+  }
 };
 </script>
 

@@ -30,7 +30,7 @@ export interface User {
 export interface ListChannel {
   id: number;
   name: string;
-  is_private: boolean;
+  isPrivate: boolean;
   ownerId: number;
   created_at: string;
   updated_at: string;
