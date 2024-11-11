@@ -167,6 +167,10 @@ export default {
             .match(/^\/join\s+([^[\]]+?)\s*(private)?$/);
 
           channelStore.joinChannel(joinMatch[1], joinMatch[2] === 'private')
+        } else if(trimmedMessage.startsWith('/cancel')) {
+          console.log('Current: ', channelStore.currentChannel)
+          channelStore.sendMessage(channelStore.currentChannel, 'User has left the channel');
+          channelStore.leaveChannel(channelStore.currentChannel);
         } else if (channelStore.currentChannel) {
           channelStore.sendMessage(channelStore.currentChannel, trimmedMessage);
           console.log('Message: ', trimmedMessage);

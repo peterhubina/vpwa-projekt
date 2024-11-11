@@ -62,17 +62,17 @@
                           rounded outlined bg-color="white"
                           label="Channel Name"
                           lazy-rules
-                          model-value=""
+                          v-model="inputContent"
                           style="margin-bottom: 10px;"
                         />
-                        <q-btn color="primary" label="Create" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
+                        <q-btn color="primary" label="Create" @click="createChannel" icon="add" push size="md" v-close-popup style="border-radius: 30px;"/>
                         <q-toggle
                           :label="`${blueModel}`"
-                          false-value="Public"
-                          true-value="Private"
+                          false-value=false
+                          true-value=true
                           color="primary"
                           keep-color
-                          v-model="blueModel"
+                          v-model="isPrivate"
                         />
                       </div>
                     </q-card>
@@ -178,7 +178,7 @@
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{ channel.name }} - {{ channel.is_private ? 'Private' : 'Public' }} server</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} server</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
@@ -199,7 +199,7 @@
                     </q-btn>
 
                     <q-btn
-                      v-if="channel.is_private == false"
+                      v-if="channel.isPrivate == false"
                       color="white"
                       label="invite"
                       text-color="primary"
@@ -331,6 +331,9 @@ export default {
     const leftDrawerOpen = ref(false);
     const authStore = useAuthStore();
 
+    const inputContent = ref('');
+    const isPrivate = ref(false);
+
     const channelStore = useChannelStore();
 
     // Return the current channel name
@@ -361,6 +364,11 @@ export default {
         // Handle logout errors here
         console.error('Logout failed:', error);
       });
+    }
+
+    const createChannel = () => {
+      console.log(inputContent.value, isPrivate.value)
+      channelStore.joinChannel(inputContent.value, isPrivate.value)
     }
 
     // Array of channels for the list
@@ -398,9 +406,12 @@ export default {
 
     return {
       model,
+      inputContent,
+      isPrivate,
       currentChannelName,
       channelStore,
       authStore,
+      createChannel,
       leftDrawerOpen,
       toggleLeftDrawer,
       channels,
