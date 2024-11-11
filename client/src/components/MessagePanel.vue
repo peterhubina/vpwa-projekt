@@ -171,6 +171,11 @@ export default {
           console.log('Current: ', channelStore.currentChannel)
           channelStore.sendMessage(channelStore.currentChannel, 'User has left the channel');
           channelStore.leaveChannel(channelStore.currentChannel);
+        } else if (trimmedMessage.startsWith('/invite')) {
+            channelStore.sendMessage(channelStore.currentChannel, 'User has been invited to the channel');
+            channelStore.inviteUser(channelStore.currentChannel, trimmedMessage[2]);
+          } else if (trimmedMessage.startsWith('/revoke')) {
+            channelStore.removeUser(channelStore.currentChannel, trimmedMessage[2]);
         } else if (channelStore.currentChannel) {
           channelStore.sendMessage(channelStore.currentChannel, trimmedMessage);
           console.log('Message: ', trimmedMessage);
