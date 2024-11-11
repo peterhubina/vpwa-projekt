@@ -1,5 +1,6 @@
 import type { WsContextContract } from '@ioc:Ruby184/Socket.IO/WsContext'
 import User from 'App/Models/User'
+import Channel from 'App/Models/Channel';
 
 export default class ActivityController {
   private getUserRoom(user: User): string {
@@ -34,6 +35,29 @@ export default class ActivityController {
     socket.emit('user:list', onlineUsers)
 
     logger.info('new websocket connection')
+  }
+
+  public async inviteUser({ socket, auth }: WsContextContract, userName: string, channelId: number) {
+    const invitedUser = await User.findByOrFail('username', userName)
+
+
+    const channel = await Channel.findOrFail(channelId)
+
+
+    if (channel.isPrivate) {
+      if (auth.user!.id !== channel.ownerId)
+        throw new Error('You are not the owner of this channel')
+
+    }
+    await invitedUser.related('channels').attach({
+      [channel.id]: {
+        invited: true,
+      },
+    })
+
+    const findchannel = await Channel.findOrFail(channelId)
+    socket.to(this.getUserRoom(invitedUser)).emit('user:invite', invitedUser, findchannel.serialize())
+
   }
 
   // see https://socket.io/get-started/private-messaging-part-2/#disconnection-handler

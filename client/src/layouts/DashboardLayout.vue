@@ -91,10 +91,10 @@
                         ref="ChannelNameJoin"
                         label="Channel Name"
                         lazy-rules
-                        model-value=""
+                        v-model="inputContent"
                         style="margin-bottom: 10px;"
                       />
-                      <q-btn color="primary" label="Join" icon="search" push size="md" v-close-popup style="border-radius: 30px;"/>
+                      <q-btn color="primary" @click="joinChannel" label="Join" icon="search" push size="md" v-close-popup style="border-radius: 30px;"/>
                     </q-card>
                   </q-expansion-item>
                 </q-item>
@@ -157,7 +157,8 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
 
       <q-list>
-        <q-item class="no-padding" v-for="channel in channelStore.channels" :key="channel.name" style="display: flex; flex-direction: column;">
+        <q-item class="no-padding" v-for="channel in channelStore.channels" clickable
+                :to="`/channels/${channel.id}`" :key="channel.name" style="display: flex; flex-direction: column;">
           <q-item class="q-px-md q-py-lg" clickable v-ripple>
             <q-item-section side>
               <q-icon name="discord" class="text-blue"/>
@@ -366,6 +367,10 @@ export default {
       });
     }
 
+    const joinChannel = () => {
+      channelStore.joinChannel(inputContent.value, false);
+    }
+
     const createChannel = () => {
       console.log(inputContent.value, isPrivate.value)
       channelStore.joinChannel(inputContent.value, isPrivate.value)
@@ -407,6 +412,7 @@ export default {
     return {
       model,
       inputContent,
+      joinChannel,
       isPrivate,
       currentChannelName,
       channelStore,
