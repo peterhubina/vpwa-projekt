@@ -4,25 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="join new channel fix">
+    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="show messages">
+      <change afterPath="$PROJECT_DIR$/backend/app/Controllers/Ws/ChannelController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.adonisrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.adonisrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Controllers/Http/AuthController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Controllers/Http/AuthController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Controllers/Ws/MessageController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Controllers/Ws/MessageController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Repositories/MessagesRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Repositories/MessageRepository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/contracts/repositories.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/contracts/repositories.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/1730445758153_channel_users.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/1730445758153_channel_users.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/providers/AppProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/providers/AppProvider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/start/socket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/start/socket.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/boot/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/boot/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/contracts/Auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/contracts/Auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/LoginPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/router/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/stores/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/stores/channel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/channel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/stores/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/models.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +103,8 @@
       <workItem from="1731039144019" duration="16304000" />
       <workItem from="1731139032393" duration="4119000" />
       <workItem from="1731173473085" duration="3225000" />
-      <workItem from="1731176702779" duration="5042000" />
+      <workItem from="1731176702779" duration="6912000" />
+      <workItem from="1731228944668" duration="4907000" />
     </task>
     <task id="LOCAL-00001" summary="configure database">
       <option name="closed" value="true" />
@@ -165,7 +154,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731139990256</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="create messages">
+      <option name="closed" value="true" />
+      <created>1731182242353</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731182242353</updated>
+    </task>
+    <task id="LOCAL-00008" summary="show messages">
+      <option name="closed" value="true" />
+      <created>1731190198528</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731190198528</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +184,8 @@
     <MESSAGE value="redirect after signup" />
     <MESSAGE value="join new channel" />
     <MESSAGE value="join new channel fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="join new channel fix" />
+    <MESSAGE value="create messages" />
+    <MESSAGE value="show messages" />
+    <option name="LAST_COMMIT_MESSAGE" value="show messages" />
   </component>
 </project>

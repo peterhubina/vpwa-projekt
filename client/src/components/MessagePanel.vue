@@ -9,18 +9,18 @@
         </template>
         <div v-for="message in channelStore.currentMessages" :key="message.id" class="caption q-py-sm">
           {{message.content}}
-          <q-chat-message
-            :key="message.id"
-            :name="message.name"
-            :avatar="message.avatar"
-            :text="message.content"
-            :stamp="message.stamp"
-            :sent="message.me"
+<!--          <q-chat-message-->
+<!--            :key="message.id"-->
+<!--            :name="message.name"-->
+<!--            :avatar="message.avatar"-->
+<!--            :text="message.content"-->
+<!--            :stamp="message.stamp"-->
+<!--            :sent="message.me"-->
 
-            :text-color="message.me ? 'primary' : 'white'"
-            :class="{'border-primary': !message.me, 'border-white': message.me}"
-          >
-          </q-chat-message>
+<!--            :text-color="message.me ? 'primary' : 'white'"-->
+<!--            :class="{'border-primary': !message.me, 'border-white': message.me}"-->
+<!--          >-->
+<!--          </q-chat-message>-->
         </div>
         <div>
           <q-chat-message
@@ -106,7 +106,7 @@ export default {
 
     const channels = inject('channels');
 
-    console.log('Channel: ', channelStore.currentChannel)
+    console.log('Current messages: ', channelStore.currentMessages)
 
     const sendMessage = async () => {
       if (text_message.value) {
@@ -167,6 +167,10 @@ export default {
             .match(/^\/join\s+([^[\]]+?)\s*(private)?$/);
 
           channelStore.joinChannel(joinMatch[1], joinMatch[2] === 'private')
+        } else if(trimmedMessage.startsWith('/cancel')) {
+          console.log('Current: ', channelStore.currentChannel)
+          channelStore.sendMessage(channelStore.currentChannel, 'User has left the channel');
+          channelStore.leaveChannel(channelStore.currentChannel);
         } else if (channelStore.currentChannel) {
           channelStore.sendMessage(channelStore.currentChannel, trimmedMessage);
           console.log('Message: ', trimmedMessage);
