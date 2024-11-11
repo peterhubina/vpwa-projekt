@@ -23,7 +23,7 @@
 <!--          </q-chat-message>-->
         </div>
         <div>
-          <q-chat-message
+          <!--<q-chat-message
             bg-color="primary"
             name="Joe"
             text-color="white"
@@ -31,7 +31,7 @@
             @click="showMessage = true"
           >
             <q-spinner-dots size="2rem" />
-          </q-chat-message>
+          </q-chat-message>-->
 
           <q-popup-proxy v-model:showing="showMessage" transition-show="scale" transition-hide="scale">
             <div class="q-pa-md bg-primary text-white" style="width: auto;">
@@ -176,8 +176,7 @@ export default {
           console.log('Message: ', trimmedMessage);
         }
 
-        //messages.value.push({id: messages.value.length + 1, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: [text_message.value], stamp: 'just now', me: true,});
-        //text_message.value = '';
+        text_message.value = '';
         await nextTick();
 
         if (message_container.value) {
