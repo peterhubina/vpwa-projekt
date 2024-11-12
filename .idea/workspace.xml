@@ -7,6 +7,7 @@
     <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="/quit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +57,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "eslint.code.style.apply.dismiss": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "vpwa__gregor",
     "js.linters.configure.manually.selectedeslint": "true",
     "last_opened_file_path": "/Users/peter_hubina/Desktop/projekt",
     "node.js.detected.package.eslint": "true",
