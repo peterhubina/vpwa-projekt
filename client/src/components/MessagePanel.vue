@@ -158,7 +158,7 @@ export default {
         messages.value.splice(0, 0,
           );
         done(); // Notify that loading is done
-      }, 1000);
+      }, 1);
     };
 
     return {
