@@ -112,24 +112,11 @@ export default {
       if (text_message.value) {
         const trimmedMessage = text_message.value.trim();
 
-        if (trimmedMessage.startsWith('/quit ')) {
-          const channelName = trimmedMessage.substring(6).trim();
-          const channel = channels.value.find((c) => c.name === channelName);
 
-          if (channel) {
-            const index = channels.value.indexOf(channel);
-
-            if (index !== -1) {
-              channels.value.splice(index, 1);
-            }
-
-            text_message.value = '';
-          }
-          return;
-        }
-        else if(trimmedMessage.startsWith('/quit')) {
+        if(trimmedMessage.startsWith('/quit')) {
           console.log('Current: ', channelStore.currentChannel)
           channelStore.leaveChannel(channelStore.currentChannel);
+          text_message.value = '';
           return;
         }
         else if(trimmedMessage.startsWith('/list')) {
