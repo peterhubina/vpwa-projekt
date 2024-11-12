@@ -157,7 +157,7 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
 
       <q-list>
-        <q-item class="no-padding" v-for="channel in channelStore.channels" clickable
+        <q-item class="no-padding" v-for="channel in channelStore.channels.slice().reverse()" clickable
                 :to="`/channels/${channel.id}`" :key="channel.name" style="display: flex; flex-direction: column;">
           <q-item class="q-px-md q-py-lg" clickable v-ripple>
             <q-item-section side>
@@ -302,7 +302,6 @@
           </q-item>
           <q-separator />
         </q-item>
-
       </q-list>
     </q-drawer>
 

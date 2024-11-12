@@ -9,7 +9,7 @@
         </template>
         <div v-for="message in channelStore.currentMessages" :key="message.id" class="caption q-py-sm">
           <q-chat-message
-              :bg-color="message.content.includes('@'+ authStore.user?.username+' ') ? 'warning' : 'primary'"
+            :bg-color="message.content.includes('@'+ authStore.user?.username) ? 'warning' : 'primary'"
             :key="message.id"
             :name="message.author.username === authStore.user?.username ? 'You' : message.author.username"
             avatar="https://cdn.quasar.dev/img/boy-avatar.png"
