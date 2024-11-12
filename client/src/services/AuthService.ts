@@ -22,7 +22,8 @@ class AuthService {
       'auth/me',
       { dontTriggerLogout } as AxiosRequestConfig
     )
-      .then((response) => response.data)
+      .then((response) =>
+        response.data)
       .catch((error: AxiosError) => {
         if (error.response?.status === 401) {
           return null
