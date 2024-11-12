@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="show messages">
+    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="Right side sent messages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/contracts/Auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/contracts/Auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +56,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "eslint.code.style.apply.dismiss": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "vpwa__gregor",
     "js.linters.configure.manually.selectedeslint": "true",
     "last_opened_file_path": "/Users/peter_hubina/Desktop/projekt",
     "node.js.detected.package.eslint": "true",
@@ -72,7 +70,7 @@
     "nodejs_package_manager_path": "npm",
     "prettier.import.notification.dismissed": "true",
     "settings.editor.selected.configurable": "settings.javascript.linters.tslint",
-    "ts.external.directory.path": "C:\\Users\\marti\\Desktop\\FIIT\\Semester 5\\VPWA\\projekt\\vpwa-projekt\\client\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\marti\\Desktop\\FIIT\\Semester 5\\VPWA\\projekt\\vpwa-projekt\\backend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -187,6 +185,7 @@
     <MESSAGE value="join new channel fix" />
     <MESSAGE value="create messages" />
     <MESSAGE value="show messages" />
-    <option name="LAST_COMMIT_MESSAGE" value="show messages" />
+    <MESSAGE value="Right side sent messages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Right side sent messages" />
   </component>
 </project>
