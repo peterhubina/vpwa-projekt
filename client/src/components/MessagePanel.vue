@@ -8,19 +8,14 @@
           </div>
         </template>
         <div v-for="message in channelStore.currentMessages" :key="message.id" class="caption q-py-sm">
-          {{message.content}}
-<!--          <q-chat-message-->
-<!--            :key="message.id"-->
-<!--            :name="message.name"-->
-<!--            :avatar="message.avatar"-->
-<!--            :text="message.content"-->
-<!--            :stamp="message.stamp"-->
-<!--            :sent="message.me"-->
-
-<!--            :text-color="message.me ? 'primary' : 'white'"-->
-<!--            :class="{'border-primary': !message.me, 'border-white': message.me}"-->
-<!--          >-->
-<!--          </q-chat-message>-->
+          <q-chat-message
+            bg-color="primary"
+            :key="message.id"
+            :name="message.author.name"
+            avatar="https://cdn.quasar.dev/img/boy-avatar.png"
+            :text="message.content">
+            <div>{{message.content}}</div>
+          </q-chat-message>
         </div>
         <div>
           <!--<q-chat-message
