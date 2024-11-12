@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="use case 6">
+    <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="fix messages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="backend-hubina" />
+        <entry key="$PROJECT_DIR$" value="vpwa_gregor" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -178,7 +177,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731410097897</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="/quit">
+      <option name="closed" value="true" />
+      <created>1731435006760</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1731435006760</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix messages">
+      <option name="closed" value="true" />
+      <created>1731437773844</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1731437773844</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +211,8 @@
     <MESSAGE value="show messages" />
     <MESSAGE value="Right side sent messages" />
     <MESSAGE value="use case 6" />
-    <option name="LAST_COMMIT_MESSAGE" value="use case 6" />
+    <MESSAGE value="/quit" />
+    <MESSAGE value="fix messages" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix messages" />
   </component>
 </project>
