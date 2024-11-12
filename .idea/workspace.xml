@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29f3807e-cb81-4b0b-83b8-800be55313a5" name="Changes" comment="show messages">
-      <change afterPath="$PROJECT_DIR$/backend/app/Controllers/Ws/ChannelController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MessagePanel.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/contracts/Auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/contracts/Auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/DashboardLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/stores/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/stores/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/stores/models.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +24,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="backend-hubina" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -34,58 +37,54 @@
     &quot;assignee&quot;: &quot;peterhubina&quot;
   }
 }</component>
-  <component name="GithubProjectSettings">
-    <option name="branchProtectionPatterns">
-      <list>
-        <option value="Default" />
-      </list>
-    </option>
-  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/peterhubina/vpwa-projekt.git&quot;,
-    &quot;accountId&quot;: &quot;5e82efa3-6117-4af4-95eb-20410b820dd5&quot;
+    &quot;accountId&quot;: &quot;3ea1a89c-23ee-4b95-bcc7-96d54fd1b75a&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2oDZ6wkIq5KmeZe3Nsgs4p6NHRQ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;eslint.code.style.apply.dismiss&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;backend-hubina&quot;,
-    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/peter_hubina/Desktop/projekt&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;/Users/peter_hubina/Desktop/projekt/client/node_modules/eslint&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettier.import.notification.dismissed&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.tslint&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/peter_hubina/Desktop/projekt/client/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "eslint.code.style.apply.dismiss": "true",
+    "git-widget-placeholder": "main",
+    "js.linters.configure.manually.selectedeslint": "true",
+    "last_opened_file_path": "/Users/peter_hubina/Desktop/projekt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "\\Users\\peter_hubina\\Desktop\\projekt\\client\\node_modules\\eslint",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettier.import.notification.dismissed": "true",
+    "settings.editor.selected.configurable": "settings.javascript.linters.tslint",
+    "ts.external.directory.path": "C:\\Users\\marti\\Desktop\\FIIT\\Semester 5\\VPWA\\projekt\\vpwa-projekt\\client\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Composition API Component&quot;
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-WS-242.21829.149" />
       </set>
     </attachedChunks>
   </component>
@@ -105,6 +104,8 @@
       <workItem from="1731173473085" duration="3225000" />
       <workItem from="1731176702779" duration="6912000" />
       <workItem from="1731228944668" duration="4907000" />
+      <workItem from="1731351276786" duration="495000" />
+      <workItem from="1731401993932" duration="4785000" />
     </task>
     <task id="LOCAL-00001" summary="configure database">
       <option name="closed" value="true" />

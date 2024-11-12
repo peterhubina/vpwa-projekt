@@ -11,9 +11,11 @@
           <q-chat-message
             bg-color="primary"
             :key="message.id"
-            :name="message.author.name"
+            :name="message.author.username === authStore.user?.username ? 'You' : message.author.username"
             avatar="https://cdn.quasar.dev/img/boy-avatar.png"
-            :text="message.content">
+            :text="message.content"
+            text-color="white"
+            :sent="message.author.username === authStore.user?.username">
             <div>{{message.content}}</div>
           </q-chat-message>
         </div>
@@ -72,6 +74,7 @@ import {ref, nextTick, inject} from 'vue';
 import { useQuasar } from 'quasar';
 import AccountListPopup from 'components/AccountListPopup.vue';
 import {useChannelStore} from 'stores/channel';
+import {useAuthStore} from 'stores/auth';
 
 export default {
   components: {
@@ -84,6 +87,8 @@ export default {
     const showMessage = ref(true);
     const showAccountList = ref(false);
     const channelStore = useChannelStore();
+    const authStore = useAuthStore();
+
     const messages = ref([
       { id: 96, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Hey, how are you?'], stamp: '7 minutes ago', me: true },
       { id: 97, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['@Michael are u doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
@@ -160,8 +165,8 @@ export default {
           const joinMatch = text_message.value
             .trim()
             .match(/^\/join\s+([^[\]]+?)\s*(private)?$/);
-
           channelStore.joinChannel(joinMatch[1], joinMatch[2] === 'private')
+
         } else if(trimmedMessage.startsWith('/cancel')) {
           console.log('Current: ', channelStore.currentChannel)
           channelStore.sendMessage(channelStore.currentChannel, 'User has left the channel');
@@ -209,6 +214,7 @@ export default {
       message_container,
       showMessage,
       accounts,
+      authStore,
       AccountListPopup,
       showAccountList,
     };
