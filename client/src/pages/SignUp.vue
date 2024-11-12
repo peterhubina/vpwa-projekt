@@ -93,7 +93,7 @@
 
 <script>
 import {defineComponent} from 'vue';
-//import {RouteLocationRaw} from 'vue-router';
+import {RouteLocationRaw} from 'vue-router';
 import {useAuthStore} from 'stores/auth';
 //import { useRouter } from 'vue-router'
 
