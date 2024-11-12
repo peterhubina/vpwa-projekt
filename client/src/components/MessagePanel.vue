@@ -121,40 +121,15 @@ export default {
 
             if (index !== -1) {
               channels.value.splice(index, 1);
-
-              $q.notify({
-                type: 'info',
-                message: `You have quit the channel "${channelName}".`,
-                position: 'top',
-                timeout: 3000,
-                color: 'white',
-                textColor: 'primary'
-              });
             }
 
             text_message.value = '';
           }
-          else {
-            $q.notify({
-              type: 'warning',
-              message: `Channel: "${channelName}" not found.`,
-              position: 'top',
-              timeout: 3000,
-              color: 'warning',
-              textColor: 'white'
-            });
-          }
           return;
         }
         else if(trimmedMessage.startsWith('/quit')) {
-          $q.notify({
-            type: 'warning',
-            message: 'Channel name missing.',
-            position: 'top',
-            timeout: 3000,
-            color: 'warning',
-            textColor: 'white'
-          });
+          console.log('Current: ', channelStore.currentChannel)
+          channelStore.leaveChannel(channelStore.currentChannel);
           return;
         }
         else if(trimmedMessage.startsWith('/list')) {
