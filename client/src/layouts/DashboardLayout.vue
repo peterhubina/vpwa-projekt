@@ -113,8 +113,8 @@
                 </q-toolbar>
                 <div class="row no-wrap q-pa-md">
                   <div class="column">
-                    <div class="text-subtitle1 q-mb-sm">Name: John Doe</div>
-                    <div class="text-subtitle1 q-mb-lg">Gmail: john.doe@gmail.com</div>
+                    <div class="text-subtitle1 q-mb-sm">Name: {{ authStore.user?.username || 'N/A' }}</div>
+                    <div class="text-subtitle1 q-mb-lg">Gmail: {{ authStore.user?.email || 'N/A' }}</div>
                     <div>
                       <q-btn-toggle
                         v-model="model"
@@ -157,7 +157,7 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
 
       <q-list>
-        <q-item class="no-padding" v-for="channel in channelStore.channels" clickable
+        <q-item class="no-padding" v-for="channel in channelStore.channels.slice().reverse()" clickable
                 :to="`/channels/${channel.id}`" :key="channel.name" style="display: flex; flex-direction: column;">
           <q-item class="q-px-md q-py-lg" clickable v-ripple>
             <q-item-section side>
@@ -302,7 +302,6 @@
           </q-item>
           <q-separator />
         </q-item>
-
       </q-list>
     </q-drawer>
 
