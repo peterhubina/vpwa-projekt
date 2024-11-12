@@ -7,20 +7,16 @@
             <q-spinner-dots color="primary" name="dots" size="40px" />
           </div>
         </template>
-        <div
-            v-for="message in channelStore.currentMessages.slice().reverse()"
-            :key="message.id"
-            class="caption q-py-sm"
-        >
+        <div v-for="message in channelStore.currentMessages" :key="message.id" class="caption q-py-sm">
           <q-chat-message
-              :bg-color="message.content.includes('@' + authStore.user?.username) ? 'warning' : 'primary'"
-              :name="message.author.username === authStore.user?.username ? 'You' : message.author.username"
-              avatar="https://cdn.quasar.dev/img/boy-avatar.png"
-              :text="message.content"
-              text-color="white"
-              :sent="message.author.username === authStore.user?.username"
-          >
-            <div>{{ message.content }}</div>
+            :bg-color="message.content.includes('@'+ authStore.user?.username) ? 'warning' : 'primary'"
+            :key="message.id"
+            :name="message.author.username === authStore.user?.username ? 'You' : message.author.username"
+            avatar="https://cdn.quasar.dev/img/boy-avatar.png"
+            :text="message.content"
+            text-color="white"
+            :sent="message.author.username === authStore.user?.username">
+            <div>{{message.content}}</div>
           </q-chat-message>
         </div>
         <div>
@@ -158,7 +154,7 @@ export default {
         messages.value.splice(0, 0,
           );
         done(); // Notify that loading is done
-      }, 1);
+      }, 1000);
     };
 
     return {

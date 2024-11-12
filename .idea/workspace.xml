@@ -41,6 +41,9 @@
     &quot;accountId&quot;: &quot;3ea1a89c-23ee-4b95-bcc7-96d54fd1b75a&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -193,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731437773844</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix messages">
+      <option name="closed" value="true" />
+      <created>1731437847150</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1731437847151</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
