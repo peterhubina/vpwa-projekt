@@ -368,6 +368,7 @@ export default {
 
     const joinChannel = () => {
       channelStore.joinChannel(inputContent.value, false);
+      channelStore.fetchChannels();
     }
 
     const createChannel = () => {
