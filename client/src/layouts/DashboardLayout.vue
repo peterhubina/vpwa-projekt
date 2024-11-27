@@ -195,7 +195,7 @@
                       icon="account_circle"
                     >
                       <q-popup-proxy>
-                        <AccountListPopup :accounts="accounts" />
+                        <AccountListPopup :accounts="getUsers()" />
                       </q-popup-proxy>
                     </q-btn>
 
@@ -348,6 +348,11 @@ export default {
       currentChannelName.value = newValue ? newValue.name : 'Slack';
     });
 
+    const getUsers = () => {
+      const users = channelStore.fetchUsersInChannel(channelStore.currentChannel?.name || 'Slack')
+      console.log('Users: ', users)
+    }
+
     // Function to toggle the left drawer state
     function toggleLeftDrawer() {
       leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -418,6 +423,7 @@ export default {
       channelStore,
       authStore,
       createChannel,
+      getUsers,
       leftDrawerOpen,
       toggleLeftDrawer,
       channels,

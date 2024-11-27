@@ -40,6 +40,7 @@ Route.group(() => {
   Route.get('channels2/:id/lister', 'ChannelsController.ts.lister')
   Route.post('channels/remove', 'ChannelsController.ts.remove')
   Route.post('channels/kick', 'ChannelsController.ts.kick')
+  Route.get('/channels/:id/users', 'ChannelsController.ts.getUsers')
 
   Route.post('messages', 'MessagesController.create')
   Route.post('getmessages', 'MessagesController.show')

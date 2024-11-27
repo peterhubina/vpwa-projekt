@@ -23,22 +23,15 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 
+import { User } from 'src/contracts';
+
 export default defineComponent({
   name: 'AccountListPopup',
   props: {
     accounts: {
-      type: Array as PropType<Array<{
-        id: number;
-        name: string;
-        gmail: string;
-        admin: boolean;
-        status: string;
-        avatar: string;
-        is_typing: boolean;
-        kick_votes: string;
-      }>>,
+      type: Array as PropType<User[]>,
       required: true,
-    }
+    },
   }
 });
 </script>
