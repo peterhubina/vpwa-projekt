@@ -124,6 +124,12 @@ export default class ChannelsController {
     return response.ok({ success: true })
   }
 
+  public async getUsers({ params, response }: HttpContextContract) {
+    const channel = await Channel.findOrFail(params.id)
+    const users = await channel.related('users').query()
+    return response.ok(users)
+  }
+
   public async kick({ response, auth, request }: HttpContextContract) {
     const removeChannelSchema = schema.create({
       channelId: schema.number(),

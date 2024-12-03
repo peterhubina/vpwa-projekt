@@ -17,6 +17,7 @@ export const useChannelStore = defineStore('channel', () => {
   const loading = ref<boolean>(false)
   const error = ref<Error|null>(null)
   const active = ref<string|null>(null)
+  const usersInChannel = ref<Record<string, any[]>>({});
 
   const currentChannel = ref<ListChannel|null>(null)
 
@@ -40,6 +41,14 @@ export const useChannelStore = defineStore('channel', () => {
       console.log('Messages: ', currentMessages)
     })
 
+  };
+
+  const fetchUsersInChannel = async (channel: string) => {
+
+    const users = await channelService.getUsers(channel);
+    usersInChannel.value[channel] = users;
+
+    return users;
   };
 
   const joinChannel = async (channelName: string, isPrivate: boolean) => {
@@ -238,6 +247,8 @@ export const useChannelStore = defineStore('channel', () => {
     addMessage,
     joinedChannels,
     lastMessageOf,
+    usersInChannel,
+    fetchUsersInChannel
     //userIsTyping
   };
 });
