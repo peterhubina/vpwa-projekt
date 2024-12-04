@@ -45,4 +45,5 @@ Route.group(() => {
   Route.post('messages', 'MessagesController.create')
   Route.post('getmessages', 'MessagesController.show')
   Route.post('status', 'UsersController.status')
+  Route.get('status/:userId', 'UsersController.getStatus')
 }).middleware('auth')

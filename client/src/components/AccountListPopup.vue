@@ -28,8 +28,7 @@ import { User } from 'src/contracts';
 export default defineComponent({
   name: 'AccountListPopup',
   props: {
-    accounts:
-      {
+    accounts: {
       type: [Array, Object, null],
       required: true,
     },

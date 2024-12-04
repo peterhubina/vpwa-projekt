@@ -117,7 +117,7 @@
                     <div class="text-subtitle1 q-mb-lg">Gmail: {{ authStore.user?.email || 'N/A' }}</div>
                     <div>
                       <q-btn-toggle
-                        v-model="model"
+                        v-model="state"
                         class="my-custom-toggle"
                         no-caps
                         rounded
@@ -126,9 +126,11 @@
                         color="white"
                         text-color="primary"
                         :options="[
-                          { label: 'Online', value: 'one' },
-                          { label: 'Offline', value: 'two' },
-                          { label: 'Invisible', value: 'three' }]"/>
+                          { label: 'Online', value: 'online' },
+                          { label: 'DND', value: 'dnd' },
+                          { label: 'Offline', value: 'offline' }]"
+                        @update:model-value="changeStatus"
+                      />
                     </div>
                   </div>
                   <q-separator vertical inset class="q-mx-lg" />
@@ -193,6 +195,7 @@
                       size="md"
                       style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
                       icon="account_circle"
+                      @click="fetchUsers"
                     >
                       <q-popup-proxy>
                         <AccountListPopup :accounts="resolvedAccounts" />
@@ -321,6 +324,7 @@ import AccountListPopup from 'components/AccountListPopup.vue';
 import {useAuthStore} from 'stores/auth';
 import { useChannelStore } from 'stores/channel';
 import {User} from 'src/contracts';
+import {UserStatus} from 'stores/models';
 
 export default {
   components: {
@@ -328,10 +332,10 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const model = ref('one');
     const Tag_Only = ref(false)
     const leftDrawerOpen = ref(false);
     const authStore = useAuthStore();
+    const state = ref('online');
 
     const inputContent = ref('');
     const isPrivate = ref(false);
@@ -398,6 +402,11 @@ export default {
       channels.value = channels.value.filter(channel => channel.id !== channelId);
     }
 
+    const changeStatus = () => {
+      console.log(state.value)
+      authStore.setStatus(state.value as UserStatus);
+    }
+
     function logout() {
       useAuthStore().logout().then(() => {
         router.push('/login');
@@ -451,7 +460,7 @@ export default {
     provide('channels', channels);
 
     return {
-      model,
+      state,
       inviteInput,
       inputContent,
       joinChannel,
@@ -471,7 +480,9 @@ export default {
       logout,
       accounts,
       Tag_Only,
-      inviteUser
+      inviteUser,
+      changeStatus,
+      fetchUsers
     };
   },
 };
