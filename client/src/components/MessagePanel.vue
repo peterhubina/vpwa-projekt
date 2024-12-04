@@ -13,7 +13,7 @@
             :key="message.id"
             :name="message.author.username === authStore.user?.username ? 'You' : message.author.username"
             avatar="https://cdn.quasar.dev/img/boy-avatar.png"
-            :text="message.content"
+            :text="[message.content]"
             text-color="white"
             :sent="message.author.username === authStore.user?.username">
             <div>{{message.content}}</div>
