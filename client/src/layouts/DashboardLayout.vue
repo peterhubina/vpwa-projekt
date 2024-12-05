@@ -181,7 +181,7 @@
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} server</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} Private</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
@@ -455,7 +455,7 @@ export default {
       { id: 5, name: 'Peter', gmail: 'peter.parker@gmail.com', admin: false, status: 'offline', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
     ]);
 
-    const blueModel = ref('server');
+    const blueModel = ref('Private');
 
     provide('channels', channels);
 

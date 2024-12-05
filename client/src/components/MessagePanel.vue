@@ -94,10 +94,7 @@ export default {
     const scrollTarget = computed(() => message_container.value || undefined);
 
     const messages = ref([
-      { id: 96, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Hey, how are you?'], stamp: '7 minutes ago', me: true },
-      { id: 97, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['@Michael are u doing fine, how r you?', 'I just feel like typing a really, really, REALLY long message to annoy you...'], stamp: '4 minutes ago', me: false },
-      { id: 98, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Did it work?'], stamp: '1 minute ago', me: false },
-      { id: 99, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['nope'], stamp: '1 minute ago', me: true }
+
     ]);
 
     const fetchUsers = async () => {
@@ -218,13 +215,7 @@ export default {
     /*const onLoad = (index, done) => {
       setTimeout(() => {
         messages.value.splice(0, 0,
-          {id: 0, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Just got a new message from history!'], stamp: '2 minutes ago', me: true,},
-          {id: 0, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Yeah, it seems so!'], stamp: '1 minute ago', me: true,},
-          {id: 0, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Yeah, it seems so!'], stamp: '1 minute ago', me: false,},
-          {id: 0, name: 'me', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Yeah, it seems so!'], stamp: '1 minute ago', me: true,},
-          {id: 0, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Yeah, it seems so!'], stamp: '1 minute ago', me: false,},
-          {id: 0, name: 'Joe', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', text: ['Yeah, it seems so!'], stamp: '1 minute ago', me: false,}
-        );
+          );
         done(); // Notify that loading is done
       }, 1000);
     };*/
