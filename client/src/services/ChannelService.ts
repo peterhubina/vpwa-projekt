@@ -49,6 +49,10 @@ class ChannelSocketManager extends SocketManager {
     return this.emitAsync('leaveChannel')
   }
 
+  public getUsersInChannel (): Promise<any[]> {
+    return this.emitAsync('getUsers')
+  }
+
   public printTyping (channel: any, user: any, messagebeingtyped: string): Promise<any> {
     return this.emitAsync('printTyping', channel, user, messagebeingtyped)
   }
@@ -104,6 +108,16 @@ class ChannelService {
       channel.destroy()
     })
     return this.channels.delete(name)
+  }
+
+  public getUsers (name: string): Promise<any[]> {
+    const channel = this.channels.get(name)
+
+    if (!channel) {
+      throw new Error(`Channel "${name}" not found`)
+    }
+
+    return channel.getUsersInChannel()
   }
 
   public in (name: string): ChannelSocketManager | undefined {

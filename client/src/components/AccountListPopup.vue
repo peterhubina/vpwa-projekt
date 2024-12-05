@@ -1,19 +1,19 @@
 <template>
   <q-banner>
     <q-item-section>
-      <q-item v-for="account in accounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
+      <q-item v-for="account in accounts || []" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
         <q-item-section avatar>
           <q-avatar color="primary" text-color="white" class="relative">
-            <img :src="account.avatar" alt="User Avatar" />
+            <!--<img :src="account.avatar" alt="User Avatar" />-->
             <q-badge :color="account.status === 'online' ? 'primary' : 'warning'" rounded floating />
           </q-avatar>
         </q-item-section>
 
         <q-item-section>
           <q-item-label>{{ account.name }}</q-item-label>
-          <q-item-label caption lines="1">gmail: {{ account.gmail }}</q-item-label>
-          <q-item-label caption lines="1">status: {{ account.admin ? 'admin' : 'guest' }}, {{ account.status }}{{ account.is_typing ? ', typing...' : '' }}</q-item-label>
-          <q-item-label caption lines="1">{{ account.is_typing ? ' hello chat i am online' : '' }}</q-item-label>
+          <q-item-label caption lines="1">gmail: {{ account.email }}</q-item-label>
+          <q-item-label caption lines="1">status: {{ account.role ? 'admin' : 'guest' }}, {{ account.status }}{{ account.is_typing ? ', typing...' : '' }}</q-item-label>
+          <!--<q-item-label caption lines="1">{{ account.is_typing ? ' hello chat i am online' : '' }}</q-item-label>-->
         </q-item-section>
       </q-item>
     </q-item-section>
@@ -21,26 +21,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import {defineComponent, onMounted, PropType, watch} from 'vue';
+
+import { User } from 'src/contracts';
 
 export default defineComponent({
   name: 'AccountListPopup',
   props: {
     accounts: {
-      type: Array as PropType<Array<{
-        id: number;
-        name: string;
-        gmail: string;
-        admin: boolean;
-        status: string;
-        avatar: string;
-        is_typing: boolean;
-        kick_votes: string;
-      }>>,
+      type: [Array, Object, null],
       required: true,
-    }
-  }
-});
+    },
+  },
+  setup(props) {
+    // Log accounts after the component is mounted
+    onMounted(() => {
+      console.log('Accounts after load:', props.accounts);
+    });
+
+    watch(
+      () => props.accounts,
+      (newValue) => {
+        console.log('Accounts updated:', newValue);
+      },
+    );
+}})
 </script>
 
 <style scoped>

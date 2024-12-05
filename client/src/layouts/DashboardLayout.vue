@@ -117,7 +117,7 @@
                     <div class="text-subtitle1 q-mb-lg">Gmail: {{ authStore.user?.email || 'N/A' }}</div>
                     <div>
                       <q-btn-toggle
-                        v-model="model"
+                        v-model="state"
                         class="my-custom-toggle"
                         no-caps
                         rounded
@@ -126,9 +126,11 @@
                         color="white"
                         text-color="primary"
                         :options="[
-                          { label: 'Online', value: 'one' },
-                          { label: 'Offline', value: 'two' },
-                          { label: 'Invisible', value: 'three' }]"/>
+                          { label: 'Online', value: 'online' },
+                          { label: 'DND', value: 'dnd' },
+                          { label: 'Offline', value: 'offline' }]"
+                        @update:model-value="changeStatus"
+                      />
                     </div>
                   </div>
                   <q-separator vertical inset class="q-mx-lg" />
@@ -179,7 +181,7 @@
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} server</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} Private</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
@@ -193,9 +195,10 @@
                       size="md"
                       style="border-radius: 30px; flex-grow: 1; flex-shrink: 1;"
                       icon="account_circle"
+                      @click="fetchUsers"
                     >
                       <q-popup-proxy>
-                        <AccountListPopup :accounts="accounts" />
+                        <AccountListPopup :accounts="resolvedAccounts" />
                       </q-popup-proxy>
                     </q-btn>
 
@@ -218,12 +221,11 @@
                                 </q-avatar>
                                 <q-input
                                   rounded outlined bg-color="white"
+                                  v-model="inviteInput"
                                   ref="Invite_Account"
-                                  label="account gmail..."
+                                  label="username"
                                   lazy-rules
-                                  model-value=""
-                                  style="margin-bottom: 0;"
-                                />
+                                  style="margin-bottom: 0;" />
                               </div>
                               <q-btn
                                 color="primary"
@@ -233,6 +235,7 @@
                                 size="md"
                                 v-close-popup
                                 style="border-radius: 30px; margin-top: 10px;"
+                                @click="inviteUser(inviteInput)"
                               />
                             </q-item-section>
                           </q-item>
@@ -252,17 +255,18 @@
                       <q-popup-proxy>
                         <q-banner>
                           <q-item-section>
-                            <q-item v-for="account in accounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
+                            <q-item v-for="account in resolvedAccounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
                               <q-item-section avatar>
-                                <q-avatar color="primary" text-color="white" class="relative">
+                                <!--<q-avatar color="primary" text-color="white" class="relative">
                                   <img :src="account.avatar" alt="User Avatar" />
-                                </q-avatar>
+                                </q-avatar>-->
                               </q-item-section>
 
                               <q-item-section>
                                 <q-item-label>{{ account.name }}</q-item-label>
-                                <q-item-label v-if="!account.admin" caption lines="1">kick votes: {{ account.kick_votes}}</q-item-label>
-                                <q-item-label v-if="account.admin" caption lines="1">admin</q-item-label>
+                                <q-item-label>{{ account.email }}</q-item-label>
+                                <q-item-label v-if="account.role == 'user'" caption lines="1">kick votes: 1</q-item-label>
+                                <q-item-label v-if="account.role == 'admin'" caption lines="1">admin</q-item-label>
                               </q-item-section>
                             </q-item>
                           </q-item-section>
@@ -314,11 +318,13 @@
 
 
 <script lang="ts">
-import {provide, ref, watch} from 'vue';
+import {onMounted, provide, ref, watch} from 'vue';
 import { useRouter } from 'vue-router';
 import AccountListPopup from 'components/AccountListPopup.vue';
 import {useAuthStore} from 'stores/auth';
 import { useChannelStore } from 'stores/channel';
+import {User} from 'src/contracts';
+import {UserStatus} from 'stores/models';
 
 export default {
   components: {
@@ -326,27 +332,66 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const model = ref('one');
     const Tag_Only = ref(false)
     const leftDrawerOpen = ref(false);
     const authStore = useAuthStore();
+    const state = ref('online');
 
     const inputContent = ref('');
     const isPrivate = ref(false);
 
+    const inviteInput = ref('');
     const channelStore = useChannelStore();
+    const resolvedAccounts = ref<User[]>([]);
 
     // Return the current channel name
     const getChannelName = () => {
       return channelStore.currentChannel?.name ?? 'Slack';
     };
-    const currentChannelName = ref(getChannelName());
+    const currentChannelName = ref('');
 
     //console.log('Channel: ', channelStore.getMessages(channelStore.currentChannel, 10))
 
     watch(() => channelStore.currentChannel, (newValue) => {
       currentChannelName.value = newValue ? newValue.name : 'Slack';
+      fetchUsers();
     });
+
+    const inviteUser = async (username: string) => {
+      try {
+        if (channelStore.currentChannel) {
+          await channelStore.inviteUser(channelStore.currentChannel, username);
+          console.log(`User ${username} invited successfully.`);
+          inviteInput.value = '';
+          await fetchUsers();
+        } else {
+          console.log('No channel selected.');
+        }
+      } catch (error) {
+        console.error('Error inviting user:', error);
+      }
+    };
+
+    const fetchUsers = async () => {
+      resolvedAccounts.value = await channelStore.fetchUsersInChannel(
+        currentChannelName.value || 'Slack'
+      );
+
+      console.log('Fetched Accounts:', resolvedAccounts.value);
+    }
+
+    onMounted(() => {
+      currentChannelName.value = getChannelName();
+      console.log('Current Channel:', currentChannelName.value);
+      fetchUsers();
+      console.log('Fetched users: ', resolvedAccounts.value)
+    });
+    /*
+    const getUsers = async () => {
+      const users = await channelStore.fetchUsersInChannel(channelStore.currentChannel?.name || 'Slack')
+      console.log('Users: ', users)
+      return users;
+    }*/
 
     // Function to toggle the left drawer state
     function toggleLeftDrawer() {
@@ -355,6 +400,11 @@ export default {
 
     function leaveChannel(channelId: number) {
       channels.value = channels.value.filter(channel => channel.id !== channelId);
+    }
+
+    const changeStatus = () => {
+      console.log(state.value)
+      authStore.setStatus(state.value as UserStatus);
     }
 
     function logout() {
@@ -368,6 +418,7 @@ export default {
 
     const joinChannel = () => {
       channelStore.joinChannel(inputContent.value, false);
+      channelStore.fetchChannels();
     }
 
     const createChannel = () => {
@@ -404,12 +455,13 @@ export default {
       { id: 5, name: 'Peter', gmail: 'peter.parker@gmail.com', admin: false, status: 'offline', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
     ]);
 
-    const blueModel = ref('server');
+    const blueModel = ref('Private');
 
     provide('channels', channels);
 
     return {
-      model,
+      state,
+      inviteInput,
       inputContent,
       joinChannel,
       isPrivate,
@@ -417,6 +469,8 @@ export default {
       channelStore,
       authStore,
       createChannel,
+      /*getUsers,*/
+      resolvedAccounts,
       leftDrawerOpen,
       toggleLeftDrawer,
       channels,
@@ -426,6 +480,9 @@ export default {
       logout,
       accounts,
       Tag_Only,
+      inviteUser,
+      changeStatus,
+      fetchUsers
     };
   },
 };

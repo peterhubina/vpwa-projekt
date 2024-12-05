@@ -6,7 +6,6 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class MessageRepository implements MessageRepositoryContract {
   public async getAll(channelName: string, auth: HttpContextContract['auth']): Promise<any[]> {
-    console.log('test', channelName)
     const channel = await auth
       .user!.related('channels')
       .query()

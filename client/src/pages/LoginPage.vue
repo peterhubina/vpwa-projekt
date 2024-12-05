@@ -76,8 +76,9 @@ const onSubmit = async () => {
   const authStore = useAuthStore();
 
   try {
-    await authStore.login(loginData);
-    router.push('/channels');
+    await authStore.login(loginData).then(() => {
+      router.push('/channels');
+    })
   } catch (error) {
     console.error('Login failed:', error);
     $q.notify({

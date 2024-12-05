@@ -4,6 +4,8 @@ import {ref} from 'vue';
 //import {useRouter} from "vue-router";
 import {authManager, authService, channelService} from 'src/services';
 import {useChannelStore} from 'stores/channel';
+import {UserStatus} from 'stores/models';
+import {api} from 'boot/axios';
 //import {useChannelStore} from 'stores/channel';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -12,7 +14,17 @@ export const useAuthStore = defineStore('auth', () => {
   const status = ref<'pending' | 'success' | 'error'>('pending');
   const errors = ref<Array<{ message: string; field?: string }>>([]);
 
-  //const router = useRouter();
+  const getStatus = async () => {
+    /*const user = await api.get<any>(
+      `http://localhost:3333/status/${user.value?.id}`
+    )
+
+    console.log('Status: ', status)
+
+    userStatus.value = user.data.status*/
+  }
+
+  const userStatus = ref<UserStatus>('online');
 
   const AUTH_START = () => {
     status.value = 'pending'
@@ -36,6 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
       AUTH_SUCCESS(null)
       // save api token to local storage and notify listeners
       authManager.setToken(apiToken.token)
+      //userStatus.value = getStatus()
       await useChannelStore().fetchChannels()
       return apiToken
     } catch (err) {
@@ -90,6 +103,26 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { login, check, register, logout, user }
+  const setStatus = async (status: UserStatus) => {
+    await api.post<any>(
+      'http://localhost:3333/status',
+      {
+        status: status,
+        userId: user.value?.id,
+      }
+    )
+  /*
+    if(status === 'offline') {
+      useChannelStore().channels.forEach((channel) => {
+        channelService.leave(channel.name)
+      })
+    } else {
+      useChannelStore().channels.forEach((channel) => {
+        channelService.join(channel.name)
+      })
+    }*/
+  }
+
+  return { login, check, register, logout, user, setStatus, userStatus, getStatus }
 
 });

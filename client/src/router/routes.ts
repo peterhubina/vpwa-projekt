@@ -12,7 +12,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/DashboardLayout.vue'),
     meta: { requiresAuth: true },
     children: [
-      { path: '', name: 'home', component: () => import('components/MessagePanel.vue') },
+      { path: '', name: 'home', component: () => import('pages/HomePage.vue') },
       { path: ':id', component: () => import('components/MessagePanel.vue') },
       { path: '', name: 'NoChannelOpened', component: () => import('components/NoChannelOpened.vue') },
     ],

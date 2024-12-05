@@ -1,6 +1,7 @@
 import type { WsContextContract } from '@ioc:Ruby184/Socket.IO/WsContext'
 import Channel from 'App/Models/Channel'
 import User from 'App/Models/User'
+import {HttpContextContract} from "@ioc:Adonis/Core/HttpContext";
 
 export default class ChannelController {
   constructor() {}
@@ -13,6 +14,13 @@ export default class ChannelController {
     socket.broadcast.emit('channelDeleted', channel)
     await channel.delete()
     return channel
+  }
+
+  public async getUsers({ params }: HttpContextContract) {
+    const channel = await Channel.query().where('name', params.name).firstOrFail()
+    const users = await channel.related('users').query()
+    console.log('Users: ', users)
+    return users
   }
 
   public async leave({ auth, socket, params }: WsContextContract) {
