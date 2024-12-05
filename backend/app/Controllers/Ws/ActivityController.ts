@@ -39,11 +39,7 @@ export default class ActivityController {
 
   public async inviteUser({ socket, auth }: WsContextContract, userName: string, channelId: number) {
     const invitedUser = await User.findByOrFail('username', userName)
-
-
     const channel = await Channel.findOrFail(channelId)
-
-
     if (channel.isPrivate) {
       if (auth.user!.id !== channel.ownerId)
         throw new Error('You are not the owner of this channel')

@@ -59,6 +59,7 @@ export const useChannelStore = defineStore('channel', () => {
     await channelService.join(channelName).loadMessages();
 
     channels.value.push(channel);
+    await fetchChannels()
     console.log('New channel')
     router.push(`/channels/${channel.id}`);
   };
