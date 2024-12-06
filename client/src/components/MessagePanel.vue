@@ -7,7 +7,7 @@
             <q-spinner-dots color="primary" name="dots" size="40px" />
           </div>
         </template>
-        <div v-for="message in channelStore.currentMessages" :key="message.id" class="caption q-py-sm">
+        <div v-for="message in (channelStore.currentMessages || []).slice().reverse()" :key="message.id" class="caption q-py-sm">
           <q-chat-message
             :bg-color="message.content.includes('@'+ authStore.user?.username) ? 'warning' : 'primary'"
             :key="message.id"
