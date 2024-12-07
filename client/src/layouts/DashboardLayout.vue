@@ -255,7 +255,7 @@
                       <q-popup-proxy>
                         <q-banner>
                           <q-item-section>
-                            <q-item v-for="account in resolvedAccounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
+                            <q-item v-for="account in resolvedAccounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup @click="kickUser(account.username)">
                               <q-item-section avatar>
                                 <!--<q-avatar color="primary" text-color="white" class="relative">
                                   <img :src="account.avatar" alt="User Avatar" />
@@ -416,6 +416,18 @@ export default {
       });
     }
 
+    const kickUser = async (userName: string) => {
+      try {
+        if (channelStore.currentChannel) {
+          console.log('Kicking user: ', userName)
+          await channelStore.removeUser(channelStore.currentChannel, userName);
+          await fetchUsers();
+        }
+      } catch (error) {
+        console.error('Error kicking user:', error);
+      }
+    };
+
     const joinChannel = () => {
       channelStore.joinChannel(inputContent.value, false);
       channelStore.fetchChannels();
@@ -484,7 +496,8 @@ export default {
       Tag_Only,
       inviteUser,
       changeStatus,
-      fetchUsers
+      fetchUsers,
+      kickUser
     };
   },
 };

@@ -44,7 +44,7 @@ export const useChannelStore = defineStore('channel', () => {
   };
 
   const fetchUsersInChannel = async (channel: string) => {
-
+    //await fetchChannels()
     const users = await channelService.getUsers(channel);
     usersInChannel.value[channel] = users;
 
@@ -105,7 +105,6 @@ export const useChannelStore = defineStore('channel', () => {
   };
 
   const removeUser = async (channel: ListChannel, user: string) => {
-    /*
     const { data: success } = await api.post<any>(
       'http://localhost:3333/channels/kick',
       {
@@ -113,8 +112,7 @@ export const useChannelStore = defineStore('channel', () => {
         userName: user,
       }
     );
-    */
-    activityService.removeUser(channel, user)
+    //activityService.removeUser(channel, user)
   };
 
   watch(() => route?.params.id, () => {

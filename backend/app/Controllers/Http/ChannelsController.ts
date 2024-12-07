@@ -146,6 +146,7 @@ export default class ChannelsController {
 
     console.log('KICK')
     if (channel.isPrivate) {
+      console.log('Kanal je private')
       if (auth.user!.id !== channel.ownerId)
         throw new Error('You are not the owner of this channel')
       await reportedUser.related('channels').detach([channel.id])
@@ -153,6 +154,7 @@ export default class ChannelsController {
     }
 
     if (channel.ownerId === auth.user!.id) {
+      console.log('Kanal je public, si owner')
       await channel
         .related('reports')
         .query()
@@ -165,7 +167,7 @@ export default class ChannelsController {
       await reportedUser.related('channels').detach([channel.id])
       return response.ok({ success: true })
     }
-
+    console.log('Kanal je public, nie si owner')
     await channel
       .related('reports')
       .query()
