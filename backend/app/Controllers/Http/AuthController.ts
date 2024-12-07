@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Channel from 'App/Models/Channel'
+//import Channel from 'App/Models/Channel'
 import User from 'App/Models/User'
 import RegisterUserValidator from 'App/Validators/RegisterUserValidator'
 
@@ -8,7 +8,7 @@ export default class AuthController {
     // if invalid, exception
     const data = await request.validate(RegisterUserValidator)
     const user = await User.create(data)
-    console.log('User created: ', user)
+    //console.log('User created: ', user)
     // join user to general channel
     //const general = await Channel.findByOrFail('name', 'general')
     //await user.related('channels').attach([general.id])
@@ -19,12 +19,12 @@ export default class AuthController {
   async login({ auth, request }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
-    console.log('Auth object: ', auth)
+    //console.log('Auth object: ', auth)
     return auth.use('api').attempt(email, password)
   }
 
   async logout({ auth }: HttpContextContract) {
-    console.log('Auth object: ', auth)
+    //console.log('Auth object: ', auth)
     return auth.use('api').logout()
   }
 

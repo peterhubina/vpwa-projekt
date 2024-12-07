@@ -22,9 +22,9 @@ export default class MessageRepository implements MessageRepositoryContract {
     content: string
   ): Promise<SerializedMessage> {
     // check if user is in channel
-    console.log('Auth: ', auth)
-    console.log('channelName: ', channelName)
-    console.log('content: ', content)
+    //console.log('Auth: ', auth)
+    //console.log('channelName: ', channelName)
+    //console.log('content: ', content)
     const channel = await auth
       .user!.related('channels')
       .query()

@@ -181,7 +181,7 @@
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} Private</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} Channel</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
@@ -255,7 +255,7 @@
                       <q-popup-proxy>
                         <q-banner>
                           <q-item-section>
-                            <q-item v-for="account in resolvedAccounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
+                            <q-item v-for="account in resolvedAccounts" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup @click="kickUser(account.username)">
                               <q-item-section avatar>
                                 <!--<q-avatar color="primary" text-color="white" class="relative">
                                   <img :src="account.avatar" alt="User Avatar" />
@@ -398,10 +398,6 @@ export default {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     }
 
-    function leaveChannel(channelId: number) {
-      channels.value = channels.value.filter(channel => channel.id !== channelId);
-    }
-
     const changeStatus = () => {
       console.log(state.value)
       authStore.setStatus(state.value as UserStatus);
@@ -416,6 +412,18 @@ export default {
       });
     }
 
+    const kickUser = async (userName: string) => {
+      try {
+        if (channelStore.currentChannel) {
+          console.log('Kicking user: ', userName)
+          await channelStore.removeUser(channelStore.currentChannel, userName);
+          await fetchUsers();
+        }
+      } catch (error) {
+        console.error('Error kicking user:', error);
+      }
+    };
+
     const joinChannel = () => {
       channelStore.joinChannel(inputContent.value, false);
       channelStore.fetchChannels();
@@ -428,20 +436,6 @@ export default {
       inputContent.value = ''
     }
 
-    // Array of channels for the list
-    const channels = ref([
-      { id: 1, name: 'Channel1', description: 'Joe: Hello how u doing in this rainy day, Hello how u doing in this rainy day', admin: true , public: false, not: 'none', isNew: true},
-      { id: 2, name: 'Channel2', description: 'Me: Just another day at the office!', admin: false, public: false, not: 'none',isMessage: true },
-      { id: 3, name: 'Channel3', description: 'Joe: Team discussion on project', admin: false, public: false, not: 'message' },
-      { id: 4, name: 'Channel4', description: 'Me: What\'s your favorite movie?', admin: false, public: false, not: 'none' },
-      { id: 5, name: 'Channel5', description: 'Joe: Let\'s plan the weekend getaway', admin: false, public: false, not: 'none'},
-      { id: 6, name: 'Channel6', description: 'Me: Hello how u doing in this rainy day', admin: true, public: false, not: 'invite' },
-      { id: 7, name: 'Channel7', description: 'Joe: Just another day at the office!', admin: false, public: false, not: 'none'},
-      { id: 8, name: 'Channel8', description: 'Me: Team discussion on project', admin: false, public: true, not: 'none' },
-      { id: 9, name: 'Channel9', description: 'Joe: What\'s your favorite movie?', admin: false, public: true, not: 'invite' },
-      { id: 10, name: 'Channel10', description: 'Me: Let\'s plan the weekend getaway', admin: false, public: true, not: 'none' },
-    ]);
-
     const notifications = ref([
       { id: 1, name: 'Channel1', type:'message', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day, Hello how u doing in this rainy day' },
       { id: 2, name: 'Channel10', type:'kick', description: 'You have been kicked from channel' },
@@ -449,17 +443,7 @@ export default {
       { id: 4, name: 'Channel11', type:'delete', description: 'Channel has been deleted' },
     ]);
 
-    const accounts = ref([
-      { id: 1, name: 'Joe', gmail: 'joe.garfield@gmail.com', admin: true, status: 'online', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
-      { id: 2, name: 'Alex', gmail: 'alex.gordon@gmail.com', admin: false, status: 'online', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: true, kick_votes:'2'},
-      { id: 3, name: 'Marco', gmail: 'marco.polo@gmail.com', admin: false, status: 'online', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
-      { id: 4, name: 'Clement', gmail: 'clement.gotwald@gmail.com', admin: false, status: 'offline', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'1'},
-      { id: 5, name: 'Peter', gmail: 'peter.parker@gmail.com', admin: false, status: 'offline', avatar: 'https://cdn.quasar.dev/img/boy-avatar.png', is_typing: false, kick_votes:'0'},
-    ]);
-
     const blueModel = ref('Private');
-
-    provide('channels', channels);
 
     return {
       state,
@@ -475,16 +459,14 @@ export default {
       resolvedAccounts,
       leftDrawerOpen,
       toggleLeftDrawer,
-      channels,
       notifications,
       blueModel,
-      leaveChannel,
       logout,
-      accounts,
       Tag_Only,
       inviteUser,
       changeStatus,
-      fetchUsers
+      fetchUsers,
+      kickUser
     };
   },
 };
