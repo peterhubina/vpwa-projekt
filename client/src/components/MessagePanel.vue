@@ -3,7 +3,7 @@
     <div class="messages-container q-pa-md" style="flex-grow: 1; overflow-y: auto; height: calc(100% - 80px);" ref="message_container" @scroll="onScroll">
       <q-infinite-scroll reverse style="width: 100%" :scroll-target="scrollTarget">
         <template v-slot:loading>
-          <div class="row justify-center q-my-md">
+          <div v-if="loading" class="row justify-center q-my-md">
             <q-spinner-dots color="primary" name="dots" size="40px" />
           </div>
         </template>
@@ -93,11 +93,14 @@ export default {
     const scrollTarget = computed(() => message_container.value || undefined);
     const messages = ref([
     ]);
-
     const limit = ref(10);
+    const loading = ref(false);
+
 
     const onScroll = async () => {
       if (message_container.value?.scrollTop === 0 && limit.value < channelStore.currentMessages.length) {
+        loading.value = true;  // Show the loading spinner
+
         const currentScrollPosition = message_container.value.scrollTop;
         const currentHeight = message_container.value.scrollHeight;
 
@@ -110,6 +113,8 @@ export default {
             message_container.value.scrollTop = newHeight - currentHeight + currentScrollPosition;
           }
         });
+
+        loading.value = false;  // Hide the loading spinner after function completes
       }
     };
 
@@ -246,7 +251,8 @@ export default {
       fetchUsers,
       scrollTarget,
       limit,
-      onScroll
+      onScroll,
+      loading
     };
   },
 };
