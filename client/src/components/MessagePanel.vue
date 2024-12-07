@@ -20,21 +20,24 @@
           </q-chat-message>
         </div>
         <div>
-          <!--<q-chat-message
-            bg-color="primary"
-            name="Joe"
-            text-color="white"
-            avatar="https://cdn.quasar.dev/img/boy-avatar.png"
-            @click="showMessage = true"
-          >
-            <q-spinner-dots size="2rem" />
-          </q-chat-message>-->
-
-          <q-popup-proxy v-model:showing="showMessage" transition-show="scale" transition-hide="scale">
-            <div class="q-pa-md bg-primary text-white" style="width: auto;">
-              <div class="text-subtitle2">Hello Michael I have a question for you, can y...</div>
-            </div>
-          </q-popup-proxy>
+          <div v-for="typingInfo in channelStore.currentChannel?.is_typing || []" :key="typingInfo.user.id" class="caption q-py-sm">
+            <q-chat-message
+              :bg-color="'secondary'"
+              :name="typingInfo.user.username"
+              avatar="https://cdn.quasar.dev/img/boy-avatar.png"
+              text-color="black"
+              :text="[typingInfo.message || 'Typing...']"
+            >
+              <template v-if="typingInfo.message">
+                <q-spinner-dots size="2rem" />
+              </template>
+            </q-chat-message>
+            <q-popup-proxy v-model:showing="showMessage" transition-show="scale" transition-hide="scale">
+              <div class="q-pa-md bg-primary text-white" style="width: auto;">
+                <div class="text-subtitle2">{{typingInfo.message}}</div>
+              </div>
+            </q-popup-proxy>
+          </div>
         </div>
       </q-infinite-scroll>
     </div>
@@ -70,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import {ref, nextTick, inject, computed} from 'vue';
+import {ref, nextTick, inject, computed, watch} from 'vue';
 import { useQuasar } from 'quasar';
 import AccountListPopup from 'components/AccountListPopup.vue';
 import {useChannelStore} from 'stores/channel';
@@ -255,6 +258,15 @@ export default {
       await channelStore.getMessages(channelStore.currentChannel, n.value)
 
     }
+
+    watch(
+      () => text_message.value,
+      (newVal) => {
+        if (newVal && channelStore.currentChannel) {
+          channelStore.userIsTyping(newVal);
+        }
+      }
+    );
 
     return {
       text_message,

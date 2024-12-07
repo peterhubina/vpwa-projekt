@@ -240,7 +240,7 @@ export const useChannelStore = defineStore('channel', () => {
       return channelMessages.length > 0 ? channelMessages[channelMessages.length - 1] : null;
     };
   };
-/*
+
   const userIsTyping = (messagebeingtyped: string) => {
     const channel =  currentChannel.value?.name ?? ''
     if (!channel) return
@@ -249,7 +249,7 @@ export const useChannelStore = defineStore('channel', () => {
     if (channelServiceInstance) {
       channelServiceInstance.printTyping(currentChannel.value, useAuthStore().user, messagebeingtyped);
     }
-  };*/
+  };
 
   return {
     channels,
@@ -280,7 +280,7 @@ export const useChannelStore = defineStore('channel', () => {
     lastMessageOf,
     usersInChannel,
     fetchUsersInChannel,
-    fetchKickVotesForUsers
-    //userIsTyping
+    fetchKickVotesForUsers,
+    userIsTyping
   };
 });
