@@ -335,7 +335,7 @@ export default {
     const Tag_Only = ref(false)
     const leftDrawerOpen = ref(false);
     const authStore = useAuthStore();
-    const state = ref('online');
+    const state = ref(authStore.user?.status || 'online');
 
     const inputContent = ref('');
     const isPrivate = ref(false);
