@@ -181,7 +181,7 @@
               <q-popup-proxy>
                 <q-banner>
                   <q-toolbar class="bg-primary text-white shadow-2">
-                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} Private</q-toolbar-title>
+                    <q-toolbar-title>{{ channel.name }} - {{ channel.isPrivate ? 'Private' : 'Public' }} Channel</q-toolbar-title>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
                     </q-avatar>
