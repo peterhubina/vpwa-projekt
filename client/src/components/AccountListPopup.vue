@@ -4,8 +4,12 @@
       <q-item v-for="account in accounts || []" :key="account.id" class="q-my-sm" clickable v-ripple v-close-popup>
         <q-item-section avatar>
           <q-avatar color="primary" text-color="white" class="relative">
-            <!--<img :src="account.avatar" alt="User Avatar" />-->
-            <q-badge :color="account.status === 'online' ? 'primary' : 'warning'" rounded floating />
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="User Avatar" />
+            <q-badge
+              :color="account.status === 'online' ? 'primary' : (account.status === 'offline' ? 'grey' : 'warning')"
+              rounded
+              floating
+            />
           </q-avatar>
         </q-item-section>
 
@@ -13,7 +17,6 @@
           <q-item-label>{{ account.name }}</q-item-label>
           <q-item-label caption lines="1">gmail: {{ account.email }}</q-item-label>
           <q-item-label caption lines="1">status: {{ account.role ? 'admin' : 'guest' }}, {{ account.status }}{{ account.is_typing ? ', typing...' : '' }}</q-item-label>
-          <!--<q-item-label caption lines="1">{{ account.is_typing ? ' hello chat i am online' : '' }}</q-item-label>-->
         </q-item-section>
       </q-item>
     </q-item-section>
@@ -45,7 +48,7 @@ export default defineComponent({
         console.log('Accounts updated:', newValue);
       },
     );
-}})
+  }})
 </script>
 
 <style scoped>
