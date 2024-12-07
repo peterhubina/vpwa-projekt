@@ -1,13 +1,13 @@
 <template>
   <div class="q-pa-md" style="height: calc(100vh - 75px); position: relative;">
-    <div class="messages-container q-pa-md" style="flex-grow: 1; overflow-y: auto; height: calc(100% - 80px);" ref="message_container">
+    <div class="messages-container q-pa-md" style="flex-grow: 1; overflow-y: auto; height: calc(100% - 80px);" ref="message_container" @scroll="onScroll">
       <q-infinite-scroll reverse style="width: 100%" :scroll-target="scrollTarget">
         <template v-slot:loading>
           <div class="row justify-center q-my-md">
             <q-spinner-dots color="primary" name="dots" size="40px" />
           </div>
         </template>
-        <div v-for="message in (channelStore.currentMessages || []).slice().reverse()" :key="message.id" class="caption q-py-sm">
+        <div v-for="message in (channelStore.currentMessages || []).slice(0, limit).reverse()" :key="message.id" class="caption q-py-sm">
           <q-chat-message
             :bg-color="message.content.includes('@'+ authStore.user?.username) ? 'warning' : 'primary'"
             :key="message.id"
@@ -90,12 +90,29 @@ export default {
     const channelStore = useChannelStore();
     const authStore = useAuthStore();
     const resolvedAccounts = ref<User[]>([])
-
     const scrollTarget = computed(() => message_container.value || undefined);
-
     const messages = ref([
-
     ]);
+
+    const limit = ref(10);
+
+    const onScroll = async () => {
+      if (message_container.value?.scrollTop === 0 && limit.value < channelStore.currentMessages.length) {
+        const currentScrollPosition = message_container.value.scrollTop;
+        const currentHeight = message_container.value.scrollHeight;
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        limit.value += 10;
+
+        nextTick(() => {
+          if (message_container.value) {
+            const newHeight = message_container.value.scrollHeight;
+            message_container.value.scrollTop = newHeight - currentHeight + currentScrollPosition;
+          }
+        });
+      }
+    };
+
 
     const fetchUsers = async () => {
       resolvedAccounts.value = await channelStore.fetchUsersInChannel(
@@ -180,25 +197,27 @@ export default {
             channelStore.leaveChannel(channelStore.currentChannel);
           }
         } else if (trimmedMessage.startsWith('/invite')) {
-            if (channelStore.currentChannel) {
-              channelStore.sendMessage(channelStore.currentChannel, 'User has been invited to the channel');
-              channelStore.inviteUser(channelStore.currentChannel, trimmedMessage[2]);
-            }
-          } else if (trimmedMessage.startsWith('/revoke')) {
-            if (channelStore.currentChannel) {
-              channelStore.removeUser(channelStore.currentChannel, trimmedMessage[2]);
-            }
+          if (channelStore.currentChannel) {
+            channelStore.sendMessage(channelStore.currentChannel, 'User has been invited to the channel');
+            channelStore.inviteUser(channelStore.currentChannel, trimmedMessage[2]);
+          }
+        } else if (trimmedMessage.startsWith('/revoke')) {
+          if (channelStore.currentChannel) {
+            channelStore.removeUser(channelStore.currentChannel, trimmedMessage[2]);
+          }
         } else if (channelStore.currentChannel) {
-            if (channelStore.currentChannel) {
-              channelStore.sendMessage(channelStore.currentChannel, trimmedMessage);
-              console.log('Message: ', trimmedMessage);
-            }
+          if (channelStore.currentChannel) {
+            channelStore.sendMessage(channelStore.currentChannel, trimmedMessage);
+            console.log('Message: ', trimmedMessage);
+          }
         }
 
         text_message.value = '';
+
         await nextTick();
 
         if (message_container.value) {
+          limit.value += 1;
           message_container.value.scrollTop = message_container.value.scrollHeight;
         }
       }
@@ -218,7 +237,6 @@ export default {
       messages,
       dense: ref(false),
       sendMessage,
-      /*onLoad,*/
       message_container,
       showMessage,
       resolvedAccounts,
@@ -226,7 +244,9 @@ export default {
       AccountListPopup,
       showAccountList,
       fetchUsers,
-      scrollTarget
+      scrollTarget,
+      limit,
+      onScroll
     };
   },
 };
