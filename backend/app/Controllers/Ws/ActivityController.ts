@@ -69,4 +69,15 @@ export default class ActivityController {
 
     logger.info('websocket disconnected', reason)
   }
+
+  public async kickUser({ socket }: WsContextContract, channel: Channel, userName: string) {
+    const kickedUser = await User.findByOrFail('username', userName)
+    const findchannel = await Channel.findOrFail(channel.id)
+
+    await kickedUser.related('channels').detach([findchannel.id])
+
+    console.log(channel)
+    console.log(userName)
+    socket.to(this.getUserRoom(kickedUser)).emit('user:kicked', findchannel.serialize(), userName)
+  }
 }
