@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md" style="height: calc(100vh - 75px); position: relative;">
     <div class="messages-container q-pa-md" style="flex-grow: 1; overflow-y: auto; height: calc(100% - 80px);" ref="message_container" @scroll="onScroll">
-      <q-infinite-scroll reverse style="width: 100%" :scroll-target="scrollTarget">
+      <q-infinite-scroll reverse style="width: 100%" debounce="500" :scroll-target="scrollTarget" @load="loadMessages">
         <template v-slot:loading>
           <div v-if="loading" class="row justify-center q-my-md">
             <q-spinner-dots color="primary" name="dots" size="40px" />
@@ -96,7 +96,6 @@ export default {
     const limit = ref(10);
     const loading = ref(false);
 
-
     const onScroll = async () => {
       if (message_container.value?.scrollTop === 0 && limit.value < channelStore.currentMessages.length) {
         loading.value = true;  // Show the loading spinner
@@ -118,7 +117,6 @@ export default {
       }
     };
 
-
     const fetchUsers = async () => {
       resolvedAccounts.value = await channelStore.fetchUsersInChannel(
         channelStore.currentChannel?.name || 'Slack'
@@ -126,6 +124,12 @@ export default {
 
       console.log('Fetched Accounts:', resolvedAccounts.value);
     };
+    /*
+    const scrollToStart = () => {
+      if (message_container.value) {
+        message_container.value.scrollTop = 0;
+      }
+    };*/
 
     const channels = channelStore.channels;
     console.log('channels: ', channels);
@@ -236,6 +240,22 @@ export default {
       }, 1000);
     };*/
 
+    const n = ref(15)
+
+    async function loadMessages(index: number, done: () => void) {
+      const channelStore = useChannelStore();
+      console.log('loading data')
+
+      if (channelStore.currentChannel === null) {
+        done();
+        return;
+      }
+
+      n.value += 15
+      await channelStore.getMessages(channelStore.currentChannel, n.value)
+
+    }
+
     return {
       text_message,
       channelStore,
@@ -252,7 +272,8 @@ export default {
       scrollTarget,
       limit,
       onScroll,
-      loading
+      loading,
+      loadMessages
     };
   },
 };
