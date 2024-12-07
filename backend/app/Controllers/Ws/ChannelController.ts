@@ -19,7 +19,7 @@ export default class ChannelController {
   public async getUsers({ params }: HttpContextContract) {
     const channel = await Channel.query().where('name', params.name).firstOrFail()
     const users = await channel.related('users').query()
-    console.log('Users: ', users)
+    //console.log('Users: ', users)
     return users
   }
 

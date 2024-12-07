@@ -265,7 +265,7 @@
                               <q-item-section>
                                 <q-item-label>{{ account.name }}</q-item-label>
                                 <q-item-label>{{ account.email }}</q-item-label>
-                                <q-item-label v-if="account.role == 'user'" caption lines="1">kick votes: 1</q-item-label>
+                                <q-item-label v-if="account.role == 'user'" caption lines="1">kick votes: {{ account.kickVotes }}</q-item-label>
                                 <q-item-label v-if="account.role == 'admin'" caption lines="1">admin</q-item-label>
                               </q-item-section>
                             </q-item>
@@ -325,6 +325,8 @@ import {useAuthStore} from 'stores/auth';
 import { useChannelStore } from 'stores/channel';
 import {User} from 'src/contracts';
 import {UserStatus} from 'stores/models';
+import { api } from 'src/boot/axios';
+import { KickVote } from 'src/contracts/Auth';
 
 export default {
   components: {
@@ -373,12 +375,28 @@ export default {
     };
 
     const fetchUsers = async () => {
-      resolvedAccounts.value = await channelStore.fetchUsersInChannel(
-        currentChannelName.value || 'Slack'
-      );
+      try {
+        if (channelStore.currentChannel) {
+          // Fetch users in the current channel
+          const users = await channelStore.fetchUsersInChannel(channelStore.currentChannel.name);
 
-      console.log('Fetched Accounts:', resolvedAccounts.value);
-    }
+          // Fetch kick votes for the current channel
+          const votes: KickVote[] = await channelStore.fetchKickVotesForUsers(channelStore.currentChannel.id);
+
+          resolvedAccounts.value = users.map(user => {
+            const kickVote = votes.find((vote: KickVote) => vote.reported_user_id === user.id);
+            return {
+              ...user,
+              kickVotes: kickVote ? kickVote.votes : 0,
+            };
+          });
+
+          console.log('Resolved Accounts:', resolvedAccounts.value);
+        }
+      } catch (error) {
+        console.error('Error fetching users or kick votes:', error);
+      }
+    };
 
     onMounted(() => {
       currentChannelName.value = getChannelName();

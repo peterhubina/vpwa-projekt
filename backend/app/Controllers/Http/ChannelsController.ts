@@ -20,7 +20,6 @@ export default class ChannelsController {
   }
 
   public async show({ params, response, auth }: HttpContextContract) {
-    // TODO show only channels that the user is a member of
     console.log(params.id)
     const channel = await auth
       .user!.related('channels')
