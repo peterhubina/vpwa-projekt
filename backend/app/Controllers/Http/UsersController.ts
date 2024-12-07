@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import  User  from 'App/Models/User'
+import Database from "@ioc:Adonis/Lucid/Database";
 
 export default class UsersControllers {
   public async status({ request, response }: HttpContextContract) {
@@ -28,6 +29,29 @@ export default class UsersControllers {
         success: false,
         message: 'Unable to fetch user status',
       });
+    }
+  }
+
+  public async getKickVotes({ params, response }: HttpContextContract) {
+    console.log('Som tu')
+    try {
+      const channelId = params.channelId
+      const kickVotes = await Database
+        .from('channel_reports')
+        .select('reported_user_id')
+        .count('* as votes')
+        .where('channel_id', channelId)
+        .groupBy('reported_user_id')
+
+      console.log('Kick votes: ', kickVotes)
+
+      return response.ok(kickVotes)
+    } catch (error) {
+      console.error('Error fetching kick votes:', error)
+      return response.status(400).send({
+        success: false,
+        message: 'Unable to fetch kick votes',
+      })
     }
   }
 }

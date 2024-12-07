@@ -29,7 +29,8 @@ export interface User {
   status: string
   surname: string
   username: string
-  name: string
+  name: string,
+  kickVotes?: number
 }
 
 export interface ListChannel {
@@ -40,4 +41,9 @@ export interface ListChannel {
   created_at: string;
   updated_at: string;
   pivot_invited: boolean;
+}
+
+export interface KickVote {
+  reported_user_id: number;
+  votes: number;
 }

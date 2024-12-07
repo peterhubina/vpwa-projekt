@@ -18,6 +18,7 @@ export const useChannelStore = defineStore('channel', () => {
   const error = ref<Error|null>(null)
   const active = ref<string|null>(null)
   const usersInChannel = ref<Record<string, any[]>>({});
+  const kickVotes = ref<Record<string, number>>({});
 
   const currentChannel = ref<ListChannel|null>(null)
 
@@ -41,6 +42,37 @@ export const useChannelStore = defineStore('channel', () => {
       console.log('Messages: ', currentMessages)
     })
 
+  };
+
+  const fetchKickVotesForUsers = async (channelId: number) => {
+    try {
+      // API call to get kick votes
+      /*const { data: kickVotesData } = await api.get<{ success: boolean; kickVotes: { reported_user_id: number; votes: number }[] }>(
+        `http://localhost:3333/channels/${channelId}/kick-votes`
+      );*/
+
+      const { data: kickVotesData } = await api.get(
+        `http://localhost:3333/users/${channelId}/kick-votes`
+      );
+      console.log('Kick votes:', kickVotesData)
+      /*
+      if (kickVotesData.success) {
+        kickVotes.value = kickVotesData.kickVotes.reduce((acc, vote) => {
+          acc[vote.reported_user_id] = vote.votes;
+          return acc;
+        }, {} as Record<string, number>);
+
+        console.log('Kick votes:', kickVotes.value);
+        return kickVotes.value;
+      } else {
+        console.error('Failed to fetch kick votes');
+        return {};
+      }*/
+      return kickVotesData
+    } catch (error) {
+      console.error('Error fetching kick votes:', error);
+      return {};
+    }
   };
 
   const fetchUsersInChannel = async (channel: string) => {
@@ -247,7 +279,8 @@ export const useChannelStore = defineStore('channel', () => {
     joinedChannels,
     lastMessageOf,
     usersInChannel,
-    fetchUsersInChannel
+    fetchUsersInChannel,
+    fetchKickVotesForUsers
     //userIsTyping
   };
 });
