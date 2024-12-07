@@ -419,11 +419,13 @@ export default {
     const joinChannel = () => {
       channelStore.joinChannel(inputContent.value, false);
       channelStore.fetchChannels();
+      inputContent.value = ''
     }
 
     const createChannel = () => {
       console.log(inputContent.value, isPrivate.value)
       channelStore.joinChannel(inputContent.value, isPrivate.value)
+      inputContent.value = ''
     }
 
     // Array of channels for the list
