@@ -48,7 +48,7 @@ export default defineComponent({
         console.log('Accounts updated:', newValue);
       },
     );
-}})
+  }})
 </script>
 
 <style scoped>
