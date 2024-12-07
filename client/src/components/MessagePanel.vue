@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import {ref, nextTick, inject, computed, watch} from 'vue';
+import {ref, nextTick, inject, computed, onUpdated } from 'vue';
 import { useQuasar } from 'quasar';
 import AccountListPopup from 'components/AccountListPopup.vue';
 import {useChannelStore} from 'stores/channel';
@@ -259,14 +259,19 @@ export default {
 
     }
 
-    watch(
-      () => text_message.value,
-      (newVal) => {
-        if (newVal && channelStore.currentChannel) {
-          channelStore.userIsTyping(newVal);
-        }
+
+    const initialScrollDone = ref(false);
+
+    onUpdated(() => {
+      if (!initialScrollDone.value && message_container.value) {
+        setTimeout(() => {
+          if (message_container.value) {
+            message_container.value.scrollTop = message_container.value.scrollHeight;
+            initialScrollDone.value = false; // Mark as done
+          }
+        }, 50); // Small delay to ensure DOM updates are fully processed
       }
-    );
+    });
 
     return {
       text_message,
@@ -285,7 +290,8 @@ export default {
       limit,
       onScroll,
       loading,
-      loadMessages
+      loadMessages,
+      initialScrollDone
     };
   },
 };
