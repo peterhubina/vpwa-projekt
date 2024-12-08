@@ -73,12 +73,15 @@
 </template>
 
 <script lang="ts">
-import {ref, nextTick, inject, computed, onUpdated } from 'vue';
+import {ref, nextTick, inject, computed, onUpdated, watch} from 'vue';
 import { useQuasar } from 'quasar';
 import AccountListPopup from 'components/AccountListPopup.vue';
 import {useChannelStore} from 'stores/channel';
 import {useAuthStore} from 'stores/auth';
 import {User} from 'src/contracts';
+import {UserStatus} from 'stores/models';
+import activityService from 'src/services/ActivityService';
+import channelService from 'src/services/ChannelService';
 
 export default {
   components: {
@@ -98,6 +101,13 @@ export default {
     ]);
     const limit = ref(10);
     const loading = ref(false);
+
+    const state = computed(() => authStore.userStatus);
+
+    watch(state, (newValue) => {
+      console.log('state change: ', newValue)
+      changeStatus()
+    });
 
     const onScroll = async () => {
       if (message_container.value?.scrollTop === 0 && limit.value < channelStore.currentMessages.length) {
@@ -133,6 +143,59 @@ export default {
         message_container.value.scrollTop = 0;
       }
     };*/
+
+    const changeStatus = () => {
+      console.log(state.value);
+      authStore.setStatus(state.value as UserStatus);
+
+      if (state.value === 'offline' && authStore.user) {
+        console.log('User is offline');
+        activityService.offline(authStore.user);
+        unsubscribeFromSockets();
+      } else if (state.value === 'online' && authStore.user) {
+        console.log('User is online');
+        activityService.online(authStore.user);
+        subscribeToSockets();
+      }
+    };
+
+    const subscribeToSockets = async () => {
+      console.log('Subscribing to sockets...');
+      await channelStore.fetchChannels()
+      /*
+      for (const channel of channelStore.channels) {
+        if (!channelService.in(channel.name)) {
+          console.log('Loading messages for channel:', channel.name);
+
+          try {
+            const messages = await channelService.join(channel.name).loadMessages(); // Await the messages
+
+            // Use the channel name as the key for currentMessages
+            if (channelStore.currentChannel && channelStore.currentChannel.name === channel.name) {
+              console.log('Channel:', channelStore.currentChannel, ', Messages:', messages);
+
+              const channelName = channelStore.currentChannel.name;
+              if (channelName) {
+                channelStore.messages[channelName] = messages; // Assign resolved messages to the store
+              }
+            }
+
+            console.log('Messages after load:', messages);
+          } catch (error) {
+            console.error('Error loading messages for channel:', channel.name, error);
+          }
+        }
+      }
+       */
+    };
+
+
+    const unsubscribeFromSockets = () => {
+      console.log('Unsubscribing from sockets...');
+      channelStore.channels.forEach(channel => {
+        channelService.leave(channel.name);
+      });
+    };
 
     const channels = channelStore.channels;
     console.log('channels: ', channels);
@@ -291,7 +354,8 @@ export default {
       onScroll,
       loading,
       loadMessages,
-      initialScrollDone
+      initialScrollDone,
+      changeStatus
     };
   },
 };

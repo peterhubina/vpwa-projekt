@@ -39,7 +39,7 @@ export const useChannelStore = defineStore('channel', () => {
 
     channels.value.forEach((channel) => {
       channelService.join(channel.name).loadMessages()
-      console.log('Messages: ', currentMessages)
+      //getAllMessages(channel)
     })
 
   };
@@ -119,7 +119,17 @@ export const useChannelStore = defineStore('channel', () => {
     const channel = channels.value.find((c) => c.id === channelId);
     return channel ? channel.name : null;
   };
+  /*
+  const getAllMessages = async (channel: ListChannel) => {
+    const { data: data } = await api.get<Message[]>(`http://localhost:3333/channels/${channel.id}`);
+    const messages : Message|Message[] = data.messages
+    if (data && messages) {
+      console.log('all messages: ', messages)
+    }
+    insertNewMessage(messages, channel.name)
 
+  };
+  */
   const getMessages = async (channel: ListChannel, count: number) => {
     const { data: messages } = await api.get<Message[]>(`http://localhost:3333/channels/${channel.id}/${count}`);
 
