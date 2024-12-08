@@ -36,6 +36,14 @@ class ActivitySocketManager extends SocketManager {
     })
   }
 
+  public offline (user: User): void {
+    this.socket.emit('user:offline', user)
+  }
+
+  public online (user: User): void {
+    this.socket.emit('user:online', user)
+  }
+
   public inviteUser (userName: string, channelId: number): Promise<any> {
     return this.emitAsync('inviteUser', userName, channelId)
   }
