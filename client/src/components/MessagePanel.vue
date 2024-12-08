@@ -268,7 +268,7 @@ export default {
         } else if(trimmedMessage.startsWith('/cancel')) {
           console.log('Current: ', channelStore.currentChannel)
           if (channelStore.currentChannel) {
-            channelStore.sendMessage(channelStore.currentChannel, 'User has left the channel');
+            channelStore.sendMessage(channelStore.currentChannel, `User ${authStore.user?.username} has left the channel`);
             channelStore.leaveChannel(channelStore.currentChannel);
           }
         } else if (trimmedMessage.startsWith('/invite')) {
@@ -276,14 +276,30 @@ export default {
           if (inviteMatch) {
             const username = inviteMatch[1];
             if (channelStore.currentChannel) {
-              channelStore.sendMessage(channelStore.currentChannel, 'User has been invited to the channel');
+              channelStore.sendMessage(channelStore.currentChannel, `User ${username} has been invited to the channel`);
               console.log('Inviting user: ', username);
               channelStore.inviteUser(channelStore.currentChannel, username);
             }
           }
         } else if (trimmedMessage.startsWith('/revoke')) {
-          if (channelStore.currentChannel) {
-            channelStore.removeUser(channelStore.currentChannel, trimmedMessage[2]);
+          const revokeMatch = trimmedMessage.match(/^\/revoke\s+(\S+)$/);
+
+          if (revokeMatch) {
+            const username = revokeMatch[1];
+            if (channelStore.currentChannel) {
+              channelStore.sendMessage(channelStore.currentChannel, `User "${username}" has been removed`);
+              channelStore.removeUser(channelStore.currentChannel, username);
+            }
+          }
+        } else if (trimmedMessage.startsWith('/kick')) {
+          const kickMatch = trimmedMessage.match(/^\/kick\s+(\S+)$/);
+
+          if (kickMatch) {
+            const username = kickMatch[1];
+            if (channelStore.currentChannel) {
+              channelStore.sendMessage(channelStore.currentChannel, `User "${username}" has been removed`);
+              channelStore.removeUser(channelStore.currentChannel, username);
+            }
           }
         } else if (channelStore.currentChannel) {
           if (channelStore.currentChannel) {

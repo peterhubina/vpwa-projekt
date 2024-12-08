@@ -157,7 +157,7 @@ export const useChannelStore = defineStore('channel', () => {
         userName: user,
       }
     );
-    //activityService.removeUser(channel, user)
+    activityService.removeUser(channel, user)
   };
 
   watch(() => route?.params.id, () => {

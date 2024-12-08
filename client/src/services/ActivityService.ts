@@ -50,7 +50,30 @@ class ActivitySocketManager extends SocketManager {
 
     this.socket.on('user:kicked', (channel: ListChannel, userName: string) => {
       useChannelStore().channels = useChannelStore().channels.filter((c) => c.id !== channel.id)
+      const authStore = useAuthStore()
+      const userStatus = authStore.userStatus;
 
+      console.log(authStore.user)
+      if (userStatus === 'online') {
+        if (AppVisibility.appVisible) {
+          Notify.create({
+            message: `#${channel.name} - You have been kicked from the channel`,
+            color: 'info',
+            position: 'top',
+            icon: 'chat',
+          });
+        } else if (Notification.permission === 'granted') {
+          const systemNotification = new Notification(`#${channel.name} - You have been kicked from the channel`);
+
+          systemNotification.onclick = () => {
+            window.focus();
+          };
+        } else if (Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+      }
+
+      useChannelStore().removedFromChannel(channel)
     })
 
     authManager.onChange((token) => {
