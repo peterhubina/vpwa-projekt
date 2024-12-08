@@ -303,14 +303,6 @@ export default {
       }
     };
 
-    /*const onLoad = (index, done) => {
-      setTimeout(() => {
-        messages.value.splice(0, 0,
-          );
-        done(); // Notify that loading is done
-      }, 1000);
-    };*/
-
     const n = ref(15)
 
     async function loadMessages(index: number, done: () => void) {

@@ -24,21 +24,19 @@ export default class ChannelsController {
     const channel = await auth
       .user!.related('channels')
       .query()
-      // preload messages and get author data
       .preload('messages', (messagesQuery) => {
         messagesQuery.preload('author').orderBy('created_at', 'desc').groupLimit(15)
       })
       .wherePivot('channel_id', params.id)
       .firstOrFail()
 
-    // set channel pivot_invited to false
     await auth.user!.related('channels').detach([channel.id])
     await auth.user!.related('channels').attach({
       [channel.id]: {
         invited: false,
       },
     })
-    // get channel messages
+
     return response.ok(channel)
   }
 
@@ -81,12 +79,12 @@ export default class ChannelsController {
       return response.created(channel)
     }
     if (channel.isPrivate) throw new Error('Channel is private')
-    /*
+
     const reports = await channel
       .related('reports')
       .query()
       .wherePivot('reported_user_id', auth.user!.id)
-    if (reports.length >= 3) throw new Error('You are banned from this channel')*/
+    if (reports.length >= 3) throw new Error('You are banned from this channel')
 
     await auth.user!.related('channels').attach([channel.id])
     return response.ok(channel)

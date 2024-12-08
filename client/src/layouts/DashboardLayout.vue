@@ -425,34 +425,7 @@ export default {
     const changeStatus = () => {
       console.log(state.value);
       authStore.setStatus(state.value as UserStatus);
-
-      /*if (state.value === 'offline' && authStore.user) {
-        console.log('User is offline');
-        activityService.offline(authStore.user);
-        unsubscribeFromSockets();
-      } else if (state.value === 'online' && authStore.user) {
-        console.log('User is online');
-        activityService.online(authStore.user);
-        subscribeToSockets();
-      }*/
     };
-  /*
-    const subscribeToSockets = () => {
-      console.log('Subscribing to sockets...');
-      channelStore.channels.forEach(channel => {
-        if (!channelService.in(channel.name)) {
-          const messages = channelService.join(channel.name).loadMessages();
-          console.log('Messages after load: ', messages)
-        }
-      });
-    };
-
-    const unsubscribeFromSockets = () => {
-      console.log('Unsubscribing from sockets...');
-      channelStore.channels.forEach(channel => {
-        channelService.leave(channel.name);
-      });
-    };*/
 
     function logout() {
       useAuthStore().logout().then(() => {
