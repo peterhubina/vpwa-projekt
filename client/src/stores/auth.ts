@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
     userStatus.value = user.data.status*/
   }
 
-  const userStatus = ref<UserStatus>('online');
+  const userStatus = ref('online');
 
   const AUTH_START = () => {
     status.value = 'pending'
@@ -111,6 +111,8 @@ export const useAuthStore = defineStore('auth', () => {
         userId: user.value?.id,
       }
     )
+
+    userStatus.value = status
   /*
     if(status === 'offline') {
       useChannelStore().channels.forEach((channel) => {
@@ -123,6 +125,19 @@ export const useAuthStore = defineStore('auth', () => {
     }*/
   }
 
-  return { login, check, register, logout, user, setStatus, userStatus, getStatus }
+  const fetchUser = async () => {
+    try {
+      AUTH_START();
+      const { data } = await api.get<User>('http://localhost:3333/user'); // Replace with actual endpoint
+      user.value = data;
+      status.value = 'success';
+      console.log('User fetched successfully:', data);
+    } catch (err) {
+      console.error('Error fetching user:', err);
+      AUTH_ERROR(err);
+    }
+  };
+
+  return { login, check, register, logout, user, setStatus, userStatus, getStatus, fetchUser  }
 
 });

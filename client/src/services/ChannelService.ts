@@ -1,6 +1,8 @@
 import { SocketManager } from './SocketManager'
 import {useChannelStore} from 'stores/channel';
+import {useAuthStore} from 'stores/auth';
 import {useRouter} from 'vue-router';
+import {Notify, AppVisibility} from 'quasar';
 
 // creating instance of this class automatically connects to given socket.io namespace
 // subscribe is called with boot params, so you can use it to dispatch actions for socket events
@@ -9,7 +11,34 @@ class ChannelSocketManager extends SocketManager {
   public subscribe (): void {
     const channel = this.namespace.split('/').pop() as string
     const channelStore = useChannelStore()
+    const authStore = useAuthStore()
     this.socket.on('message', (message: any) => {
+      console.log('message', message)
+      const channelName = channelStore.getChannelNameById(message.channelId);
+      const userStatus = authStore.userStatus;
+      console.log(authStore.user)
+      if (userStatus === 'online') {
+        if (AppVisibility.appVisible) {
+          Notify.create({
+            message: `#${channelName} - ${message.author.username}`,
+            caption: message.content.slice(0, 50),
+            color: 'info',
+            position: 'top',
+            icon: 'chat',
+          });
+        } else if (Notification.permission === 'granted') {
+          const systemNotification = new Notification(`#${channelName} - ${message.author.username}`, {
+            body: message.content.slice(0, 100),
+          });
+
+          systemNotification.onclick = () => {
+            window.focus();
+          };
+        } else if (Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+      }
+
       channelStore.insertNewMessage(message, channel)
     })
     this.socket.on('channelDeleted', (channel: any) => {

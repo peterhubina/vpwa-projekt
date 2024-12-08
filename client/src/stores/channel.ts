@@ -115,6 +115,11 @@ export const useChannelStore = defineStore('channel', () => {
     insertNewMessage(newMessage, channel.name)
   };
 
+  const getChannelNameById = (channelId: number): string | null => {
+    const channel = channels.value.find((c) => c.id === channelId);
+    return channel ? channel.name : null;
+  };
+
   const getMessages = async (channel: ListChannel, count: number) => {
     const { data: messages } = await api.get<Message[]>(`http://localhost:3333/channels/${channel.id}/${count}`);
 
@@ -281,6 +286,7 @@ export const useChannelStore = defineStore('channel', () => {
     usersInChannel,
     fetchUsersInChannel,
     fetchKickVotesForUsers,
-    userIsTyping
+    userIsTyping,
+    getChannelNameById
   };
 });
