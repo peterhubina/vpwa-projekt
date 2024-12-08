@@ -14,9 +14,9 @@
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>{{ account.name }}</q-item-label>
+          <q-item-label>{{ account.username }}</q-item-label>
           <q-item-label caption lines="1">gmail: {{ account.email }}</q-item-label>
-          <q-item-label caption lines="1">status: {{ account.role ? 'admin' : 'guest' }}, {{ account.status }}{{ account.is_typing ? ', typing...' : '' }}</q-item-label>
+          <q-item-label caption lines="1">role: {{ account.id === authStore.user?.id ? 'admin' : 'guest' }}, {{ account.status }}{{ account.is_typing ? ', typing...' : '' }}</q-item-label>
         </q-item-section>
       </q-item>
     </q-item-section>
@@ -25,8 +25,11 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, PropType, watch} from 'vue';
+import {useAuthStore} from 'stores/auth';
 
 import { User } from 'src/contracts';
+
+
 
 export default defineComponent({
   name: 'AccountListPopup',
@@ -35,6 +38,11 @@ export default defineComponent({
       type: [Array, Object, null],
       required: true,
     },
+    channel: {
+      type: [Object, null],
+      required: true,
+      default: () => null,
+    },
   },
   setup(props) {
     // Log accounts after the component is mounted
@@ -42,12 +50,16 @@ export default defineComponent({
       console.log('Accounts after load:', props.accounts);
     });
 
+    const authStore = useAuthStore();
+
     watch(
       () => props.accounts,
       (newValue) => {
         console.log('Accounts updated:', newValue);
       },
     );
+
+    return {authStore}
   }})
 </script>
 

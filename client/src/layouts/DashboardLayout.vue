@@ -198,12 +198,12 @@
                       @click="fetchUsers"
                     >
                       <q-popup-proxy>
-                        <AccountListPopup :accounts="resolvedAccounts" />
+                        <AccountListPopup :accounts="resolvedAccounts" :channel="channel" />
                       </q-popup-proxy>
                     </q-btn>
 
                     <q-btn
-                      v-if="channel.isPrivate == false"
+                      v-if="!channel.isPrivate"
                       color="white"
                       label="invite"
                       text-color="primary"
@@ -263,10 +263,10 @@
                               </q-item-section>
 
                               <q-item-section>
-                                <q-item-label>{{ account.name }}</q-item-label>
+                                <q-item-label>{{ account.username }}</q-item-label>
                                 <q-item-label>{{ account.email }}</q-item-label>
-                                <q-item-label v-if="account.role == 'user'" caption lines="1">kick votes: {{ account.kickVotes }}</q-item-label>
-                                <q-item-label v-if="account.role == 'admin'" caption lines="1">admin</q-item-label>
+                                <q-item-label v-if="account.id !== authStore.user?.id" caption lines="1">kick votes: {{ account.kickVotes }}</q-item-label>
+                                <q-item-label v-if="account.id === authStore.user?.id" caption lines="1">admin</q-item-label>
                               </q-item-section>
                             </q-item>
                           </q-item-section>
