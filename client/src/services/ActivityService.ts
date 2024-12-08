@@ -3,6 +3,8 @@ import { authManager } from '.'
 import { SocketManager } from './SocketManager'
 import { useChannelStore } from 'src/stores/channel'
 import { ListChannel } from 'src/contracts'
+import {Notify, AppVisibility} from 'quasar';
+import {useAuthStore} from 'stores/auth';
 
 class ActivitySocketManager extends SocketManager {
   public subscribe (): void {
@@ -20,6 +22,30 @@ class ActivitySocketManager extends SocketManager {
 
     this.socket.on('user:invite', (user: User, channel: ListChannel) => {
       useChannelStore().channels.push(channel)
+
+      const channelStore = useChannelStore()
+      const authStore = useAuthStore()
+      const userStatus = authStore.userStatus;
+
+      console.log(authStore.user)
+      if (userStatus === 'online') {
+        if (AppVisibility.appVisible) {
+          Notify.create({
+            message: `#${channel.name} - User has been invited to the channel`,
+            color: 'info',
+            position: 'top',
+            icon: 'chat',
+          });
+        } else if (Notification.permission === 'granted') {
+          const systemNotification = new Notification(`#${channel.name} - User has been invited to the channel`);
+
+          systemNotification.onclick = () => {
+            window.focus();
+          };
+        } else if (Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+      }
     })
 
     this.socket.on('user:kicked', (channel: ListChannel, userName: string) => {

@@ -272,9 +272,14 @@ export default {
             channelStore.leaveChannel(channelStore.currentChannel);
           }
         } else if (trimmedMessage.startsWith('/invite')) {
-          if (channelStore.currentChannel) {
-            channelStore.sendMessage(channelStore.currentChannel, 'User has been invited to the channel');
-            channelStore.inviteUser(channelStore.currentChannel, trimmedMessage[2]);
+          const inviteMatch = trimmedMessage.match(/^\/invite\s+(\S+)$/);
+          if (inviteMatch) {
+            const username = inviteMatch[1];
+            if (channelStore.currentChannel) {
+              channelStore.sendMessage(channelStore.currentChannel, 'User has been invited to the channel');
+              console.log('Inviting user: ', username);
+              channelStore.inviteUser(channelStore.currentChannel, username);
+            }
           }
         } else if (trimmedMessage.startsWith('/revoke')) {
           if (channelStore.currentChannel) {
