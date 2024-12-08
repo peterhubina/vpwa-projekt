@@ -16,7 +16,7 @@
                   <q-toolbar-title>Notifications</q-toolbar-title>
                   <div class="q-pa-md q-gutter-lg">
                     <q-toggle
-                      v-model="Tag_Only"
+                      v-model="tagOnly"
                       checked-icon="check"
                       color="white"
                       icon-color="primary"
@@ -334,7 +334,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const Tag_Only = ref(false)
+    const tagOnly = ref(false)
     const leftDrawerOpen = ref(false);
     const authStore = useAuthStore();
     const state = ref(authStore.user?.status || 'online');
@@ -357,6 +357,10 @@ export default {
     watch(() => channelStore.currentChannel, (newValue) => {
       currentChannelName.value = newValue ? newValue.name : 'Slack';
       fetchUsers();
+    });
+
+    watch(tagOnly, (newValue: boolean) => {
+      authStore.toggleTagOnly(newValue);
     });
 
     const inviteUser = async (username: string) => {
@@ -480,7 +484,7 @@ export default {
       notifications,
       blueModel,
       logout,
-      Tag_Only,
+      tagOnly,
       inviteUser,
       changeStatus,
       fetchUsers,

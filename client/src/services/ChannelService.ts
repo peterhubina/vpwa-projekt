@@ -16,6 +16,14 @@ class ChannelSocketManager extends SocketManager {
       console.log('message', message)
       const channelName = channelStore.getChannelNameById(message.channelId);
       const userStatus = authStore.userStatus;
+      const tagOnly = authStore.tagOnly;
+      const username = authStore.user?.username;
+
+      if (tagOnly && (!username || !message.content.includes(`@${username}`))) {
+        console.log('Skipping message due to tagOnly filter.');
+        return;
+      }
+
       console.log(authStore.user)
       if (userStatus === 'online') {
         if (AppVisibility.appVisible) {

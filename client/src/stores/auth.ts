@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null);
   const status = ref<'pending' | 'success' | 'error'>('pending');
   const errors = ref<Array<{ message: string; field?: string }>>([]);
+  const tagOnly = ref(false)
 
   const getStatus = async () => {
     /*const user = await api.get<any>(
@@ -23,6 +24,10 @@ export const useAuthStore = defineStore('auth', () => {
 
     userStatus.value = user.data.status*/
   }
+
+  const toggleTagOnly = (value : boolean) => {
+    tagOnly.value = value;
+  };
 
   const userStatus = ref('online');
 
@@ -138,6 +143,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { login, check, register, logout, user, setStatus, userStatus, getStatus, fetchUser  }
+  return { login, check, register, logout, user, setStatus, userStatus, getStatus, fetchUser, toggleTagOnly, tagOnly  }
 
 });
