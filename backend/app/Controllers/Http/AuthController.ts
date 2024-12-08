@@ -5,13 +5,8 @@ import RegisterUserValidator from 'App/Validators/RegisterUserValidator'
 
 export default class AuthController {
   async register({ request }: HttpContextContract) {
-    // if invalid, exception
     const data = await request.validate(RegisterUserValidator)
     const user = await User.create(data)
-    //console.log('User created: ', user)
-    // join user to general channel
-    //const general = await Channel.findByOrFail('name', 'general')
-    //await user.related('channels').attach([general.id])
 
     return user
   }
@@ -19,12 +14,10 @@ export default class AuthController {
   async login({ auth, request }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
-    //console.log('Auth object: ', auth)
     return auth.use('api').attempt(email, password)
   }
 
   async logout({ auth }: HttpContextContract) {
-    //console.log('Auth object: ', auth)
     return auth.use('api').logout()
   }
 

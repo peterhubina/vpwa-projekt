@@ -6,8 +6,6 @@ export default class UsersControllers {
   public async status({ request, response }: HttpContextContract) {
     const { status, userId } = request.all()
     const user = await User.findOrFail(userId)
-    //console.log(user)
-    //console.log(status)
     user.status = status
     await user.save()
     //console.log('Changed user: ', user)

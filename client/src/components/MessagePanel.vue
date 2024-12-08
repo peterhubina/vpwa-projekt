@@ -262,7 +262,7 @@ export default {
             .match(/^\/join\s+([^[\]]+?)\s*(private)?$/);
           if(joinMatch != null) {
             channelStore.joinChannel(joinMatch[1], joinMatch[2] === 'private');
-            await channelStore.fetchChannels();
+            //await channelStore.fetchChannels();
             console.log(channelStore.channels);
           }
         } else if(trimmedMessage.startsWith('/cancel')) {
@@ -302,14 +302,6 @@ export default {
         }
       }
     };
-
-    /*const onLoad = (index, done) => {
-      setTimeout(() => {
-        messages.value.splice(0, 0,
-          );
-        done(); // Notify that loading is done
-      }, 1000);
-    };*/
 
     const n = ref(15)
 

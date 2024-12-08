@@ -89,11 +89,9 @@ export const useChannelStore = defineStore('channel', () => {
       { channelName, isPrivate }
     );
     await channelService.join(channelName).loadMessages();
-
     channels.value.push(channel);
-    await fetchChannels()
-    console.log('New channel')
     router.push(`/channels/${channel.id}`);
+    console.log('New channel')
   };
 
   const removeChannel = async (channel: ListChannel) => {
