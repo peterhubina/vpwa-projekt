@@ -6,7 +6,7 @@
         <q-toolbar-title>{{currentChannelName}}</q-toolbar-title>
         <div class="q-pa-md row q-gutter-md">
           <q-btn color="primary" style="border-radius: 150px; width: 40px; height: 40px; padding: 0;" icon="notifications">
-            <q-badge color="red" floating style="border-radius: 12px;">{{ notifications.length }}</q-badge>
+            <!--<q-badge color="red" floating style="border-radius: 12px;">{{ notifications.length }}</q-badge>-->
             <q-popup-proxy>
               <q-banner>
                 <q-toolbar class="bg-primary text-white shadow-2">
@@ -26,7 +26,7 @@
                     />
                   </div>
                 </q-toolbar>
-                <q-item v-for="notification in notifications" :key="notification.id" class="q-my-sm" clickable v-ripple v-close-popup>
+                <!--<q-item v-for="notification in notifications" :key="notification.id" class="q-my-sm" clickable v-ripple v-close-popup>
                   <q-item-section avatar>
                     <q-avatar color="primary" text-color="white">
                       <q-icon name="discord" />
@@ -36,7 +36,7 @@
                     <q-item-label>{{ notification.name }} - {{ notification.type }} - By: Joe</q-item-label>
                     <q-item-label caption lines="1">{{ notification.description }}</q-item-label>
                   </q-item-section>
-                </q-item>
+                </q-item>-->
               </q-banner>
             </q-popup-proxy>
           </q-btn>
@@ -327,6 +327,8 @@ import {User} from 'src/contracts';
 import {UserStatus} from 'stores/models';
 import { api } from 'src/boot/axios';
 import { KickVote } from 'src/contracts/Auth';
+import activityService from 'src/services/ActivityService';
+import channelService from 'src/services/ChannelService';
 
 export default {
   components: {
@@ -421,9 +423,36 @@ export default {
     }
 
     const changeStatus = () => {
-      console.log(state.value)
+      console.log(state.value);
       authStore.setStatus(state.value as UserStatus);
-    }
+
+      /*if (state.value === 'offline' && authStore.user) {
+        console.log('User is offline');
+        activityService.offline(authStore.user);
+        unsubscribeFromSockets();
+      } else if (state.value === 'online' && authStore.user) {
+        console.log('User is online');
+        activityService.online(authStore.user);
+        subscribeToSockets();
+      }*/
+    };
+  /*
+    const subscribeToSockets = () => {
+      console.log('Subscribing to sockets...');
+      channelStore.channels.forEach(channel => {
+        if (!channelService.in(channel.name)) {
+          const messages = channelService.join(channel.name).loadMessages();
+          console.log('Messages after load: ', messages)
+        }
+      });
+    };
+
+    const unsubscribeFromSockets = () => {
+      console.log('Unsubscribing from sockets...');
+      channelStore.channels.forEach(channel => {
+        channelService.leave(channel.name);
+      });
+    };*/
 
     function logout() {
       useAuthStore().logout().then(() => {
@@ -458,13 +487,6 @@ export default {
       inputContent.value = ''
     }
 
-    const notifications = ref([
-      { id: 1, name: 'Channel1', type:'message', description: 'Hello how u doing in this rainy day, Hello how u doing in this rainy day, Hello how u doing in this rainy day' },
-      { id: 2, name: 'Channel10', type:'kick', description: 'You have been kicked from channel' },
-      { id: 3, name: 'Channel9', type:'invite', description: 'You have been invited to channel' },
-      { id: 4, name: 'Channel11', type:'delete', description: 'Channel has been deleted' },
-    ]);
-
     const blueModel = ref('Private');
 
     return {
@@ -481,7 +503,6 @@ export default {
       resolvedAccounts,
       leftDrawerOpen,
       toggleLeftDrawer,
-      notifications,
       blueModel,
       logout,
       tagOnly,
