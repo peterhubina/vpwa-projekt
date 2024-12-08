@@ -109,6 +109,12 @@ export default {
       changeStatus()
     });
 
+    watch(text_message, (newValue) => {
+      if (channelStore.currentChannel) {
+        channelStore.userIsTyping(newValue);
+      }
+    });
+
     const onScroll = async () => {
       if (message_container.value?.scrollTop === 0 && limit.value < channelStore.currentMessages.length) {
         loading.value = true;  // Show the loading spinner
